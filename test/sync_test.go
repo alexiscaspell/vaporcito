@@ -23,7 +23,7 @@ import (
 const (
 	longTimeLimit  = 1 * time.Minute
 	shortTimeLimit = 25 * time.Second
-	s12Folder      = `¯\_(ツ)_/¯ Räksmörgås 动作 Адрес` // This was renamed to ensure arbitrary folder IDs are fine.
+	s12Folder      = `¯\_(ツ)_/¯ Räksmörgås 动作 Адрес` // This was renamed to ensure arbitrary Game IDs are fine.
 )
 
 func TestSyncCluster(t *testing.T) {

@@ -46,8 +46,8 @@ type Process struct {
 	startComplete chan struct{}
 	stopped       chan struct{}
 	stopErr       error
-	sequence      map[string]map[string]int64 // Folder ID => Device ID => Sequence
-	done          map[string]bool             // Folder ID => 100%
+	sequence      map[string]map[string]int64 // Game ID => Device ID => Sequence
+	done          map[string]bool             // Game ID => 100%
 
 	cmd   *exec.Cmd
 	logfd *os.File

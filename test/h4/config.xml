@@ -1,5 +1,5 @@
 <configuration version="32">
-    <folder id="default" label="" path="s4/" type="sendreceive" rescanIntervalS="60" fsWatcherEnabled="false" fsWatcherDelayS="10" ignorePerms="false" autoNormalize="false">
+    <Game ID="default" label="" path="s4/" type="sendreceive" rescanIntervalS="60" fsWatcherEnabled="false" fsWatcherDelayS="10" ignorePerms="false" autoNormalize="false">
         <filesystemType>basic</filesystemType>
         <device id="7PBCTLL-JJRYBSA-MOWZRKL-MSDMN4N-4US4OMX-SYEXUS4-HSBGNRY-CZXRXAT" introducedBy=""></device>
         <minDiskFree unit="%">1</minDiskFree>

@@ -1,5 +1,5 @@
 <configuration version="32">
-    <folder id="default" label="" path="s3" type="sendreceive" rescanIntervalS="20" fsWatcherEnabled="false" fsWatcherDelayS="10" ignorePerms="false" autoNormalize="true">
+    <Game ID="default" label="" path="s3" type="sendreceive" rescanIntervalS="20" fsWatcherEnabled="false" fsWatcherDelayS="10" ignorePerms="false" autoNormalize="true">
         <filesystemType>basic</filesystemType>
         <device id="I6KAH76-66SLLLB-5PFXSOA-UFJCDZC-YAOMLEK-CP2GB32-BV5RQST-3PSROAU" introducedBy=""></device>
         <device id="MRIW7OK-NETT3M4-N6SBWME-N25O76W-YJKVXPH-FUMQJ3S-P57B74J-GBITBAC" introducedBy=""></device>
@@ -31,7 +31,7 @@
         <caseSensitiveFS>false</caseSensitiveFS>
         <junctionsAsDirs>true</junctionsAsDirs>
     </folder>
-    <folder id="s23" label="" path="s23-3" type="sendreceive" rescanIntervalS="20" fsWatcherEnabled="false" fsWatcherDelayS="10" ignorePerms="false" autoNormalize="true">
+    <Game ID="s23" label="" path="s23-3" type="sendreceive" rescanIntervalS="20" fsWatcherEnabled="false" fsWatcherDelayS="10" ignorePerms="false" autoNormalize="true">
         <filesystemType>basic</filesystemType>
         <device id="MRIW7OK-NETT3M4-N6SBWME-N25O76W-YJKVXPH-FUMQJ3S-P57B74J-GBITBAC" introducedBy=""></device>
         <device id="373HSRP-QLPNLIE-JYKZVQF-P4PKZ63-R2ZE6K3-YD442U2-JHBGBQG-WWXAHAU" introducedBy=""></device>

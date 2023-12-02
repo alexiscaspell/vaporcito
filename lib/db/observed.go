@@ -86,7 +86,7 @@ func (db *Lowlevel) RemovePendingFolderForDevice(id string, device protocol.Devi
 	return db.Delete(key)
 }
 
-// RemovePendingFolder removes all entries matching a specific folder ID.
+// RemovePendingFolder removes all entries matching a specific Game ID.
 func (db *Lowlevel) RemovePendingFolder(id string) error {
 	iter, err := db.NewPrefixIterator([]byte{KeyTypePendingFolder})
 	if err != nil {

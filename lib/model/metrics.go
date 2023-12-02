@@ -29,33 +29,33 @@ var (
 		Namespace: "syncthing",
 		Subsystem: "model",
 		Name:      "folder_pulls_total",
-		Help:      "Total number of folder pull iterations, per folder ID",
+		Help:      "Total number of folder pull iterations, per Game ID",
 	}, []string{"folder"})
 	metricFolderPullSeconds = promauto.NewCounterVec(prometheus.CounterOpts{
 		Namespace: "syncthing",
 		Subsystem: "model",
 		Name:      "folder_pull_seconds_total",
-		Help:      "Total time spent in folder pull iterations, per folder ID",
+		Help:      "Total time spent in folder pull iterations, per Game ID",
 	}, []string{"folder"})
 
 	metricFolderScans = promauto.NewCounterVec(prometheus.CounterOpts{
 		Namespace: "syncthing",
 		Subsystem: "model",
 		Name:      "folder_scans_total",
-		Help:      "Total number of folder scan iterations, per folder ID",
+		Help:      "Total number of folder scan iterations, per Game ID",
 	}, []string{"folder"})
 	metricFolderScanSeconds = promauto.NewCounterVec(prometheus.CounterOpts{
 		Namespace: "syncthing",
 		Subsystem: "model",
 		Name:      "folder_scan_seconds_total",
-		Help:      "Total time spent in folder scan iterations, per folder ID",
+		Help:      "Total time spent in folder scan iterations, per Game ID",
 	}, []string{"folder"})
 
 	metricFolderProcessedBytesTotal = promauto.NewCounterVec(prometheus.CounterOpts{
 		Namespace: "syncthing",
 		Subsystem: "model",
 		Name:      "folder_processed_bytes_total",
-		Help:      "Total amount of data processed during folder syncing, per folder ID and data source (network/local_origin/local_other/local_shifted/skipped)",
+		Help:      "Total amount of data processed during folder syncing, per Game ID and data source (network/local_origin/local_other/local_shifted/skipped)",
 	}, []string{"folder", "source"})
 )
 

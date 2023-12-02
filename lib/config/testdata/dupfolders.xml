@@ -1,6 +1,6 @@
 <configuration version="15">
-    <folder id="f1" path="testdata/">
+    <Game ID="f1" path="testdata/">
     </folder>
-    <folder id="f1" path="testdata/">
+    <Game ID="f1" path="testdata/">
     </folder>
 </configuration>

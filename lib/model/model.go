@@ -517,7 +517,7 @@ func (m *model) cleanupFolderLocked(cfg config.FolderConfiguration) {
 
 func (m *model) restartFolder(from, to config.FolderConfiguration, cacheIgnoredFiles bool) error {
 	if to.ID == "" {
-		panic("bug: cannot restart empty folder ID")
+		panic("bug: cannot restart empty Game ID")
 	}
 	if to.ID != from.ID {
 		l.Warnf("bug: folder restart cannot change ID %q -> %q", from.ID, to.ID)
@@ -1176,7 +1176,7 @@ func (m *model) handleIndex(conn protocol.Connection, folder string, fs []protoc
 	l.Debugf("%v (in): %s / %q: %d files", op, deviceID, folder, len(fs))
 
 	if cfg, ok := m.cfg.Folder(folder); !ok || !cfg.SharedWith(deviceID) {
-		l.Warnf("%v for unexpected folder ID %q sent from device %q; ensure that the folder exists and that this device is selected under \"Share With\" in the folder configuration.", op, folder, deviceID)
+		l.Warnf("%v for unexpected Game ID %q sent from device %q; ensure that the folder exists and that this device is selected under \"Share With\" in the folder configuration.", op, folder, deviceID)
 		return fmt.Errorf("%s: %w", folder, ErrFolderMissing)
 	} else if cfg.Paused {
 		l.Debugf("%v for paused folder (ID %q) sent from device %q.", op, folder, deviceID)
@@ -3309,7 +3309,7 @@ func (m *model) DismissPendingDevice(device protocol.DeviceID) error {
 }
 
 // DismissPendingFolders removes records of pending folders.  Either a specific folder /
-// device combination, or all matching a specific folder ID if the device argument is
+// device combination, or all matching a specific Game ID if the device argument is
 // specified as EmptyDeviceID.
 func (m *model) DismissPendingFolder(device protocol.DeviceID, folder string) error {
 	var removedPendingFolders []map[string]string
@@ -3343,7 +3343,7 @@ func (m *model) DismissPendingFolder(device protocol.DeviceID, folder string) er
 	return nil
 }
 
-// mapFolders returns a map of folder ID to folder configuration for the given
+// mapFolders returns a map of Game ID to folder configuration for the given
 // slice of folder configurations.
 func mapFolders(folders []config.FolderConfiguration) map[string]config.FolderConfiguration {
 	m := make(map[string]config.FolderConfiguration, len(folders))

@@ -828,7 +828,7 @@ func TestDuplicateFolders(t *testing.T) {
 	_, _Cancel, err := copyAndLoad(testFs, "dupfolders.xml", device1)
 	defer _Cancel()
 	if err == nil || !strings.Contains(err.Error(), errFolderIDDuplicate.Error()) {
-		t.Fatal(`Expected error to mention "duplicate folder ID":`, err)
+		t.Fatal(`Expected error to mention "duplicate Game ID":`, err)
 	}
 }
 
@@ -1137,14 +1137,14 @@ func TestInvalidDeviceIDRejected(t *testing.T) {
 }
 
 func TestInvalidFolderIDRejected(t *testing.T) {
-	// This test verifies that we properly reject invalid folder IDs when
+	// This test verifies that we properly reject invalid Game IDs when
 	// deserializing a JSON config.
 
 	cases := []struct {
 		id string
 		ok bool
 	}{
-		// a reasonable folder ID
+		// a reasonable Game ID
 		{"foo", true},
 		// empty is not OK
 		{"", false},
@@ -1153,7 +1153,7 @@ func TestInvalidFolderIDRejected(t *testing.T) {
 	for _, tc := range cases {
 		cfg := defaultConfigAsMap()
 
-		// Change the folder ID of the first folder to the empty string.
+		// Change the Game ID of the first folder to the empty string.
 		// Fast and loose with the type assertions as we know what the JSON
 		// decoder returns.
 		devs := cfg["folders"].([]interface{})
@@ -1168,9 +1168,9 @@ func TestInvalidFolderIDRejected(t *testing.T) {
 
 		_, err = ReadJSON(bytes.NewReader(invalidJSON), device1)
 		if tc.ok && err != nil {
-			t.Errorf("unexpected error for folder ID %q: %v", tc.id, err)
+			t.Errorf("unexpected error for Game ID %q: %v", tc.id, err)
 		} else if !tc.ok && err == nil {
-			t.Errorf("folder ID %q, expected error but got nil", tc.id)
+			t.Errorf("Game ID %q, expected error but got nil", tc.id)
 		}
 	}
 }

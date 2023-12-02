@@ -1039,7 +1039,7 @@ func (s *service) postSystemReset(w http.ResponseWriter, r *http.Request) {
 
 	if len(folder) > 0 {
 		if _, ok := s.cfg.Folders()[folder]; !ok {
-			http.Error(w, "Invalid folder ID", http.StatusInternalServerError)
+			http.Error(w, "Invalid Game ID", http.StatusInternalServerError)
 			return
 		}
 	}

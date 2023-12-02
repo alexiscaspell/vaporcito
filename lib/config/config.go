@@ -447,7 +447,7 @@ func (cfg *Configuration) Folder(id string) (FolderConfiguration, int, bool) {
 	return FolderConfiguration{}, 0, false
 }
 
-// FolderMap returns a map of folder ID to folder configuration for the given configuration.
+// FolderMap returns a map of Game ID to folder configuration for the given configuration.
 func (cfg *Configuration) FolderMap() map[string]FolderConfiguration {
 	m := make(map[string]FolderConfiguration, len(cfg.Folders))
 	for _, folder := range cfg.Folders {

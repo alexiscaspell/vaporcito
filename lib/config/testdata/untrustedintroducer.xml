@@ -1,10 +1,10 @@
 <configuration version="37">
-    <folder id="a" label="a" path="a">
+    <Game ID="a" label="a" path="a">
         <device id="6564BQV-R2WYPMN-5OLXMII-CDJUKFD-BHNNCRA-WLQPAIV-ELSGAD2-RMFBFQU" introducedBy="">
             <encryptionPassword></encryptionPassword>
         </device>
     </folder>
-    <folder id="b" label="b" path="b">
+    <Game ID="b" label="b" path="b">
         <device id="6564BQV-R2WYPMN-5OLXMII-CDJUKFD-BHNNCRA-WLQPAIV-ELSGAD2-RMFBFQU" introducedBy="">
             <encryptionPassword>a complex password</encryptionPassword>
         </device>

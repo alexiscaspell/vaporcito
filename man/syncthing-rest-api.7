@@ -695,7 +695,7 @@ Returns a \fB{\(dqping\(dq: \(dqpong\(dq}\fP object.
 .sp
 Post with empty body to erase the current index database and restart
 Syncthing. With no query parameters, the entire database is erased from disk.
-By specifying the \fBfolder\fP parameter with a valid folder ID, only
+By specifying the \fBfolder\fP parameter with a valid Game ID, only
 information for that folder will be erased:
 .INDENT 0.0
 .INDENT 3.5
@@ -1157,7 +1157,7 @@ attributes named after the relative file paths, with timestamps as values
 matching valid \fBversionTime\fP entries in the corresponding
 \fI\%GET /rest/folder/versions\fP response object.
 .sp
-Takes the mandatory parameter \fBfolder\fP (folder ID).  Returns an object
+Takes the mandatory parameter \fBfolder\fP (Game ID).  Returns an object
 containing any error messages that occurred during restoration of the file, with
 the file path as attribute name.
 .INDENT 0.0
@@ -1255,7 +1255,7 @@ Returns the completion percentage (0 to 100) and byte / item counts. Takes
 optional \fBdevice\fP and \fBfolder\fP parameters:
 .INDENT 0.0
 .IP \(bu 2
-\fBfolder\fP specifies the folder ID to calculate completion for. An empty
+\fBfolder\fP specifies the Game ID to calculate completion for. An empty
 or absent \fBfolder\fP parameter means all folders as an aggregate.
 .IP \(bu 2
 \fBdevice\fP specifies the device ID to calculate completion for. An empty
@@ -1334,7 +1334,7 @@ Aggregated completion status for all folders on the local device:
 .UNINDENT
 .UNINDENT
 .sp
-New in version 1.8.0: The ability to aggregate multiple folders by leaving out the folder ID.
+New in version 1.8.0: The ability to aggregate multiple folders by leaving out the Game ID.
 Querying data for the local device by leaving out the device ID. Returning
 the \fBglobalItems\fP counter in the response.
 
@@ -1598,7 +1598,7 @@ Request override of a send only folder. Override means to make the local
 version latest, overriding changes made on other devices. This API call does
 nothing if the folder is not a send only folder.
 .sp
-Takes the mandatory parameter \fIfolder\fP (folder ID).
+Takes the mandatory parameter \fIfolder\fP (Game ID).
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -1676,7 +1676,7 @@ Request revert of a receive only folder. Reverting a folder means to undo
 all local changes. This API call does nothing if the folder is not a receive
 only folder.
 .sp
-Takes the mandatory parameter \fIfolder\fP (folder ID).
+Takes the mandatory parameter \fIfolder\fP (Game ID).
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -1689,7 +1689,7 @@ curl \-X POST \-H X\-API\-Key:... http://127.0.0.1:8384/rest/db/revert?folder=de
 .UNINDENT
 .SS POST /rest/db/scan
 .sp
-Request immediate scan. Takes the optional parameters \fBfolder\fP (folder ID),
+Request immediate scan. Takes the optional parameters \fBfolder\fP (Game ID),
 \fBsub\fP (path relative to the folder root) and \fBnext\fP (time in seconds). If
 \fBfolder\fP is omitted or empty all folders are scanned. If \fBsub\fP is given,
 only this path (and children, in case it’s a directory) is scanned. The \fBnext\fP
@@ -2028,7 +2028,7 @@ Credentials for the web GUI and the API key are automatically redacted already.
 .SS GET /rest/debug/file
 .sp
 Shows diagnostics about a certain file in a shared folder.  Takes the \fBfolder\fP
-(folder ID) and \fBfile\fP (folder relative path) parameters.
+(Game ID) and \fBfile\fP (folder relative path) parameters.
 .INDENT 0.0
 .INDENT 3.5
 .sp

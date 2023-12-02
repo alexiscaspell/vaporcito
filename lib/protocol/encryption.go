@@ -504,8 +504,8 @@ func randomNonce() *[nonceSize]byte {
 	return &nonce
 }
 
-// keysFromPasswords converts a set of folder ID to password into a set of
-// folder ID to encryption key, using our key derivation function.
+// keysFromPasswords converts a set of Game ID to password into a set of
+// Game ID to encryption key, using our key derivation function.
 func keysFromPasswords(keyGen *KeyGenerator, passwords map[string]string) map[string]*[keySize]byte {
 	res := make(map[string]*[keySize]byte, len(passwords))
 	for folder, password := range passwords {
@@ -663,7 +663,7 @@ func IsEncryptedParent(pathComponents []string) bool {
 
 type folderKeyRegistry struct {
 	keyGen *KeyGenerator
-	keys   map[string]*[keySize]byte // folder ID -> key
+	keys   map[string]*[keySize]byte // Game ID -> key
 	mut    sync.RWMutex
 }
 

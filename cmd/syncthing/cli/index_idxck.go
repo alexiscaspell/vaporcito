@@ -151,7 +151,7 @@ func indexCheck(*cli.Context) (err error) {
 
 		folder := folders[fk.folder]
 		if folder == "" {
-			fmt.Printf("Unknown folder ID %d for FileInfo %q\n", fk.folder, fk.name)
+			fmt.Printf("Unknown Game ID %d for FileInfo %q\n", fk.folder, fk.name)
 			success = false
 			continue
 		}
@@ -231,7 +231,7 @@ func indexCheck(*cli.Context) (err error) {
 	for gk, vl := range globals {
 		folder := folders[gk.folder]
 		if folder == "" {
-			fmt.Printf("Unknown folder ID %d for VersionList %q\n", gk.folder, gk.name)
+			fmt.Printf("Unknown Game ID %d for VersionList %q\n", gk.folder, gk.name)
 			success = false
 		}
 		checkGlobal := func(i int, device []byte, version protocol.Vector, invalid, deleted bool) {
@@ -293,7 +293,7 @@ func indexCheck(*cli.Context) (err error) {
 	for sk, name := range sequences {
 		folder := folders[sk.folder]
 		if folder == "" {
-			fmt.Printf("Unknown folder ID %d for sequence entry %d, %q\n", sk.folder, sk.sequence, name)
+			fmt.Printf("Unknown Game ID %d for sequence entry %d, %q\n", sk.folder, sk.sequence, name)
 			success = false
 			continue
 		}
@@ -319,7 +319,7 @@ func indexCheck(*cli.Context) (err error) {
 	for nk := range needs {
 		folder := folders[nk.folder]
 		if folder == "" {
-			fmt.Printf("Unknown folder ID %d for need entry %q\n", nk.folder, nk.name)
+			fmt.Printf("Unknown Game ID %d for need entry %q\n", nk.folder, nk.name)
 			success = false
 			continue
 		}

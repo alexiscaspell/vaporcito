@@ -2172,7 +2172,7 @@ angular.module('syncthing.core')
                 break;
             case "new":
             case "new-pending":
-                title = $translate.instant("Add Folder");
+                title = $translate.instant("Add Game");
                 break;
             case "new-ignores":
                 title = $translate.instant("Set Ignores on Added Folder");
@@ -2470,7 +2470,7 @@ angular.module('syncthing.core')
                 return;
             }
 
-            // Add folder (paused), load existing ignores and if there are none,
+            // Add Game (paused), load existing ignores and if there are none,
             // load default ignores, then let the user edit them.
             $scope.saveConfig().then(function() {
                 editFolderLoadingIgnores();

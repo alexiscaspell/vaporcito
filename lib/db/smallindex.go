@@ -65,7 +65,7 @@ func (i *smallIndex) load() {
 func (i *smallIndex) ID(val []byte) (uint32, error) {
 	i.mut.Lock()
 	// intentionally avoiding defer here as we want this call to be as fast as
-	// possible in the general case (folder ID already exists). The map lookup
+	// possible in the general case (Game ID already exists). The map lookup
 	// with the conversion of []byte to string is compiler optimized to not
 	// copy the []byte, which is why we don't assign it to a temp variable
 	// here.

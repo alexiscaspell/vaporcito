@@ -21,22 +21,22 @@ const (
 )
 
 const (
-	// KeyTypeDevice <int32 folder ID> <int32 device ID> <file name> = FileInfo
+	// KeyTypeDevice <int32 Game ID> <int32 device ID> <file name> = FileInfo
 	KeyTypeDevice byte = 0
 
-	// KeyTypeGlobal <int32 folder ID> <file name> = VersionList
+	// KeyTypeGlobal <int32 Game ID> <file name> = VersionList
 	KeyTypeGlobal byte = 1
 
-	// KeyTypeBlock <int32 folder ID> <32 bytes hash> <§file name> = int32 (block index)
+	// KeyTypeBlock <int32 Game ID> <32 bytes hash> <§file name> = int32 (block index)
 	KeyTypeBlock byte = 2
 
 	// KeyTypeDeviceStatistic <device ID as string> <some string> = some value
 	KeyTypeDeviceStatistic byte = 3
 
-	// KeyTypeFolderStatistic <folder ID as string> <some string> = some value
+	// KeyTypeFolderStatistic <Game ID as string> <some string> = some value
 	KeyTypeFolderStatistic byte = 4
 
-	// KeyTypeVirtualMtime <int32 folder ID> <file name> = mtimeMapping
+	// KeyTypeVirtualMtime <int32 Game ID> <file name> = mtimeMapping
 	KeyTypeVirtualMtime byte = 5
 
 	// KeyTypeFolderIdx <int32 id> = string value
@@ -45,31 +45,31 @@ const (
 	// KeyTypeDeviceIdx <int32 id> = string value
 	KeyTypeDeviceIdx byte = 7
 
-	// KeyTypeIndexID <int32 device ID> <int32 folder ID> = protocol.IndexID
+	// KeyTypeIndexID <int32 device ID> <int32 Game ID> = protocol.IndexID
 	KeyTypeIndexID byte = 8
 
-	// KeyTypeFolderMeta <int32 folder ID> = CountsSet
+	// KeyTypeFolderMeta <int32 Game ID> = CountsSet
 	KeyTypeFolderMeta byte = 9
 
 	// KeyTypeMiscData <some string> = some value
 	KeyTypeMiscData byte = 10
 
-	// KeyTypeSequence <int32 folder ID> <int64 sequence number> = KeyTypeDevice key
+	// KeyTypeSequence <int32 Game ID> <int64 sequence number> = KeyTypeDevice key
 	KeyTypeSequence byte = 11
 
-	// KeyTypeNeed <int32 folder ID> <file name> = <nothing>
+	// KeyTypeNeed <int32 Game ID> <file name> = <nothing>
 	KeyTypeNeed byte = 12
 
 	// KeyTypeBlockList <block list hash> = BlockList
 	KeyTypeBlockList byte = 13
 
-	// KeyTypeBlockListMap <int32 folder ID> <block list hash> <file name> = <nothing>
+	// KeyTypeBlockListMap <int32 Game ID> <block list hash> <file name> = <nothing>
 	KeyTypeBlockListMap byte = 14
 
 	// KeyTypeVersion <version hash> = Vector
 	KeyTypeVersion byte = 15
 
-	// KeyTypePendingFolder <int32 device ID> <folder ID as string> = ObservedFolder
+	// KeyTypePendingFolder <int32 device ID> <Game ID as string> = ObservedFolder
 	KeyTypePendingFolder byte = 16
 
 	// KeyTypePendingDevice <device ID in wire format> = ObservedDevice

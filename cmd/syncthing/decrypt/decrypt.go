@@ -29,10 +29,10 @@ type CLI struct {
 	To         string `xor:"mode" placeholder:"PATH" help:"Destination directory, when decrypting"`
 	VerifyOnly bool   `xor:"mode" help:"Don't write decrypted files to disk (but verify plaintext hashes)"`
 	Password   string `help:"Folder password for decryption / verification" env:"FOLDER_PASSWORD"`
-	FolderID   string `help:"Folder ID of the encrypted folder, if it cannot be determined automatically"`
+	FolderID   string `help:"Game ID of the encrypted folder, if it cannot be determined automatically"`
 	Continue   bool   `help:"Continue processing next file in case of error, instead of aborting"`
 	Verbose    bool   `help:"Show verbose progress information"`
-	TokenPath  string `placeholder:"PATH" help:"Path to the token file within the folder (used to determine folder ID)"`
+	TokenPath  string `placeholder:"PATH" help:"Path to the token file within the folder (used to determine Game ID)"`
 
 	folderKey *[32]byte
 	keyGen    *protocol.KeyGenerator
@@ -56,16 +56,16 @@ func (c *CLI) Run() error {
 	}
 
 	if c.FolderID == "" {
-		// We should try to figure out the folder ID
+		// We should try to figure out the Game ID
 		folderID, err := c.getFolderID()
 		if err != nil {
 			log.Println("No --folder-id given and couldn't read folder token")
-			return fmt.Errorf("getting folder ID: %w", err)
+			return fmt.Errorf("getting Game ID: %w", err)
 		}
 
 		c.FolderID = folderID
 		if c.Verbose {
-			log.Println("Found folder ID:", c.FolderID)
+			log.Println("Found Game ID:", c.FolderID)
 		}
 	}
 
@@ -111,7 +111,7 @@ func (c *CLI) withContinue(err error) error {
 	return err
 }
 
-// getFolderID returns the folder ID found in the encrypted token, or an
+// getFolderID returns the Game ID found in the encrypted token, or an
 // error.
 func (c *CLI) getFolderID() (string, error) {
 	tokenPath := filepath.Join(c.Path, c.TokenPath)
