@@ -304,6 +304,7 @@
     "QR code": "Código QR",
     "QUIC LAN": "QUIC LAN",
     "QUIC WAN": "QUIC WAN",
+    "QUIC connections are in most cases considered suboptimal": "Las conexiones QUIC se consideran en la mayoría de los casos subóptimas",
     "Quick guide to supported patterns": "Guía rápida de patrones soportados",
     "Random": "Aleatorio",
     "Receive Encrypted": "Recibir Encriptado",
@@ -537,14 +538,10 @@
     "modified": "modificado",
     "permit": "permiso",
     "seconds": "segundos",
-    "theme": {
-        "name": {
-            "black": "Negro",
-            "dark": "Oscuro",
-            "default": "Por Defecto",
-            "light": "Claro"
-        }
-    },
+    "theme-name-black": "Negro",
+    "theme-name-dark": "Oscuro",
+    "theme-name-default": "Por Defecto",
+    "theme-name-light": "Claro",
     "{%device%} wants to share folder \"{%folder%}\".": "{{device}} quiere compartir la carpeta \"{{folder}}\".",
     "{%device%} wants to share folder \"{%folderlabel%}\" ({%folder%}).": "{{device}} quiere compartir la carpeta \"{{folderlabel}}\" ({{folder}}).",
     "{%reintroducer%} might reintroduce this device.": "{{reintroducer}} puede reintroducir este dispositivo."

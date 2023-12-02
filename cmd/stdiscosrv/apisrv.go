@@ -136,12 +136,7 @@ func (s *apiSrv) handler(w http.ResponseWriter, req *http.Request) {
 	}
 
 	if s.useHTTP {
-		// X-Forwarded-For can have multiple client IPs; split using the comma separator
-		forwardIP, _, _ := strings.Cut(req.Header.Get("X-Forwarded-For"), ",")
-
-		// net.ParseIP will return nil if leading/trailing whitespace exists; use strings.TrimSpace()
-		remoteAddr.IP = net.ParseIP(strings.TrimSpace(forwardIP))
-
+		remoteAddr.IP = net.ParseIP(req.Header.Get("X-Forwarded-For"))
 		if parsedPort, err := strconv.ParseInt(req.Header.Get("X-Client-Port"), 10, 0); err == nil {
 			remoteAddr.Port = int(parsedPort)
 		}
@@ -212,9 +207,7 @@ func (s *apiSrv) handleGET(w http.ResponseWriter, req *http.Request) {
 			s.db.put(key, rec)
 		}
 
-		afterS := notFoundRetryAfterSeconds(int(misses))
-		retryAfterHistogram.Observe(float64(afterS))
-		w.Header().Set("Retry-After", strconv.Itoa(afterS))
+		w.Header().Set("Retry-After", notFoundRetryAfterString(int(misses)))
 		http.Error(w, "Not Found", http.StatusNotFound)
 		return
 	}
@@ -417,13 +410,13 @@ func fixupAddresses(remote *net.TCPAddr, addresses []string) []string {
 			continue
 		}
 
-		if host == "" || ip.IsUnspecified() {
-			if remote != nil {
+		if remote != nil {
+			if host == "" || ip.IsUnspecified() {
 				// Replace the unspecified IP with the request source.
 
 				// ... unless the request source is the loopback address or
 				// multicast/unspecified (can't happen, really).
-				if remote.IP == nil || remote.IP.IsLoopback() || remote.IP.IsMulticast() || remote.IP.IsUnspecified() {
+				if remote.IP.IsLoopback() || remote.IP.IsMulticast() || remote.IP.IsUnspecified() {
 					continue
 				}
 
@@ -439,22 +432,11 @@ func fixupAddresses(remote *net.TCPAddr, addresses []string) []string {
 				}
 
 				host = remote.IP.String()
-
-			} else {
-				// remote is nil, unable to determine host IP
-				continue
 			}
 
-		}
-
-		// If zero port was specified, use remote port.
-		if port == "0" {
-			if remote != nil && remote.Port > 0 {
-				// use remote port
+			// If zero port was specified, use remote port.
+			if port == "0" && remote.Port > 0 {
 				port = strconv.Itoa(remote.Port)
-			} else {
-				// unable to determine remote port
-				continue
 			}
 		}
 
@@ -494,13 +476,13 @@ func errorRetryAfterString() string {
 	return strconv.Itoa(errorRetryAfterSeconds + rand.Intn(errorRetryFuzzSeconds))
 }
 
-func notFoundRetryAfterSeconds(misses int) int {
+func notFoundRetryAfterString(misses int) string {
 	retryAfterS := notFoundRetryMinSeconds + notFoundRetryIncSeconds*misses
 	if retryAfterS > notFoundRetryMaxSeconds {
 		retryAfterS = notFoundRetryMaxSeconds
 	}
 	retryAfterS += rand.Intn(notFoundRetryFuzzSeconds)
-	return retryAfterS
+	return strconv.Itoa(retryAfterS)
 }
 
 func reannounceAfterString() string {

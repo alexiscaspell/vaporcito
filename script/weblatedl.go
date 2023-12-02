@@ -29,7 +29,7 @@ type stat struct {
 	Fuzzy      int    `json:"fuzzy"`
 }
 
-type translation map[string]any
+type translation map[string]string
 
 func main() {
 	log.SetFlags(log.Lshortfile)
