@@ -279,6 +279,7 @@ func (s *service) Serve(ctx context.Context) error {
 	restMux.HandlerFunc(http.MethodGet, "/rest/system/debug", s.getSystemDebug)               // -
 	restMux.HandlerFunc(http.MethodGet, "/rest/system/log", s.getSystemLog)                   // [since]
 	restMux.HandlerFunc(http.MethodGet, "/rest/system/log.txt", s.getSystemLogTxt)            // [since]
+	restMux.HandlerFunc(http.MethodGet, "/rest/system/games", s.getSystemGames)               // get games
 
 	// The POST handlers
 	restMux.HandlerFunc(http.MethodPost, "/rest/db/prio", s.postDBPrio)                          // folder file
@@ -1158,6 +1159,31 @@ func (s *service) getSystemLogTxt(w http.ResponseWriter, r *http.Request) {
 	for _, line := range s.systemLog.Since(since) {
 		fmt.Fprintf(w, "%s: %s\n", line.When.Format(time.RFC3339), line.Message)
 	}
+}
+
+func (s *service) getSystemGames(w http.ResponseWriter, r *http.Request) {
+	q := r.URL.Query()
+	gameName := q.Get("name")
+
+	url := "https://www.pcgamingwiki.com/w/api.php?action=opensearch&format=json&search=" + gameName + "&limit=10"
+	fmt.Println("URL:>", url)
+
+	// var jsonStr = []byte(`{"title":"Buy cheese and bread for breakfast."}`)
+	req, err := http.NewRequest("GET", url, nil)
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+
+	if err != nil {
+		l.Debugln(err)
+	}
+
+	body, _ := io.ReadAll(resp.Body)
+
+	defer resp.Body.Close()
+
+	sendJSON(w, string(body))
 }
 
 type fileEntry struct {

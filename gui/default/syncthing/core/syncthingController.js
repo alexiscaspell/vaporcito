@@ -1,3 +1,4 @@
+
 angular.module('syncthing.core')
     .config(function ($locationProvider) {
         $locationProvider.html5Mode({ enabled: true, requireBase: false }).hashPrefix('!');
@@ -34,6 +35,7 @@ angular.module('syncthing.core')
             password: '',
             errors: {},
         };
+        $scope.gameOptions = [];
         $scope.completion = {};
         $scope.config = {};
         $scope.configInSync = true;
@@ -101,8 +103,8 @@ angular.module('syncthing.core')
             $scope.login.inProgress = true;
             $scope.login.errors = {};
             $http.post(authUrlbase + '/password', {
-              username: $scope.login.username,
-              password: $scope.login.password,
+                username: $scope.login.username,
+                password: $scope.login.password,
             }).then(function () {
                 location.reload();
             }).catch(function (response) {
@@ -117,13 +119,13 @@ angular.module('syncthing.core')
             });
         };
 
-        $scope.logout = function() {
+        $scope.logout = function () {
             $http.post(authUrlbase + '/logout', {})
-            .then(function () {
-                location.reload();
-            }).catch(function (response) {
-                console.log('Failed to log out:', response);
-            });
+                .then(function () {
+                    location.reload();
+                }).catch(function (response) {
+                    console.log('Failed to log out:', response);
+                });
         };
 
         $(window).bind('beforeunload', function () {
@@ -165,7 +167,7 @@ angular.module('syncthing.core')
                 refreshConfig(),
                 refreshCluster(),
                 refreshConnectionStats(),
-            ]).then(function() {
+            ]).then(function () {
                 $http.get(urlbase + '/system/version').success(function (data) {
                     console.log("version", data);
                     if ($scope.version.version && $scope.version.version !== data.version) {
@@ -660,7 +662,7 @@ angular.module('syncthing.core')
                 $scope.completion[device]._needItems = items + deletes;
             }
 
-            if (needed == 0 && deletes + items > 0 ) {
+            if (needed == 0 && deletes + items > 0) {
                 // We don't need any data, but we have deletes or
                 // dirs/links/empty files that we need to do. Drop down the
                 // completion percentage to indicate that we have stuff to do.
@@ -1284,18 +1286,18 @@ angular.module('syncthing.core')
 
         $scope.rdConnTypeIcon = function (type) {
             switch (type) {
-            case "tcplan":
-            case "quiclan":
-                return "reception-4";
-            case "tcpwan":
-            case "quicwan":
-                return "reception-3";
-            case "relaylan":
-                return "reception-2";
-            case "relaywan":
-                return "reception-1";
-            case "disconnected":
-                return "reception-0";
+                case "tcplan":
+                case "quiclan":
+                    return "reception-4";
+                case "tcpwan":
+                case "quicwan":
+                    return "reception-3";
+                case "relaylan":
+                    return "reception-2";
+                case "relaywan":
+                    return "reception-1";
+                case "disconnected":
+                    return "reception-0";
             }
         }
 
@@ -1747,7 +1749,7 @@ angular.module('syncthing.core')
             showModal('#editDevice');
         }
 
-        $scope.editDeviceModalTitle = function() {
+        $scope.editDeviceModalTitle = function () {
             if ($scope.editingDeviceDefaults()) {
                 return $translate.instant("Edit Device Defaults");
             }
@@ -1764,22 +1766,22 @@ angular.module('syncthing.core')
             return title;
         };
 
-        $scope.editDeviceModalIcon = function() {
+        $scope.editDeviceModalIcon = function () {
             if ($scope.has(["existing", "defaults"], $scope.currentDevice._editing)) {
                 return 'fas fa-pencil-alt';
             }
             return 'fas fa-desktop';
         };
 
-        $scope.editingDeviceDefaults = function() {
+        $scope.editingDeviceDefaults = function () {
             return $scope.currentDevice._editing == 'defaults';
         }
 
-        $scope.editingDeviceExisting = function() {
+        $scope.editingDeviceExisting = function () {
             return $scope.currentDevice._editing == 'existing';
         }
 
-        $scope.editingDeviceNew = function() {
+        $scope.editingDeviceNew = function () {
             // The "new-pending" value is intentionally disregarded here.
             return $scope.currentDevice._editing == 'new';
         }
@@ -2091,7 +2093,7 @@ angular.module('syncthing.core')
         });
 
         $scope.setFSWatcherIntervalDefault = function () {
-            var defaultRescanIntervals = [60, 3600, 3600*24];
+            var defaultRescanIntervals = [60, 3600, 3600 * 24];
             if (defaultRescanIntervals.indexOf($scope.currentFolder.rescanIntervalS) === -1) {
                 return;
             }
@@ -2161,22 +2163,22 @@ angular.module('syncthing.core')
             showModal('#editFolder');
         };
 
-        $scope.editFolderModalTitle = function() {
+        $scope.editFolderModalTitle = function () {
             if ($scope.editingFolderDefaults()) {
                 return $translate.instant("Edit Folder Defaults");
             }
             var title = '';
             switch ($scope.currentFolder._editing) {
-            case "existing":
-                title = $translate.instant("Edit Folder");
-                break;
-            case "new":
-            case "new-pending":
-                title = $translate.instant("Add Game");
-                break;
-            case "new-ignores":
-                title = $translate.instant("Set Ignores on Added Folder");
-                break;
+                case "existing":
+                    title = $translate.instant("Edit Folder");
+                    break;
+                case "new":
+                case "new-pending":
+                    title = $translate.instant("Add Game");
+                    break;
+                case "new-ignores":
+                    title = $translate.instant("Set Ignores on Added Folder");
+                    break;
             }
             if ($scope.currentFolder.id !== '') {
                 title += ' (' + $scope.folderLabel($scope.currentFolder.id) + ')';
@@ -2184,22 +2186,37 @@ angular.module('syncthing.core')
             return title;
         };
 
-        $scope.editFolderModalIcon = function() {
+        async function searchGame(searchText) {
+            return $http.get(urlbase + '/system/games?name=' + searchText)
+        }
+
+        // Tostado estuvo aqui
+        $scope.searchGames = function (folderID) {
+            searchGame(folderID).then(response => {
+                    $scope.gameOptions = JSON.parse(response.data)[1];
+            });
+        };
+
+        $scope.selectGame = function (folderID) {
+            $scope.currentFolder.id = folderID;
+        };
+
+        $scope.editFolderModalIcon = function () {
             if ($scope.has(["existing", "defaults"], $scope.currentFolder._editing)) {
                 return 'fas fa-pencil-alt';
             }
             return 'fas fa-folder';
         };
 
-        $scope.editingFolderDefaults = function() {
+        $scope.editingFolderDefaults = function () {
             return $scope.currentFolder._editing == 'defaults';
         }
 
-        $scope.editingFolderExisting = function() {
+        $scope.editingFolderExisting = function () {
             return $scope.currentFolder._editing == 'existing';
         }
 
-        $scope.editingFolderNew = function() {
+        $scope.editingFolderNew = function () {
             return $scope.has(['new', 'new-pending'], $scope.currentFolder._editing);
         }
 
@@ -2235,19 +2252,19 @@ angular.module('syncthing.core')
 
             // Apply parameters currently in use
             switch (currentVersioning.type) {
-            case "trashcan":
-                $scope.currentFolder._guiVersioning.trashcanClean = +currentVersioning.params.cleanoutDays;
-                break;
-            case "simple":
-                $scope.currentFolder._guiVersioning.simpleKeep = +currentVersioning.params.keep;
-                $scope.currentFolder._guiVersioning.trashcanClean = +currentVersioning.params.cleanoutDays;
-                break;
-            case "staggered":
-                $scope.currentFolder._guiVersioning.staggeredMaxAge = Math.floor(+currentVersioning.params.maxAge / 86400);
-                break;
-            case "external":
-                $scope.currentFolder._guiVersioning.externalCommand = currentVersioning.params.command;
-                break;
+                case "trashcan":
+                    $scope.currentFolder._guiVersioning.trashcanClean = +currentVersioning.params.cleanoutDays;
+                    break;
+                case "simple":
+                    $scope.currentFolder._guiVersioning.simpleKeep = +currentVersioning.params.keep;
+                    $scope.currentFolder._guiVersioning.trashcanClean = +currentVersioning.params.cleanoutDays;
+                    break;
+                case "staggered":
+                    $scope.currentFolder._guiVersioning.staggeredMaxAge = Math.floor(+currentVersioning.params.maxAge / 86400);
+                    break;
+                case "external":
+                    $scope.currentFolder._guiVersioning.externalCommand = currentVersioning.params.command;
+                    break;
             }
         };
 
@@ -2271,7 +2288,7 @@ angular.module('syncthing.core')
                 }, function (response) {
                     $scope.ignores.text = $translate.instant("Failed to load ignore patterns.");
                     return $q.reject(response);
-            });
+                });
         };
 
         function editFolderLoadIgnores() {
@@ -2284,7 +2301,7 @@ angular.module('syncthing.core')
             }, $scope.emitHTTPError);
         }
 
-        $scope.editFolderDefaults = function() {
+        $scope.editFolderDefaults = function () {
             $q.all([
                 $http.get(urlbase + '/config/defaults/folder').then(function (response) {
                     $scope.currentFolder = response.data;
@@ -2328,7 +2345,7 @@ angular.module('syncthing.core')
         $scope.addFolder = function () {
             $http.get(urlbase + '/svc/random/string?length=10').success(function (data) {
                 var folderID = (data.random.substr(0, 5) + '-' + data.random.substr(5, 5)).toLowerCase();
-                addFolderInit(folderID).then(function() {
+                addFolderInit(folderID).then(function () {
                     // Triggers the watch that sets the path
                     $scope.currentFolder._editing = "new";
                     $scope.currentFolder.label = $scope.currentFolder.label;
@@ -2338,7 +2355,7 @@ angular.module('syncthing.core')
         };
 
         $scope.addFolderAndShare = function (folderID, pendingFolder, device) {
-            addFolderInit(folderID).then(function() {
+            addFolderInit(folderID).then(function () {
                 $scope.currentSharing.selected[device] = true;
                 $scope.currentFolder.label = pendingFolder.offeredBy[device].label;
                 for (var k in pendingFolder.offeredBy) {
@@ -2413,28 +2430,28 @@ angular.module('syncthing.core')
             delete $scope.currentSharing;
 
             if (!folderCfg.versioning) {
-                folderCfg.versioning = {params: {}};
+                folderCfg.versioning = { params: {} };
             }
             folderCfg.versioning.type = folderCfg._guiVersioning.selector;
             if ($scope.internalVersioningEnabled()) {
                 folderCfg.versioning.cleanupIntervalS = folderCfg._guiVersioning.cleanupIntervalS;
             }
             switch (folderCfg._guiVersioning.selector) {
-            case "trashcan":
-                folderCfg.versioning.params.cleanoutDays = '' + folderCfg._guiVersioning.trashcanClean;
-                break;
-            case "simple":
-                folderCfg.versioning.params.keep = '' + folderCfg._guiVersioning.simpleKeep,
-                folderCfg.versioning.params.cleanoutDays = '' + folderCfg._guiVersioning.trashcanClean;
-                break;
-            case "staggered":
-                folderCfg.versioning.params.maxAge = '' + (folderCfg._guiVersioning.staggeredMaxAge * 86400);
-                break;
-            case "external":
-                folderCfg.versioning.params.command = '' + folderCfg._guiVersioning.externalCommand;
-                break;
-            default:
-                folderCfg.versioning = {type: ''};
+                case "trashcan":
+                    folderCfg.versioning.params.cleanoutDays = '' + folderCfg._guiVersioning.trashcanClean;
+                    break;
+                case "simple":
+                    folderCfg.versioning.params.keep = '' + folderCfg._guiVersioning.simpleKeep,
+                        folderCfg.versioning.params.cleanoutDays = '' + folderCfg._guiVersioning.trashcanClean;
+                    break;
+                case "staggered":
+                    folderCfg.versioning.params.maxAge = '' + (folderCfg._guiVersioning.staggeredMaxAge * 86400);
+                    break;
+                case "external":
+                    folderCfg.versioning.params.command = '' + folderCfg._guiVersioning.externalCommand;
+                    break;
+                default:
+                    folderCfg.versioning = { type: '' };
             }
             delete folderCfg._guiVersioning;
 
@@ -2472,7 +2489,7 @@ angular.module('syncthing.core')
 
             // Add Game (paused), load existing ignores and if there are none,
             // load default ignores, then let the user edit them.
-            $scope.saveConfig().then(function() {
+            $scope.saveConfig().then(function () {
                 editFolderLoadingIgnores();
                 $scope.currentFolder._editing = "new-ignores";
                 $('.nav-tabs a[href="#folder-ignores"]').tab('show');
@@ -2540,7 +2557,7 @@ angular.module('syncthing.core')
 
         $scope.dismissPendingFolder = function (folderID, deviceID) {
             $http.delete(urlbase + '/cluster/pending/folders?folder=' + encodeURIComponent(folderID)
-                         + '&device=' + encodeURIComponent(deviceID));
+                + '&device=' + encodeURIComponent(deviceID));
         };
 
         $scope.folderHasUnacceptedDevices = function (folderCfg) {
@@ -2934,7 +2951,7 @@ angular.module('syncthing.core')
             showModal('#remoteNeed');
         };
 
-        $scope.downloadProgressEnabled = function() {
+        $scope.downloadProgressEnabled = function () {
             return $scope.config.options &&
                 $scope.config.options.progressUpdateIntervalS > 0 &&
                 $scope.folders[$scope.neededFolder] &&
@@ -2970,7 +2987,7 @@ angular.module('syncthing.core')
         };
 
         $scope.hasReceiveOnlyChanged = function (folderCfg) {
-            if (!folderCfg || ["receiveonly",  "receiveencrypted"].indexOf(folderCfg.type) === -1) {
+            if (!folderCfg || ["receiveonly", "receiveencrypted"].indexOf(folderCfg.type) === -1) {
                 return false;
             }
             var counts = $scope.model[folderCfg.id];
@@ -2979,8 +2996,8 @@ angular.module('syncthing.core')
 
         $scope.revertOverride = function () {
             $http.post(
-                urlbase + "/db/" + $scope.revertOverrideParams.operation +"?folder="
-                +encodeURIComponent($scope.revertOverrideParams.folderID));
+                urlbase + "/db/" + $scope.revertOverrideParams.operation + "?folder="
+                + encodeURIComponent($scope.revertOverrideParams.folderID));
         };
 
         $scope.revertOverrideConfirmationModal = function (type, folderID) {
@@ -3293,8 +3310,8 @@ angular.module('syncthing.core')
 
             // Title and footer can be reused between different sharing
             // methods, hence we define them separately before the body.
-            var title = $translate.instant('Syncthing device ID for "{%devicename%}"', {devicename: deviceName});
-            var footer = $translate.instant("Learn more at {%url%}", {url: "https://syncthing.net"});
+            var title = $translate.instant('Syncthing device ID for "{%devicename%}"', { devicename: deviceName });
+            var footer = $translate.instant("Learn more at {%url%}", { url: "https://syncthing.net" });
 
             switch (method) {
                 case "email":
@@ -3304,7 +3321,7 @@ angular.module('syncthing.core')
                     // Ref: https://datatracker.ietf.org/doc/html/rfc5322
                     params.subject = title;
                     params.body = [
-                        $translate.instant('To connect with the Syncthing device named "{%devicename%}", add a new remote device on your end with this ID:', {devicename: deviceName}),
+                        $translate.instant('To connect with the Syncthing device named "{%devicename%}", add a new remote device on your end with this ID:', { devicename: deviceName }),
                         deviceID,
                         $translate.instant("Syncthing is a continuous file synchronization program. It synchronizes files between two or more computers in real time, safely protected from prying eyes. Your data is your data alone and you deserve to choose where it is stored, whether it is shared with some third party, and how it's transmitted over the internet."),
                         footer
@@ -3409,7 +3426,7 @@ angular.module('syncthing.core')
 
         $scope.newXattrEntry = function () {
             var entries = $scope.currentFolder.xattrFilter.entries;
-            var newEntry = {match: '', permit: false};
+            var newEntry = { match: '', permit: false };
 
             if (entries.some(function (n) {
                 return n.match == '';
@@ -3417,7 +3434,7 @@ angular.module('syncthing.core')
                 return;
             }
 
-            if (entries.length > 0 && entries[entries.length -1].match === '*') {
+            if (entries.length > 0 && entries[entries.length - 1].match === '*') {
                 if (newEntry.match !== '*') {
                     entries.splice(entries.length - 1, 0, newEntry);
                 }
@@ -3453,7 +3470,7 @@ angular.module('syncthing.core')
             if (filterEntries.every(function (entry) {
                 return entry.permit === false;
             })) {
-                return  $translate.instant('Hint: only deny-rules detected while the default is deny. Consider adding "permit any" as last rule.');
+                return $translate.instant('Hint: only deny-rules detected while the default is deny. Consider adding "permit any" as last rule.');
             }
 
             return '';
@@ -3471,7 +3488,7 @@ angular.module('syncthing.core')
                 return $translate.instant('permit');
             }
             // If any rule is present and the last entry isn't a wild-card, the default is deny.
-            if (filterEntries[filterEntries.length -1].match !== '*') {
+            if (filterEntries[filterEntries.length - 1].match !== '*') {
                 return $translate.instant('deny');
             }
 
@@ -3484,7 +3501,7 @@ angular.module('syncthing.core')
                 return n.match !== "";
             });
         };
-        
+
         // The showModal and hideModal functions are a bandaid for a Bootstrap
         // bug (see https://github.com/twbs/bootstrap/issues/3902) that causes
         // multiple consecutively shown or hidden modals to overlap which leads
@@ -3562,7 +3579,7 @@ angular.module('syncthing.core')
             },
             link: function (scope, elem, attrs) {
                 var plain = false;
-                scope.togglePasswordVisibility = function() {
+                scope.togglePasswordVisibility = function () {
                     scope.plain = !scope.plain;
                 };
             },
