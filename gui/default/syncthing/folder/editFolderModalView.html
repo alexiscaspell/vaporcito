@@ -40,16 +40,24 @@
               unique-folder value="{{currentFolder.id}}" /> -->
             <input name="folderID" ng-readonly="has(['existing', 'new-pending'], currentFolder._editing)" id="folderID"
               class="form-control" type="text" ng-model="currentFolder.id" required="" aria-required="true"
-              ng-model-options="{ debounce: 300 }" ng-keyup="searchGames(currentFolder.id)" />
+              ng-model-options="{ debounce: 0 }" ng-keyup="searchGames(currentFolder.id)" />
 
             <!-- Tostado estuvo aqui -->
-            <select class="form-control" ng-repeat="game in gameOptions">
-              <option value="Dishonored" ng-click="selectGame(game)">{{game}}</option>
+
+            <select class="form-control" ng-model="gameOption" ng-change="selectGame()">
+              <option ng-repeat="game in gameOptions" value="{{game}}">
+                {{game}}
+              </option>
             </select>
-            <!-- <select class="form-control" ng-repeat="game in searchGames(folderID)"
-              ng-model="currentFolder._gameSearch.selector">
-              <option value="{{ game }}">{{ game }}</option>
+            <!-- <select class="form-control">
+              <option ng-repeat="game in gameOptions" value="{{game}}">
+                <button type="button" class="btn btn-primary btn-sm" ng-click="selectGame(game)">
+                  <span class="fas fa-check"></span>&nbsp;<span translate="" class="ng-scope">Guardar</span>
+                </button>
+              </option>
+              <option *ngFor="let game of gameOptions" (click)="selectGame(game)">{{game}} </option>
             </select> -->
+
             <p class="help-block">
               <span translate ng-if="folderEditor.folderID.$valid || folderEditor.folderID.$pristine">Required
                 identifier for the folder. Must be the same on all cluster devices.</span>

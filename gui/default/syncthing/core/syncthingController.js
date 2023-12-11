@@ -36,6 +36,7 @@ angular.module('syncthing.core')
             errors: {},
         };
         $scope.gameOptions = [];
+        $scope.gameOption = "";
         $scope.completion = {};
         $scope.config = {};
         $scope.configInSync = true;
@@ -2089,7 +2090,7 @@ angular.module('syncthing.core')
             if (!newvalue || !shouldSetDefaultFolderPath() || $scope.currentFolder.label) {
                 return;
             }
-            $scope.currentFolder.path = pathJoin($scope.config.defaults.folder.path, newvalue);
+            // $scope.currentFolder.path = pathJoin($scope.config.defaults.folder.path, newvalue);
         });
 
         $scope.setFSWatcherIntervalDefault = function () {
@@ -2192,14 +2193,89 @@ angular.module('syncthing.core')
 
         // Tostado estuvo aqui
         $scope.searchGames = function (folderID) {
+            $scope.gameOptions = [];
             searchGame(folderID).then(response => {
-                    $scope.gameOptions = JSON.parse(response.data)[1];
+                $scope.gameOptions = JSON.parse(response.data)[1];
             });
         };
 
-        $scope.selectGame = function (folderID) {
-            $scope.currentFolder.id = folderID;
+        async function getGameWiki(gameName) {
+            return await $http.get(urlbase + '/system/games/wiki?name=' + gameName)
+        }
+
+        function getValueOrDefault(obj, key, defaultValue) {
+            return key in obj ? obj[key] : defaultValue;
+        }
+
+        function tableToJson(table) {
+            var headerRow = table.querySelector('tbody tr.table-gamedata-head-row');
+            var headers = headerRow ? headerRow.querySelectorAll('th') : [];
+
+            var rows = table.querySelectorAll('tbody tr');
+
+            var data = [];
+
+            for (var i = 0; i < rows.length; i++) {
+                var rowData = {};
+                headers.forEach(function (header, index) {
+                    var cell = rows[i].querySelectorAll('td, th')[index];
+
+                    if (cell && header) {
+                        var content = cell.textContent.trim();
+
+                        rowData[header.textContent.trim()] = content;
+                    }
+                });
+
+                data.push(rowData);
+            }
+
+            return data;
         };
+
+        async function getGameSaveDataLocationFromTable(table, os = "Windows") {
+
+            let pathList = await tableToJson(table);
+
+            for (var i = 0; i < pathList.length; i++) {
+
+                var system = getValueOrDefault(pathList[i], "System", "");
+
+                if (system.trim().toLowerCase() == os.trim().toLowerCase()) {
+                    return pathList[i]
+                }
+            }
+
+            return { "System": os, "Location": null }
+        }
+
+        async function getGameSaveDataLocation(gameName, os = "Windows") {
+            let html = await getGameWiki(gameName);
+            // Parse the HTML content using a DOMParser
+            // const doc = new jsdom.JSDOM(html.data).window.document;
+            var parser = new DOMParser();
+            var doc = parser.parseFromString(html.data, 'text/html');
+
+            var table = doc.getElementById('table-gamedata');
+            if (table) {
+                return await getGameSaveDataLocationFromTable(table, os);
+            } else {
+                console.error("Table with id 'table-gamedata' not found.");
+            }
+            return null;
+        }
+
+        $scope.selectGame = async function () {
+            let saveData = await getGameSaveDataLocation(this.gameOption)
+            this.currentFolder.id = this.gameOption;
+            this.currentFolder.path = saveData["Location"];
+            // $scope.currentFolder.id = this.gameOption;
+            // $scope.currentFolder.path = saveData["Location"];
+        };
+        // $scope.selectGame = function (folderID) {
+        //     $scope.currentFolder.id = folderID;
+        //     $scope.currentFolder.path = getGameConfigFolder($scope.currentFolder.id);
+        // };
 
         $scope.editFolderModalIcon = function () {
             if ($scope.has(["existing", "defaults"], $scope.currentFolder._editing)) {

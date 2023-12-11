@@ -280,6 +280,7 @@ func (s *service) Serve(ctx context.Context) error {
 	restMux.HandlerFunc(http.MethodGet, "/rest/system/log", s.getSystemLog)                   // [since]
 	restMux.HandlerFunc(http.MethodGet, "/rest/system/log.txt", s.getSystemLogTxt)            // [since]
 	restMux.HandlerFunc(http.MethodGet, "/rest/system/games", s.getSystemGames)               // get games
+	restMux.HandlerFunc(http.MethodGet, "/rest/system/games/wiki", s.getSystemGameWiki)       // get game wiki
 
 	// The POST handlers
 	restMux.HandlerFunc(http.MethodPost, "/rest/db/prio", s.postDBPrio)                          // folder file
@@ -1161,6 +1162,33 @@ func (s *service) getSystemLogTxt(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func (s *service) getSystemGameWiki(w http.ResponseWriter, r *http.Request) {
+	q := r.URL.Query()
+	gameName := q.Get("name")
+
+	url := "https://www.pcgamingwiki.com/wiki/" + gameName + "#Save_game_data_location"
+
+	fmt.Println("URL:>", url)
+
+	req, _ := http.NewRequest("GET", url, nil)
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+
+	if err != nil {
+		l.Debugln(err)
+	}
+
+	wikiHtml, _ := io.ReadAll(resp.Body)
+
+	defer resp.Body.Close()
+
+	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+
+	fmt.Fprintf(w, "%s", wikiHtml)
+}
+
 func (s *service) getSystemGames(w http.ResponseWriter, r *http.Request) {
 	q := r.URL.Query()
 	gameName := q.Get("name")
@@ -1168,8 +1196,7 @@ func (s *service) getSystemGames(w http.ResponseWriter, r *http.Request) {
 	url := "https://www.pcgamingwiki.com/w/api.php?action=opensearch&format=json&search=" + gameName + "&limit=10"
 	fmt.Println("URL:>", url)
 
-	// var jsonStr = []byte(`{"title":"Buy cheese and bread for breakfast."}`)
-	req, err := http.NewRequest("GET", url, nil)
+	req, _ := http.NewRequest("GET", url, nil)
 	req.Header.Set("Content-Type", "application/json")
 
 	client := &http.Client{}
