@@ -2251,24 +2251,49 @@ angular.module('syncthing.core')
 
         async function getGameSaveDataLocation(gameName, os = "Windows") {
             let html = await getGameWiki(gameName);
-            // Parse the HTML content using a DOMParser
-            // const doc = new jsdom.JSDOM(html.data).window.document;
+
             var parser = new DOMParser();
             var doc = parser.parseFromString(html.data, 'text/html');
 
-            var table = doc.getElementById('table-gamedata');
-            if (table) {
-                return await getGameSaveDataLocationFromTable(table, os);
+            // Find the element with the "Save game data location" heading
+            var saveGameDataLocationElement = doc.getElementById('Save_game_data_location');
+
+            // Find the parent element (h3) of the heading
+            var headingParentElement = saveGameDataLocationElement.parentNode;
+
+            // Find the next sibling of the parent element, which is the div containing the table
+            var containingDiv = headingParentElement.nextElementSibling;
+
+            var tableList = containingDiv.getElementsByTagName("table")
+
+            // Check if the next sibling is a table
+            if (tableList.length>0) {
+                console.log(tableList);
+                return await getGameSaveDataLocationFromTable(tableList[0], os);
             } else {
-                console.error("Table with id 'table-gamedata' not found.");
+                console.log('Table not found after "Save game data location" heading.');
             }
-            return null;
         }
+        // async function getGameSaveDataLocation(gameName, os = "Windows") {
+        //     let html = await getGameWiki(gameName);
+        //     // Parse the HTML content using a DOMParser
+        //     // const doc = new jsdom.JSDOM(html.data).window.document;
+        //     var parser = new DOMParser();
+        //     var doc = parser.parseFromString(html.data, 'text/html');
+
+        //     var table = doc.getElementById('table-gamedata');
+        //     if (table) {
+        //         return await getGameSaveDataLocationFromTable(table, os);
+        //     } else {
+        //         console.error("Table with id 'table-gamedata' not found.");
+        //     }
+        //     return null;
+        // }
 
         $scope.selectGame = async function () {
             let saveData = await getGameSaveDataLocation(this.gameOption)
             this.currentFolder.id = this.gameOption;
-            this.currentFolder.path = saveData["Location"];
+            this.currentFolder.path = saveData["Location"].replace(/\[Note \d+\]/g, '');
             // $scope.currentFolder.id = this.gameOption;
             // $scope.currentFolder.path = saveData["Location"];
         };

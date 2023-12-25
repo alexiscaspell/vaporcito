@@ -35,9 +35,7 @@
           <div ng-if="!editingFolderDefaults()" class="form-group"
             ng-class="{'has-error': folderEditor.folderID.$invalid && folderEditor.folderID.$dirty}">
             <label for="folderID"><span translate>Game ID</span></label>
-            <!-- <input name="folderID" ng-readonly="has(['existing', 'new-pending'], currentFolder._editing)" id="folderID"
-              class="form-control" type="text" ng-model="currentFolder.id" required="" aria-required="true"
-              unique-folder value="{{currentFolder.id}}" /> -->
+
             <input name="folderID" ng-readonly="has(['existing', 'new-pending'], currentFolder._editing)" id="folderID"
               class="form-control" type="text" ng-model="currentFolder.id" required="" aria-required="true"
               ng-model-options="{ debounce: 0 }" ng-keyup="searchGames(currentFolder.id)" />
@@ -49,14 +47,6 @@
                 {{game}}
               </option>
             </select>
-            <!-- <select class="form-control">
-              <option ng-repeat="game in gameOptions" value="{{game}}">
-                <button type="button" class="btn btn-primary btn-sm" ng-click="selectGame(game)">
-                  <span class="fas fa-check"></span>&nbsp;<span translate="" class="ng-scope">Guardar</span>
-                </button>
-              </option>
-              <option *ngFor="let game of gameOptions" (click)="selectGame(game)">{{game}} </option>
-            </select> -->
 
             <p class="help-block">
               <span translate ng-if="folderEditor.folderID.$valid || folderEditor.folderID.$pristine">Required
