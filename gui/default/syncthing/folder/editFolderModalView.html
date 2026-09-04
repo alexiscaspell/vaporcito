@@ -38,19 +38,27 @@
 
             <input name="folderID" ng-readonly="has(['existing', 'new-pending'], currentFolder._editing)" id="folderID"
               class="form-control" type="text" ng-model="currentFolder.id" required="" aria-required="true"
-              ng-model-options="{ debounce: 0 }" ng-keyup="searchGames(currentFolder.id)" />
+              autocomplete="off"
+              ng-model-options="{ debounce: 300, updateOn: 'default' }"
+              ng-change="editingFolderNew() && searchGames(currentFolder.id)"
+              placeholder="{{'Type a game name to search…' | translate}}" />
 
-            <!-- Tostado estuvo aqui -->
+            <p class="help-block" ng-if="editingFolderNew() && gameSearchLoading">
+              <span class="fas fa-spinner fa-spin"></span>
+              <span translate>Searching games…</span>
+            </p>
 
-            <select class="form-control" ng-model="gameOption" ng-change="selectGame()">
-              <option ng-repeat="game in gameOptions" value="{{game}}">
+            <div class="list-group" ng-if="editingFolderNew() && gameOptions.length"
+              style="max-height: 220px; overflow-y: auto; margin-bottom: 10px;">
+              <a href="#" class="list-group-item" ng-repeat="game in gameOptions"
+                ng-click="selectGameOption(game); $event.preventDefault()">
                 {{game}}
-              </option>
-            </select>
+              </a>
+            </div>
 
             <p class="help-block">
               <span translate ng-if="folderEditor.folderID.$valid || folderEditor.folderID.$pristine">Required
-                identifier for the folder. Must be the same on all cluster devices.</span>
+                identifier for the folder. Must be the same on all cluster devices. Start typing a game name to see suggestions.</span>
               <span translate ng-if="folderEditor.folderID.$error.uniqueFolder">The Game ID must be unique.</span>
               <span translate ng-if="folderEditor.folderID.$error.required && folderEditor.folderID.$dirty">The Game ID
                 cannot be blank.</span>

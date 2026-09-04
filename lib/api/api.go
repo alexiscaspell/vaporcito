@@ -1162,55 +1162,165 @@ func (s *service) getSystemLogTxt(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (s *service) getSystemGameWiki(w http.ResponseWriter, r *http.Request) {
-	q := r.URL.Query()
-	gameName := q.Get("name")
+const pcgamingWikiAPI = "https://www.pcgamingwiki.com/w/api.php"
+const pcgamingWikiUserAgent = "Vaporcito/1.0 (savegame path lookup; +https://github.com/syncthing/syncthing)"
 
-	url := "https://www.pcgamingwiki.com/wiki/" + gameName + "#Save_game_data_location"
+func pcgamingWikiClient() *http.Client {
+	return &http.Client{Timeout: 30 * time.Second}
+}
 
-	fmt.Println("URL:>", url)
-
-	req, _ := http.NewRequest("GET", url, nil)
-	req.Header.Set("Content-Type", "application/json")
-
-	client := &http.Client{}
-	resp, err := client.Do(req)
-
+func pcgamingWikiGET(client *http.Client, params url.Values) ([]byte, error) {
+	reqURL := pcgamingWikiAPI + "?" + params.Encode()
+	req, err := http.NewRequest(http.MethodGet, reqURL, nil)
 	if err != nil {
-		l.Debugln(err)
+		return nil, err
 	}
+	req.Header.Set("User-Agent", pcgamingWikiUserAgent)
+	req.Header.Set("Accept", "application/json")
 
-	wikiHtml, _ := io.ReadAll(resp.Body)
-
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
 	defer resp.Body.Close()
 
-	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("pcgamingwiki api returned %s", resp.Status)
+	}
+	return body, nil
+}
 
-	fmt.Fprintf(w, "%s", wikiHtml)
+func findPCGWSaveSectionIndex(client *http.Client, gameName string) (string, error) {
+	body, err := pcgamingWikiGET(client, url.Values{
+		"action": {"parse"},
+		"page":   {gameName},
+		"prop":   {"sections"},
+		"format": {"json"},
+	})
+	if err != nil {
+		return "", err
+	}
+
+	var parsed struct {
+		Parse struct {
+			Sections []struct {
+				Index  string `json:"index"`
+				Anchor string `json:"anchor"`
+			} `json:"sections"`
+		} `json:"parse"`
+		Error *struct {
+			Code string `json:"code"`
+			Info string `json:"info"`
+		} `json:"error"`
+	}
+	if err := json.Unmarshal(body, &parsed); err != nil {
+		return "", err
+	}
+	if parsed.Error != nil {
+		return "", fmt.Errorf("pcgamingwiki: %s", parsed.Error.Info)
+	}
+
+	for _, section := range parsed.Parse.Sections {
+		if section.Anchor == "Save_game_data_location" {
+			return section.Index, nil
+		}
+	}
+	return "", nil
+}
+
+func fetchPCGWParseHTML(client *http.Client, gameName, section string) (string, error) {
+	params := url.Values{
+		"action": {"parse"},
+		"page":   {gameName},
+		"prop":   {"text"},
+		"format": {"json"},
+	}
+	if section != "" {
+		params.Set("section", section)
+	}
+
+	body, err := pcgamingWikiGET(client, params)
+	if err != nil {
+		return "", err
+	}
+
+	var parsed struct {
+		Parse struct {
+			Text map[string]string `json:"text"`
+		} `json:"parse"`
+		Error *struct {
+			Code string `json:"code"`
+			Info string `json:"info"`
+		} `json:"error"`
+	}
+	if err := json.Unmarshal(body, &parsed); err != nil {
+		return "", err
+	}
+	if parsed.Error != nil {
+		return "", fmt.Errorf("pcgamingwiki: %s", parsed.Error.Info)
+	}
+
+	html, ok := parsed.Parse.Text["*"]
+	if !ok || html == "" {
+		return "", errors.New("pcgamingwiki: empty parse result")
+	}
+	return html, nil
+}
+
+func (s *service) getSystemGameWiki(w http.ResponseWriter, r *http.Request) {
+	gameName := r.URL.Query().Get("name")
+	if gameName == "" {
+		http.Error(w, "missing name parameter", http.StatusBadRequest)
+		return
+	}
+
+	client := pcgamingWikiClient()
+
+	section, err := findPCGWSaveSectionIndex(client, gameName)
+	if err != nil {
+		l.Debugln(err)
+		http.Error(w, err.Error(), http.StatusBadGateway)
+		return
+	}
+
+	wikiHTML, err := fetchPCGWParseHTML(client, gameName, section)
+	if err != nil {
+		l.Debugln(err)
+		http.Error(w, err.Error(), http.StatusBadGateway)
+		return
+	}
+
+	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+	fmt.Fprint(w, wikiHTML)
 }
 
 func (s *service) getSystemGames(w http.ResponseWriter, r *http.Request) {
-	q := r.URL.Query()
-	gameName := q.Get("name")
-
-	url := "https://www.pcgamingwiki.com/w/api.php?action=opensearch&format=json&search=" + gameName + "&limit=10"
-	fmt.Println("URL:>", url)
-
-	req, _ := http.NewRequest("GET", url, nil)
-	req.Header.Set("Content-Type", "application/json")
-
-	client := &http.Client{}
-	resp, err := client.Do(req)
-
-	if err != nil {
-		l.Debugln(err)
+	gameName := r.URL.Query().Get("name")
+	if gameName == "" {
+		http.Error(w, "missing name parameter", http.StatusBadRequest)
+		return
 	}
 
-	body, _ := io.ReadAll(resp.Body)
+	client := pcgamingWikiClient()
+	body, err := pcgamingWikiGET(client, url.Values{
+		"action": {"opensearch"},
+		"format": {"json"},
+		"search": {gameName},
+		"limit":  {"10"},
+	})
+	if err != nil {
+		l.Debugln(err)
+		http.Error(w, err.Error(), http.StatusBadGateway)
+		return
+	}
 
-	defer resp.Body.Close()
-
-	sendJSON(w, string(body))
+	// Return the MediaWiki opensearch payload as-is (JSON array).
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	w.Write(body)
 }
 
 type fileEntry struct {

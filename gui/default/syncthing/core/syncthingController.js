@@ -37,6 +37,9 @@ angular.module('syncthing.core')
         };
         $scope.gameOptions = [];
         $scope.gameOption = "";
+        $scope.gameSearchLoading = false;
+        var gameSearchSeq = 0;
+        var skipNextGameSearch = false;
         $scope.completion = {};
         $scope.config = {};
         $scope.configInSync = true;
@@ -2187,15 +2190,50 @@ angular.module('syncthing.core')
             return title;
         };
 
-        async function searchGame(searchText) {
-            return $http.get(urlbase + '/system/games?name=' + searchText)
+        function searchGame(searchText) {
+            return $http.get(urlbase + '/system/games?name=' + encodeURIComponent(searchText));
         }
 
-        // Tostado estuvo aqui
-        $scope.searchGames = function (folderID) {
-            $scope.gameOptions = [];
-            searchGame(folderID).then(response => {
-                $scope.gameOptions = JSON.parse(response.data)[1];
+        function parseGameSearchResponse(data) {
+            var parsed = data;
+            if (typeof parsed === 'string') {
+                parsed = JSON.parse(parsed);
+            }
+            if (typeof parsed === 'string') {
+                parsed = JSON.parse(parsed);
+            }
+            return Array.isArray(parsed) ? (parsed[1] || []) : [];
+        }
+
+        // Live PCGamingWiki search while typing the Game ID.
+        $scope.searchGames = function (query) {
+            if (skipNextGameSearch) {
+                skipNextGameSearch = false;
+                return;
+            }
+
+            var text = (query || '').trim();
+            if (text.length < 2) {
+                gameSearchSeq++;
+                $scope.gameOptions = [];
+                $scope.gameSearchLoading = false;
+                return;
+            }
+
+            var seq = ++gameSearchSeq;
+            $scope.gameSearchLoading = true;
+            searchGame(text).then(function (response) {
+                if (seq !== gameSearchSeq) {
+                    return;
+                }
+                $scope.gameOptions = parseGameSearchResponse(response.data);
+                $scope.gameSearchLoading = false;
+            }, function () {
+                if (seq !== gameSearchSeq) {
+                    return;
+                }
+                $scope.gameOptions = [];
+                $scope.gameSearchLoading = false;
             });
         };
 
@@ -2233,74 +2271,110 @@ angular.module('syncthing.core')
             return data;
         };
 
-        async function getGameSaveDataLocationFromTable(table, os = "Windows") {
+        function pcgamingWikiOSLabel() {
+            var os = ($scope.system && $scope.system.os) || '';
+            switch (os) {
+                case 'linux':
+                    return 'Linux';
+                case 'darwin':
+                    return 'macOS (OS X)';
+                case 'windows':
+                default:
+                    return 'Windows';
+            }
+        }
 
+        function systemsMatch(systemLabel, wantedOS) {
+            var system = (systemLabel || '').trim().toLowerCase();
+            var wanted = (wantedOS || '').trim().toLowerCase();
+            if (!system || !wanted) {
+                return false;
+            }
+            if (system === wanted) {
+                return true;
+            }
+            // PCGW uses "macOS (OS X)" / "OS X"; runtime reports darwin.
+            if (wanted.indexOf('macos') === 0 || wanted.indexOf('os x') === 0) {
+                return system.indexOf('macos') === 0 || system.indexOf('os x') === 0;
+            }
+            return system.indexOf(wanted) === 0;
+        }
+
+        async function getGameSaveDataLocationFromTable(table, os) {
             let pathList = await tableToJson(table);
 
             for (var i = 0; i < pathList.length; i++) {
-
                 var system = getValueOrDefault(pathList[i], "System", "");
-
-                if (system.trim().toLowerCase() == os.trim().toLowerCase()) {
-                    return pathList[i]
+                if (systemsMatch(system, os)) {
+                    return pathList[i];
                 }
             }
 
-            return { "System": os, "Location": null }
+            return { "System": os, "Location": null };
         }
 
-        async function getGameSaveDataLocation(gameName, os = "Windows") {
+        async function getGameSaveDataLocation(gameName, os) {
+            os = os || pcgamingWikiOSLabel();
             let html = await getGameWiki(gameName);
 
             var parser = new DOMParser();
             var doc = parser.parseFromString(html.data, 'text/html');
 
-            // Find the element with the "Save game data location" heading
+            // Prefer the heading: full pages have two #table-gamedata (config + saves).
+            var table = null;
             var saveGameDataLocationElement = doc.getElementById('Save_game_data_location');
-
-            // Find the parent element (h3) of the heading
-            var headingParentElement = saveGameDataLocationElement.parentNode;
-
-            // Find the next sibling of the parent element, which is the div containing the table
-            var containingDiv = headingParentElement.nextElementSibling;
-
-            var tableList = containingDiv.getElementsByTagName("table")
-
-            // Check if the next sibling is a table
-            if (tableList.length>0) {
-                console.log(tableList);
-                return await getGameSaveDataLocationFromTable(tableList[0], os);
-            } else {
-                console.log('Table not found after "Save game data location" heading.');
+            if (saveGameDataLocationElement && saveGameDataLocationElement.parentNode) {
+                var containingDiv = saveGameDataLocationElement.parentNode.nextElementSibling;
+                if (containingDiv) {
+                    var tableList = containingDiv.getElementsByTagName('table');
+                    if (tableList.length > 0) {
+                        table = tableList[0];
+                    }
+                }
             }
+            if (!table) {
+                table = doc.getElementById('table-gamedata');
+            }
+
+            if (table) {
+                return await getGameSaveDataLocationFromTable(table, os);
+            }
+
+            console.log('Table not found for save game data location.');
+            return { "System": os, "Location": null };
         }
-        // async function getGameSaveDataLocation(gameName, os = "Windows") {
-        //     let html = await getGameWiki(gameName);
-        //     // Parse the HTML content using a DOMParser
-        //     // const doc = new jsdom.JSDOM(html.data).window.document;
-        //     var parser = new DOMParser();
-        //     var doc = parser.parseFromString(html.data, 'text/html');
 
-        //     var table = doc.getElementById('table-gamedata');
-        //     if (table) {
-        //         return await getGameSaveDataLocationFromTable(table, os);
-        //     } else {
-        //         console.error("Table with id 'table-gamedata' not found.");
-        //     }
-        //     return null;
-        // }
-
-        $scope.selectGame = async function () {
-            let saveData = await getGameSaveDataLocation(this.gameOption)
-            this.currentFolder.id = this.gameOption;
-            this.currentFolder.path = saveData["Location"].replace(/\[Note \d+\]/g, '');
-            // $scope.currentFolder.id = this.gameOption;
-            // $scope.currentFolder.path = saveData["Location"];
+        $scope.selectGameOption = async function (gameName) {
+            if (!gameName) {
+                return;
+            }
+            skipNextGameSearch = true;
+            gameSearchSeq++;
+            $scope.gameOption = gameName;
+            $scope.currentFolder.id = gameName;
+            $scope.gameOptions = [];
+            $scope.gameSearchLoading = false;
+            try {
+                var saveData = await getGameSaveDataLocation(gameName);
+                var location = saveData && saveData["Location"];
+                if (location) {
+                    $scope.currentFolder.path = String(location).replace(/\[Note \d+\]/g, '').trim();
+                } else {
+                    $scope.currentFolder.path = '';
+                    console.warn('No save game path found for', gameName);
+                }
+            } catch (err) {
+                $scope.currentFolder.path = '';
+                console.error('Failed to resolve save game path', err);
+            }
+            // Async wiki lookup finishes outside Angular's digest.
+            $scope.$applyAsync();
         };
-        // $scope.selectGame = function (folderID) {
-        //     $scope.currentFolder.id = folderID;
-        //     $scope.currentFolder.path = getGameConfigFolder($scope.currentFolder.id);
-        // };
+
+        // Kept for compatibility with any leftover bindings.
+        $scope.selectGame = function () {
+            return $scope.selectGameOption($scope.gameOption);
+        };
 
         $scope.editFolderModalIcon = function () {
             if ($scope.has(["existing", "defaults"], $scope.currentFolder._editing)) {
@@ -2444,14 +2518,12 @@ angular.module('syncthing.core')
         };
 
         $scope.addFolder = function () {
-            $http.get(urlbase + '/svc/random/string?length=10').success(function (data) {
-                var folderID = (data.random.substr(0, 5) + '-' + data.random.substr(5, 5)).toLowerCase();
-                addFolderInit(folderID).then(function () {
-                    // Triggers the watch that sets the path
-                    $scope.currentFolder._editing = "new";
-                    $scope.currentFolder.label = $scope.currentFolder.label;
-                    editFolderModal();
-                });
+            addFolderInit('').then(function () {
+                $scope.gameOptions = [];
+                $scope.gameOption = '';
+                $scope.gameSearchLoading = false;
+                $scope.currentFolder._editing = "new";
+                editFolderModal();
             });
         };
 
