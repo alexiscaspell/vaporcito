@@ -1,6 +1,9 @@
 /syncthing
 /vaporcito
+/back/vaporcito
+/back/vaporcito.exe
 /stdiscosrv
+/back/stdiscosrv
 *.tar.gz
 *.zip
 *.asc
@@ -17,5 +20,8 @@ RELEASE
 deb
 *.bz2
 /repos
+/back/repos
 /proto/scripts/protoc-gen-gosyncthing
+/back/proto/scripts/protoc-gen-gosyncthing
 /gui/next-gen-gui
+/front/gui/next-gen-gui

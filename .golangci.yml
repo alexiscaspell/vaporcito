@@ -21,6 +21,6 @@ linters:
 service:
   golangci-lint-version: 1.21.x
   prepare:
-    - rm -f go.sum # 1.12 -> 1.13 issues with QUIC-go
-    - GO111MODULE=on go mod vendor
-    - go run build.go assets
+    - rm -f back/go.sum # 1.12 -> 1.13 issues with QUIC-go
+    - cd back && GO111MODULE=on go mod vendor
+    - cd back && go run build.go assets

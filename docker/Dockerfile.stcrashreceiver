@@ -1,0 +1,8 @@
+FROM alpine
+ARG TARGETARCH
+
+EXPOSE 8080
+
+COPY back/stcrashreceiver-linux-${TARGETARCH} /bin/stcrashreceiver
+
+ENTRYPOINT [ "/bin/stcrashreceiver" ]
