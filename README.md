@@ -58,16 +58,32 @@ UI: http://127.0.0.1:8384
 
 ### Releases
 
-Al pushear a `develop` o `main`, el workflow [`.github/workflows/release.yml`](.github/workflows/release.yml):
+Al pushear a `develop` o `main`, el workflow [`.github/workflows/release.yml`](.github/workflows/release.yml) publica un release con versionado [SemVer 2.0.0](https://semver.org/) vía [Conventional Commits](https://www.conventionalcommits.org/):
 
-1. Calcula la versión con [`scripts/calc-version.sh`](scripts/calc-version.sh) (major/minor/patch según commits).
-2. Compila binarios Linux y Windows amd64.
-3. Publica un GitHub Release (`develop` = prerelease, `main` = release).
+| Commit | Bump |
+|--------|------|
+| `feat!:` / `BREAKING CHANGE` | MAJOR |
+| `feat:` | MINOR |
+| `fix:` / resto | PATCH |
+
+- **main:** `1.2.3` (tag `v1.2.3`, release)
+- **develop:** `1.2.3-develop.N` (tag `v1.2.3-develop.N`, prerelease)
+
+Artefactos en cada release:
+- **Desktop Tauri:** AppImage/deb (Linux) y MSI/NSIS (Windows)
+- **CLI:** `vaporcito-linux-amd64`, `vaporcito-windows-amd64.exe`
 
 ```bash
 ./scripts/calc-version.sh --channel develop
 ./scripts/calc-version.sh --channel main
 ```
+
+### Desktop (Tauri)
+
+App nativa (ventana + WebView), no navegador. Ver [front/desktop/README.md](front/desktop/README.md):
+
+- Dev: `cd front/desktop && npm run desktop:dev` (aparecen terminales; es normal)
+- Producto: `npm run desktop:build:linux` → AppImage/deb en `src-tauri/target/release/bundle/`
 
 ## Installation
 

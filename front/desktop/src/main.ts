@@ -16,8 +16,8 @@ async function refreshStatus() {
     statusEl.textContent = status.message;
     if (hintEl) {
       hintEl.textContent = status.ready
-        ? `GUI: ${status.gui_url}`
-        : "El motor se inicia en segundo plano y luego abre la interfaz web.";
+        ? "Cargando la interfaz en esta ventana…"
+        : "App de escritorio: el motor arranca en segundo plano; la GUI se muestra aquí (no en el navegador).";
     }
   } catch (err) {
     statusEl.textContent = `Error: ${String(err)}`;
