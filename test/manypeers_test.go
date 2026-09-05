@@ -16,9 +16,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/syncthing/syncthing/lib/config"
-	"github.com/syncthing/syncthing/lib/protocol"
-	"github.com/syncthing/syncthing/lib/rc"
+	"github.com/alexiscaspell/vaporcito/lib/config"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/rc"
 )
 
 func TestManyPeers(t *testing.T) {

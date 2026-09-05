@@ -12,7 +12,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
 )
 
 func (f FileInfoTruncated) String() string {

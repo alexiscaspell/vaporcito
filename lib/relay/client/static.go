@@ -11,10 +11,10 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/dialer"
-	"github.com/syncthing/syncthing/lib/osutil"
-	syncthingprotocol "github.com/syncthing/syncthing/lib/protocol"
-	"github.com/syncthing/syncthing/lib/relay/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/dialer"
+	"github.com/alexiscaspell/vaporcito/lib/osutil"
+	syncthingprotocol "github.com/alexiscaspell/vaporcito/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/relay/protocol"
 )
 
 type staticClient struct {

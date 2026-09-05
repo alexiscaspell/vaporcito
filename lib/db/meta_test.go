@@ -11,8 +11,8 @@ import (
 	"sort"
 	"testing"
 
-	"github.com/syncthing/syncthing/lib/events"
-	"github.com/syncthing/syncthing/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/events"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
 )
 
 func TestEachFlagBit(t *testing.T) {

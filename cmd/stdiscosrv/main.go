@@ -18,9 +18,9 @@ import (
 	"time"
 
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"github.com/syncthing/syncthing/lib/build"
-	"github.com/syncthing/syncthing/lib/protocol"
-	"github.com/syncthing/syncthing/lib/tlsutil"
+	"github.com/alexiscaspell/vaporcito/lib/build"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/tlsutil"
 	"github.com/syndtr/goleveldb/leveldb/opt"
 	"github.com/thejerf/suture/v4"
 )

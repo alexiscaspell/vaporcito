@@ -9,9 +9,9 @@ package stats
 import (
 	"time"
 
-	"github.com/syncthing/syncthing/lib/db"
-	"github.com/syncthing/syncthing/lib/db/backend"
-	"github.com/syncthing/syncthing/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/db"
+	"github.com/alexiscaspell/vaporcito/lib/db/backend"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
 )
 
 const (

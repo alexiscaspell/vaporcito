@@ -14,10 +14,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/api/auto"
-	"github.com/syncthing/syncthing/lib/assets"
-	"github.com/syncthing/syncthing/lib/config"
-	"github.com/syncthing/syncthing/lib/sync"
+	"github.com/alexiscaspell/vaporcito/lib/api/auto"
+	"github.com/alexiscaspell/vaporcito/lib/assets"
+	"github.com/alexiscaspell/vaporcito/lib/config"
+	"github.com/alexiscaspell/vaporcito/lib/sync"
 )
 
 const themePrefix = "theme-assets/"

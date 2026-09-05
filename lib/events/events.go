@@ -20,7 +20,7 @@ import (
 
 	"github.com/thejerf/suture/v4"
 
-	"github.com/syncthing/syncthing/lib/sync"
+	"github.com/alexiscaspell/vaporcito/lib/sync"
 )
 
 type EventType int64

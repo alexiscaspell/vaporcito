@@ -5,8 +5,8 @@ import (
 	"context"
 	"sync"
 
-	"github.com/syncthing/syncthing/lib/discover"
-	"github.com/syncthing/syncthing/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/discover"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
 )
 
 type Manager struct {

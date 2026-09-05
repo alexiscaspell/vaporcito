@@ -15,9 +15,9 @@ import (
 	stdsync "sync"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/config"
-	"github.com/syncthing/syncthing/lib/protocol"
-	"github.com/syncthing/syncthing/lib/sync"
+	"github.com/alexiscaspell/vaporcito/lib/config"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/sync"
 )
 
 // Service runs a loop for discovery of IGDs (Internet Gateway Devices) and

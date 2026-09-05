@@ -16,10 +16,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/config"
-	"github.com/syncthing/syncthing/lib/fs"
-	"github.com/syncthing/syncthing/lib/osutil"
-	"github.com/syncthing/syncthing/lib/stringutil"
+	"github.com/alexiscaspell/vaporcito/lib/config"
+	"github.com/alexiscaspell/vaporcito/lib/fs"
+	"github.com/alexiscaspell/vaporcito/lib/osutil"
+	"github.com/alexiscaspell/vaporcito/lib/stringutil"
 )
 
 var (

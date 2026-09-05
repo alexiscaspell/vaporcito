@@ -10,10 +10,10 @@ import (
 	"fmt"
 	"runtime"
 
-	"github.com/syncthing/syncthing/lib/protocol"
-	"github.com/syncthing/syncthing/lib/rand"
-	"github.com/syncthing/syncthing/lib/stringutil"
-	"github.com/syncthing/syncthing/lib/structutil"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/rand"
+	"github.com/alexiscaspell/vaporcito/lib/stringutil"
+	"github.com/alexiscaspell/vaporcito/lib/structutil"
 )
 
 func (opts OptionsConfiguration) Copy() OptionsConfiguration {

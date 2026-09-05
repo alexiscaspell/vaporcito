@@ -8,5 +8,5 @@ name = "go"
 enabled = true
 
   [analyzers.meta]
-  import_paths = ["github.com/syncthing/syncthing"]
+  import_paths = ["github.com/alexiscaspell/vaporcito"]
   build_tags = ["noassets"]

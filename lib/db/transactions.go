@@ -11,10 +11,10 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/syncthing/syncthing/lib/db/backend"
-	"github.com/syncthing/syncthing/lib/events"
-	"github.com/syncthing/syncthing/lib/osutil"
-	"github.com/syncthing/syncthing/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/db/backend"
+	"github.com/alexiscaspell/vaporcito/lib/events"
+	"github.com/alexiscaspell/vaporcito/lib/osutil"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
 )
 
 var (

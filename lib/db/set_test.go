@@ -16,10 +16,10 @@ import (
 	"time"
 
 	"github.com/d4l3k/messagediff"
-	"github.com/syncthing/syncthing/lib/db"
-	"github.com/syncthing/syncthing/lib/db/backend"
-	"github.com/syncthing/syncthing/lib/events"
-	"github.com/syncthing/syncthing/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/db"
+	"github.com/alexiscaspell/vaporcito/lib/db/backend"
+	"github.com/alexiscaspell/vaporcito/lib/events"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
 )
 
 var remoteDevice0, remoteDevice1 protocol.DeviceID
@@ -1167,7 +1167,7 @@ func TestMoveGlobalBack(t *testing.T) {
 // TestIssue5007 checks, that updating the local device with an invalid file
 // info with the newest version does indeed remove that file from the list of
 // needed files.
-// https://github.com/syncthing/syncthing/issues/5007
+// https://github.com/alexiscaspell/vaporcito/issues/5007
 func TestIssue5007(t *testing.T) {
 	ldb := newLowlevelMemory(t)
 	defer ldb.Close()
@@ -1627,7 +1627,7 @@ func TestIgnoreAfterReceiveOnly(t *testing.T) {
 	}
 }
 
-// https://github.com/syncthing/syncthing/issues/6650
+// https://github.com/alexiscaspell/vaporcito/issues/6650
 func TestUpdateWithOneFileTwice(t *testing.T) {
 	ldb := newLowlevelMemory(t)
 	defer ldb.Close()
@@ -1665,7 +1665,7 @@ func TestUpdateWithOneFileTwice(t *testing.T) {
 	}
 }
 
-// https://github.com/syncthing/syncthing/issues/6668
+// https://github.com/alexiscaspell/vaporcito/issues/6668
 func TestNeedRemoteOnly(t *testing.T) {
 	ldb := newLowlevelMemory(t)
 	defer ldb.Close()
@@ -1683,7 +1683,7 @@ func TestNeedRemoteOnly(t *testing.T) {
 	}
 }
 
-// https://github.com/syncthing/syncthing/issues/6784
+// https://github.com/alexiscaspell/vaporcito/issues/6784
 func TestNeedRemoteAfterReset(t *testing.T) {
 	ldb := newLowlevelMemory(t)
 	defer ldb.Close()
@@ -1709,7 +1709,7 @@ func TestNeedRemoteAfterReset(t *testing.T) {
 	}
 }
 
-// https://github.com/syncthing/syncthing/issues/6850
+// https://github.com/alexiscaspell/vaporcito/issues/6850
 func TestIgnoreLocalChanged(t *testing.T) {
 	ldb := newLowlevelMemory(t)
 	defer ldb.Close()

@@ -10,7 +10,7 @@ import (
 	"path/filepath"
 	"sort"
 
-	"github.com/syncthing/syncthing/lib/fs"
+	"github.com/alexiscaspell/vaporcito/lib/fs"
 )
 
 type emptyDirTracker map[string]struct{}

@@ -47,9 +47,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/dialer"
-	"github.com/syncthing/syncthing/lib/nat"
-	"github.com/syncthing/syncthing/lib/osutil"
+	"github.com/alexiscaspell/vaporcito/lib/dialer"
+	"github.com/alexiscaspell/vaporcito/lib/nat"
+	"github.com/alexiscaspell/vaporcito/lib/osutil"
 )
 
 func init() {
@@ -443,7 +443,7 @@ func soapRequest(ctx context.Context, url, service, function, message string) ([
 	}
 	req.Close = true
 	req.Header.Set("Content-Type", `text/xml; charset="utf-8"`)
-	req.Header.Set("User-Agent", "syncthing/1.0")
+	req.Header.Set("User-Agent", "vaporcito/1.0")
 	req.Header["SOAPAction"] = []string{fmt.Sprintf(`"%s#%s"`, service, function)} // Enforce capitalization in header-entry for sensitive routers. See issue #1696
 	req.Header.Set("Connection", "Close")
 	req.Header.Set("Cache-Control", "no-cache")

@@ -14,7 +14,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/rc"
+	"github.com/alexiscaspell/vaporcito/lib/rc"
 )
 
 func TestReconnectReceiverDuringTransfer(t *testing.T) {

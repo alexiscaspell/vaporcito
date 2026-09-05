@@ -9,7 +9,7 @@ package sliceutil_test
 import (
 	"testing"
 
-	"github.com/syncthing/syncthing/lib/sliceutil"
+	"github.com/alexiscaspell/vaporcito/lib/sliceutil"
 	"golang.org/x/exp/slices"
 )
 

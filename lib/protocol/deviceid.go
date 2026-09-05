@@ -10,7 +10,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/syncthing/syncthing/lib/sha256"
+	"github.com/alexiscaspell/vaporcito/lib/sha256"
 )
 
 const (

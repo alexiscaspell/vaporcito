@@ -16,7 +16,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
 )
 
 type filesystemWrapperType int32

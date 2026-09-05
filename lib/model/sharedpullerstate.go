@@ -12,10 +12,10 @@ import (
 	"io"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/fs"
-	"github.com/syncthing/syncthing/lib/osutil"
-	"github.com/syncthing/syncthing/lib/protocol"
-	"github.com/syncthing/syncthing/lib/sync"
+	"github.com/alexiscaspell/vaporcito/lib/fs"
+	"github.com/alexiscaspell/vaporcito/lib/osutil"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/sync"
 )
 
 // A sharedPullerState is kept for each file that is being synced and is kept

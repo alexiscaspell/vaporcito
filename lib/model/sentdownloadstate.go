@@ -9,7 +9,7 @@ package model
 import (
 	"time"
 
-	"github.com/syncthing/syncthing/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
 )
 
 // sentFolderFileDownloadState represents a state of what we've announced as available

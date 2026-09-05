@@ -15,7 +15,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/syncthing/syncthing/proto/ext"
+	"github.com/alexiscaspell/vaporcito/proto/ext"
 
 	"github.com/gogo/protobuf/gogoproto"
 	"github.com/gogo/protobuf/proto"
@@ -38,7 +38,7 @@ func main() {
 	vanity.ForEachFile(files, vanity.TurnOnMarshalerAll)
 	vanity.ForEachFile(files, vanity.TurnOnUnmarshalerAll)
 	vanity.ForEachEnumInFiles(files, HandleCustomEnumExtensions)
-	vanity.ForEachFile(files, SetPackagePrefix("github.com/syncthing/syncthing"))
+	vanity.ForEachFile(files, SetPackagePrefix("github.com/alexiscaspell/vaporcito"))
 	vanity.ForEachFile(files, HandleFile)
 	vanity.ForEachFieldInFilesExcludingExtensions(files, TurnOffNullableForMessages)
 
@@ -241,8 +241,8 @@ func HandleCustomExtensions(file *descriptor.FileDescriptorProto) func(msg *desc
 			}
 
 			if val, ok := GetFieldBooleanExtension(field, ext.E_DeviceId); ok && val {
-				if *file.Options.GoPackage != "github.com/syncthing/syncthing/lib/protocol" {
-					SetStringFieldOption(field, gogoproto.E_Customtype, "github.com/syncthing/syncthing/lib/protocol.DeviceID")
+				if *file.Options.GoPackage != "github.com/alexiscaspell/vaporcito/lib/protocol" {
+					SetStringFieldOption(field, gogoproto.E_Customtype, "github.com/alexiscaspell/vaporcito/lib/protocol.DeviceID")
 				} else {
 					SetStringFieldOption(field, gogoproto.E_Customtype, "DeviceID")
 				}

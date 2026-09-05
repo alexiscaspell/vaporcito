@@ -16,7 +16,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/syncthing/syncthing/lib/build"
+	"github.com/alexiscaspell/vaporcito/lib/build"
 )
 
 type Release struct {

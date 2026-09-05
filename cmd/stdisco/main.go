@@ -15,9 +15,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/beacon"
-	"github.com/syncthing/syncthing/lib/discover"
-	"github.com/syncthing/syncthing/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/beacon"
+	"github.com/alexiscaspell/vaporcito/lib/discover"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
 )
 
 var (

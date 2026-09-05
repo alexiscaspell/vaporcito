@@ -13,8 +13,8 @@ import (
 
 	"github.com/ccding/go-stun/stun"
 
-	"github.com/syncthing/syncthing/lib/config"
-	"github.com/syncthing/syncthing/lib/svcutil"
+	"github.com/alexiscaspell/vaporcito/lib/config"
+	"github.com/alexiscaspell/vaporcito/lib/svcutil"
 )
 
 const stunRetryInterval = 5 * time.Minute

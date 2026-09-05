@@ -15,7 +15,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/build"
+	"github.com/alexiscaspell/vaporcito/lib/build"
 )
 
 func printUsage(name string, proc *os.ProcessState, total int64) {

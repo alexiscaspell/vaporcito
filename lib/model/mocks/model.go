@@ -7,13 +7,13 @@ import (
 	"sync"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/db"
-	"github.com/syncthing/syncthing/lib/fs"
-	"github.com/syncthing/syncthing/lib/model"
-	"github.com/syncthing/syncthing/lib/protocol"
-	"github.com/syncthing/syncthing/lib/stats"
-	"github.com/syncthing/syncthing/lib/ur/contract"
-	"github.com/syncthing/syncthing/lib/versioner"
+	"github.com/alexiscaspell/vaporcito/lib/db"
+	"github.com/alexiscaspell/vaporcito/lib/fs"
+	"github.com/alexiscaspell/vaporcito/lib/model"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/stats"
+	"github.com/alexiscaspell/vaporcito/lib/ur/contract"
+	"github.com/alexiscaspell/vaporcito/lib/versioner"
 )
 
 type Model struct {

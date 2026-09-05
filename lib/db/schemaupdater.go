@@ -12,8 +12,8 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/syncthing/syncthing/lib/db/backend"
-	"github.com/syncthing/syncthing/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/db/backend"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
 )
 
 // dbMigrationVersion is for migrations that do not change the schema and thus
@@ -378,8 +378,8 @@ func (db *schemaUpdater) updateSchema2to3(_ int) error {
 
 // updateSchemaTo5 resets the need bucket due to bugs existing in the v0.14.49
 // release candidates (dbVersion 3 and 4)
-// https://github.com/syncthing/syncthing/issues/5007
-// https://github.com/syncthing/syncthing/issues/5053
+// https://github.com/alexiscaspell/vaporcito/issues/5007
+// https://github.com/alexiscaspell/vaporcito/issues/5053
 func (db *schemaUpdater) updateSchemaTo5(prevVersion int) error {
 	if prevVersion != 3 && prevVersion != 4 {
 		return nil

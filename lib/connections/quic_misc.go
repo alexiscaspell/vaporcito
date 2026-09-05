@@ -20,7 +20,7 @@ import (
 	"github.com/quic-go/quic-go"
 	"github.com/quic-go/quic-go/logging"
 
-	"github.com/syncthing/syncthing/lib/osutil"
+	"github.com/alexiscaspell/vaporcito/lib/osutil"
 )
 
 var quicConfig = &quic.Config{

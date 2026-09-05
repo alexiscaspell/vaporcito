@@ -19,19 +19,19 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/build"
-	"github.com/syncthing/syncthing/lib/events"
-	"github.com/syncthing/syncthing/lib/osutil"
-	"github.com/syncthing/syncthing/lib/relay/protocol"
-	"github.com/syncthing/syncthing/lib/tlsutil"
+	"github.com/alexiscaspell/vaporcito/lib/build"
+	"github.com/alexiscaspell/vaporcito/lib/events"
+	"github.com/alexiscaspell/vaporcito/lib/osutil"
+	"github.com/alexiscaspell/vaporcito/lib/relay/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/tlsutil"
 	"golang.org/x/time/rate"
 
-	"github.com/syncthing/syncthing/lib/config"
-	"github.com/syncthing/syncthing/lib/nat"
-	_ "github.com/syncthing/syncthing/lib/pmp"
-	_ "github.com/syncthing/syncthing/lib/upnp"
+	"github.com/alexiscaspell/vaporcito/lib/config"
+	"github.com/alexiscaspell/vaporcito/lib/nat"
+	_ "github.com/alexiscaspell/vaporcito/lib/pmp"
+	_ "github.com/alexiscaspell/vaporcito/lib/upnp"
 
-	syncthingprotocol "github.com/syncthing/syncthing/lib/protocol"
+	syncthingprotocol "github.com/alexiscaspell/vaporcito/lib/protocol"
 )
 
 var (

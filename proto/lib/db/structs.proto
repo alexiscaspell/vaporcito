@@ -25,7 +25,7 @@ message FileInfoTruncated {
     string                name           = 1;
     int64                 size           = 3;
     int64                 modified_s     = 5;
-    uint64                modified_by    = 12 [(ext.gotype) = "github.com/syncthing/syncthing/lib/protocol.ShortID"];
+    uint64                modified_by    = 12 [(ext.gotype) = "github.com/alexiscaspell/vaporcito/lib/protocol.ShortID"];
     protocol.Vector       version        = 9;
     int64                 sequence       = 10;
     // repeated BlockInfo Blocks         = 16

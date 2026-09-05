@@ -15,10 +15,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/build"
-	"github.com/syncthing/syncthing/lib/fs"
-	"github.com/syncthing/syncthing/lib/osutil"
-	"github.com/syncthing/syncthing/lib/rand"
+	"github.com/alexiscaspell/vaporcito/lib/build"
+	"github.com/alexiscaspell/vaporcito/lib/fs"
+	"github.com/alexiscaspell/vaporcito/lib/osutil"
+	"github.com/alexiscaspell/vaporcito/lib/rand"
 )
 
 var testFiles = map[string]string{
@@ -1108,7 +1108,7 @@ func TestIssue4901(t *testing.T) {
 }
 
 // TestIssue5009 checks that ignored dirs are only skipped if there are no include patterns.
-// https://github.com/syncthing/syncthing/issues/5009 (rc-only bug)
+// https://github.com/alexiscaspell/vaporcito/issues/5009 (rc-only bug)
 func TestIssue5009(t *testing.T) {
 	testFs := newTestFS()
 

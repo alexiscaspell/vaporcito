@@ -15,11 +15,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/build"
-	"github.com/syncthing/syncthing/lib/config"
-	"github.com/syncthing/syncthing/lib/dialer"
-	"github.com/syncthing/syncthing/lib/events"
-	"github.com/syncthing/syncthing/lib/svcutil"
+	"github.com/alexiscaspell/vaporcito/lib/build"
+	"github.com/alexiscaspell/vaporcito/lib/config"
+	"github.com/alexiscaspell/vaporcito/lib/dialer"
+	"github.com/alexiscaspell/vaporcito/lib/events"
+	"github.com/alexiscaspell/vaporcito/lib/svcutil"
 
 	"github.com/thejerf/suture/v4"
 )

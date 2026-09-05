@@ -18,12 +18,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/build"
-	"github.com/syncthing/syncthing/lib/config"
-	"github.com/syncthing/syncthing/lib/events"
-	"github.com/syncthing/syncthing/lib/fs"
-	"github.com/syncthing/syncthing/lib/protocol"
-	"github.com/syncthing/syncthing/lib/rand"
+	"github.com/alexiscaspell/vaporcito/lib/build"
+	"github.com/alexiscaspell/vaporcito/lib/config"
+	"github.com/alexiscaspell/vaporcito/lib/events"
+	"github.com/alexiscaspell/vaporcito/lib/fs"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/rand"
 )
 
 func TestRequestSimple(t *testing.T) {
@@ -544,7 +544,7 @@ func TestParentDeletion(t *testing.T) {
 }
 
 // TestRequestSymlinkWindows checks that symlinks aren't marked as deleted on windows
-// Issue: https://github.com/syncthing/syncthing/issues/5125
+// Issue: https://github.com/alexiscaspell/vaporcito/issues/5125
 func TestRequestSymlinkWindows(t *testing.T) {
 	if !build.IsWindows {
 		t.Skip("windows specific test")
@@ -961,7 +961,7 @@ func TestNeedFolderFiles(t *testing.T) {
 
 // TestIgnoreDeleteUnignore checks that the deletion of an ignored file is not
 // propagated upon un-ignoring.
-// https://github.com/syncthing/syncthing/issues/6038
+// https://github.com/alexiscaspell/vaporcito/issues/6038
 func TestIgnoreDeleteUnignore(t *testing.T) {
 	w, fcfg, wCancel := newDefaultCfgWrapper()
 	defer wCancel()

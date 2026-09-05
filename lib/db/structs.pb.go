@@ -8,9 +8,9 @@ import (
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/gogo/protobuf/proto"
 	github_com_gogo_protobuf_types "github.com/gogo/protobuf/types"
-	github_com_syncthing_syncthing_lib_protocol "github.com/syncthing/syncthing/lib/protocol"
-	protocol "github.com/syncthing/syncthing/lib/protocol"
-	_ "github.com/syncthing/syncthing/proto/ext"
+	github_com_syncthing_syncthing_lib_protocol "github.com/alexiscaspell/vaporcito/lib/protocol"
+	protocol "github.com/alexiscaspell/vaporcito/lib/protocol"
+	_ "github.com/alexiscaspell/vaporcito/proto/ext"
 	_ "google.golang.org/protobuf/types/known/timestamppb"
 	io "io"
 	math "math"
@@ -111,7 +111,7 @@ type FileInfoTruncated struct {
 	Name       string                                              `protobuf:"bytes,1,opt,name=name,proto3" json:"name" xml:"name"`
 	Size       int64                                               `protobuf:"varint,3,opt,name=size,proto3" json:"size" xml:"size"`
 	ModifiedS  int64                                               `protobuf:"varint,5,opt,name=modified_s,json=modifiedS,proto3" json:"modifiedS" xml:"modifiedS"`
-	ModifiedBy github_com_syncthing_syncthing_lib_protocol.ShortID `protobuf:"varint,12,opt,name=modified_by,json=modifiedBy,proto3,customtype=github.com/syncthing/syncthing/lib/protocol.ShortID" json:"modifiedBy" xml:"modifiedBy"`
+	ModifiedBy github_com_syncthing_syncthing_lib_protocol.ShortID `protobuf:"varint,12,opt,name=modified_by,json=modifiedBy,proto3,customtype=github.com/alexiscaspell/vaporcito/lib/protocol.ShortID" json:"modifiedBy" xml:"modifiedBy"`
 	Version    protocol.Vector                                     `protobuf:"bytes,9,opt,name=version,proto3" json:"version" xml:"version"`
 	Sequence   int64                                               `protobuf:"varint,10,opt,name=sequence,proto3" json:"sequence" xml:"sequence"`
 	// repeated BlockInfo Blocks         = 16

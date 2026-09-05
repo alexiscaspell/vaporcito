@@ -12,7 +12,7 @@ import (
 
 	"github.com/thejerf/suture/v4"
 
-	"github.com/syncthing/syncthing/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
 )
 
 // A cachedFinder is a Finder with associated cache timeouts.

@@ -3,7 +3,7 @@
 package protocol
 
 import (
-	"github.com/syncthing/syncthing/lib/logger"
+	"github.com/alexiscaspell/vaporcito/lib/logger"
 )
 
 var (

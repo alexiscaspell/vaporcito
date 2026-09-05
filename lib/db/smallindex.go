@@ -10,8 +10,8 @@ import (
 	"encoding/binary"
 	"sort"
 
-	"github.com/syncthing/syncthing/lib/db/backend"
-	"github.com/syncthing/syncthing/lib/sync"
+	"github.com/alexiscaspell/vaporcito/lib/db/backend"
+	"github.com/alexiscaspell/vaporcito/lib/sync"
 )
 
 // A smallIndex is an in memory bidirectional []byte to uint32 map. It gives

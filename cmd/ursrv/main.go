@@ -11,8 +11,8 @@ import (
 	"os"
 
 	"github.com/alecthomas/kong"
-	"github.com/syncthing/syncthing/cmd/ursrv/aggregate"
-	"github.com/syncthing/syncthing/cmd/ursrv/serve"
+	"github.com/alexiscaspell/vaporcito/cmd/ursrv/aggregate"
+	"github.com/alexiscaspell/vaporcito/cmd/ursrv/serve"
 )
 
 type CLI struct {

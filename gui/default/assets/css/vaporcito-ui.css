@@ -1,0 +1,439 @@
+/*
+ * Vaporcito UI refresh — soft Material-inspired surfaces on Bootstrap 3.
+ * Loaded last so it can override vendor radii/borders without forking Bootstrap.
+ */
+
+:root {
+  --vc-radius-xs: 8px;
+  --vc-radius-sm: 10px;
+  --vc-radius-md: 14px;
+  --vc-radius-lg: 18px;
+  --vc-radius-xl: 22px;
+
+  --vc-border: rgba(20, 40, 70, 0.10);
+  --vc-border-strong: rgba(20, 40, 70, 0.16);
+  --vc-shadow-1: 0 1px 2px rgba(15, 30, 55, 0.05), 0 4px 14px rgba(15, 30, 55, 0.06);
+  --vc-shadow-2: 0 8px 28px rgba(15, 30, 55, 0.10);
+  --vc-shadow-3: 0 16px 40px rgba(15, 30, 55, 0.14);
+
+  --vc-surface: #eef3f8;
+  --vc-surface-accent: #e4eef7;
+  --vc-card: #ffffff;
+  --vc-ink: #1a2433;
+  --vc-muted: #5b6b7c;
+  --vc-accent: #1f7bb8;
+  --vc-accent-soft: rgba(31, 123, 184, 0.12);
+  --vc-success: #1f9d63;
+  --vc-danger: #d64545;
+  --vc-warning: #c98a12;
+
+  --vc-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --vc-border: rgba(255, 255, 255, 0.10);
+    --vc-border-strong: rgba(255, 255, 255, 0.16);
+    --vc-shadow-1: 0 1px 2px rgba(0, 0, 0, 0.35), 0 6px 18px rgba(0, 0, 0, 0.28);
+    --vc-shadow-2: 0 10px 30px rgba(0, 0, 0, 0.40);
+    --vc-shadow-3: 0 18px 48px rgba(0, 0, 0, 0.50);
+
+    --vc-surface: #141a22;
+    --vc-surface-accent: #1a2330;
+    --vc-card: #1d2632;
+    --vc-ink: #e8eef5;
+    --vc-muted: #9aa8b8;
+    --vc-accent: #5db0e0;
+    --vc-accent-soft: rgba(93, 176, 224, 0.16);
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--vc-ink);
+  background:
+    radial-gradient(900px 420px at 8% -10%, var(--vc-surface-accent), transparent 60%),
+    radial-gradient(700px 380px at 100% 0%, rgba(31, 123, 184, 0.08), transparent 55%),
+    var(--vc-surface);
+  letter-spacing: 0.01em;
+}
+
+h1, h2, h3, h4, h5, .panel-title, .modal-title, .navbar-brand {
+  letter-spacing: -0.02em;
+}
+
+.content {
+  padding-top: 8px;
+}
+
+/* Navbar — floating soft bar */
+.navbar-top.navbar-default {
+  background: color-mix(in srgb, var(--vc-card) 88%, transparent);
+  border: none;
+  border-bottom: 1px solid var(--vc-border);
+  box-shadow: var(--vc-shadow-1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.navbar-default .navbar-nav > li > a {
+  border-radius: var(--vc-radius-xs);
+  margin: 8px 2px;
+  transition: background-color 180ms var(--vc-ease), color 180ms var(--vc-ease);
+}
+
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+  background-color: var(--vc-accent-soft);
+}
+
+.navbar-btn.btn {
+  border-radius: 999px;
+  box-shadow: none;
+}
+
+/* Panels / cards */
+.panel {
+  background-color: var(--vc-card);
+  border: 1px solid var(--vc-border);
+  border-radius: var(--vc-radius-lg);
+  box-shadow: var(--vc-shadow-1);
+  overflow: hidden;
+  transition: box-shadow 220ms var(--vc-ease), transform 220ms var(--vc-ease), border-color 220ms var(--vc-ease);
+}
+
+.panel:hover {
+  box-shadow: var(--vc-shadow-2);
+  border-color: var(--vc-border-strong);
+}
+
+.panel + .panel {
+  margin-top: 16px;
+}
+
+.panel-default > .panel-heading,
+.panel-warning > .panel-heading,
+.panel-danger > .panel-heading,
+.panel-success > .panel-heading {
+  border-color: var(--vc-border);
+}
+
+button.panel-heading {
+  border-radius: 0 !important;
+  transition: background-color 180ms var(--vc-ease);
+}
+
+.panel-heading {
+  border-bottom: 1px solid var(--vc-border);
+}
+
+.panel-footer {
+  background: transparent;
+  border-top: 1px solid var(--vc-border);
+}
+
+.panel-body {
+  padding: 14px 16px;
+}
+
+.panel-collapse .panel-body {
+  padding: 12px 14px;
+}
+
+/* Buttons */
+.btn {
+  border-radius: var(--vc-radius-sm);
+  border-width: 1px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition:
+    background-color 160ms var(--vc-ease),
+    border-color 160ms var(--vc-ease),
+    box-shadow 160ms var(--vc-ease),
+    transform 120ms var(--vc-ease);
+}
+
+.btn:not(.panel-heading):hover {
+  transform: translateY(-1px);
+  box-shadow: var(--vc-shadow-1);
+}
+
+.btn:not(.panel-heading):active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.btn-primary {
+  background-color: var(--vc-accent);
+  border-color: transparent;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.12) inset;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open > .dropdown-toggle.btn-primary {
+  background-color: color-mix(in srgb, var(--vc-accent) 88%, #000);
+  border-color: transparent;
+}
+
+.btn-default {
+  background-color: var(--vc-card);
+  border-color: var(--vc-border-strong);
+  color: var(--vc-ink);
+}
+
+.btn-sm {
+  border-radius: var(--vc-radius-xs);
+}
+
+.btn-xs {
+  border-radius: 7px;
+}
+
+/* Forms */
+.form-control {
+  border-radius: var(--vc-radius-sm);
+  border-color: var(--vc-border-strong);
+  box-shadow: none;
+  transition: border-color 160ms var(--vc-ease), box-shadow 160ms var(--vc-ease), background-color 160ms var(--vc-ease);
+  background-clip: padding-box;
+}
+
+.form-control:focus {
+  border-color: var(--vc-accent);
+  box-shadow: 0 0 0 3px var(--vc-accent-soft);
+}
+
+.input-group .form-control:first-child,
+.input-group-addon:first-child,
+.input-group-btn:first-child > .btn {
+  border-top-left-radius: var(--vc-radius-sm);
+  border-bottom-left-radius: var(--vc-radius-sm);
+}
+
+.input-group .form-control:last-child,
+.input-group-addon:last-child,
+.input-group-btn:last-child > .btn {
+  border-top-right-radius: var(--vc-radius-sm);
+  border-bottom-right-radius: var(--vc-radius-sm);
+}
+
+select.form-control {
+  border-radius: var(--vc-radius-sm);
+}
+
+/* Modals */
+.modal-content {
+  border: 1px solid var(--vc-border);
+  border-radius: var(--vc-radius-xl);
+  box-shadow: var(--vc-shadow-3);
+  overflow: hidden;
+  background-color: var(--vc-card);
+}
+
+.modal-header,
+.modal-footer {
+  border-color: var(--vc-border);
+  background: transparent;
+}
+
+.modal-header {
+  padding: 18px 20px 14px;
+}
+
+.modal-body {
+  padding: 16px 20px;
+}
+
+.modal-footer {
+  padding: 14px 20px 18px;
+}
+
+.modal-backdrop.in {
+  opacity: 0.45;
+}
+
+/* Tabs */
+.nav-tabs {
+  border-bottom-color: var(--vc-border);
+}
+
+.nav-tabs > li > a {
+  border-radius: var(--vc-radius-sm) var(--vc-radius-sm) 0 0;
+  border-color: transparent;
+  color: var(--vc-muted);
+  transition: color 160ms var(--vc-ease), background-color 160ms var(--vc-ease);
+}
+
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+  border-color: var(--vc-border) var(--vc-border) transparent;
+  color: var(--vc-accent);
+  background-color: var(--vc-card);
+}
+
+/* Dropdowns */
+.dropdown-menu {
+  border: 1px solid var(--vc-border);
+  border-radius: var(--vc-radius-md);
+  box-shadow: var(--vc-shadow-2);
+  padding: 6px;
+  background-color: var(--vc-card);
+}
+
+.dropdown-menu > li > a {
+  border-radius: var(--vc-radius-xs);
+  padding: 8px 12px;
+}
+
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+  background-color: var(--vc-accent-soft);
+}
+
+/* Alerts / labels / badges */
+.alert {
+  border-radius: var(--vc-radius-md);
+  border: 1px solid var(--vc-border);
+  box-shadow: none;
+}
+
+.label,
+.badge {
+  border-radius: 999px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* Progress */
+.progress {
+  border-radius: 999px;
+  background-color: color-mix(in srgb, var(--vc-muted) 16%, transparent);
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.progress-bar {
+  box-shadow: none;
+}
+
+/* Tables inside cards */
+.panel .table,
+.modal .table {
+  background: transparent;
+}
+
+.table > thead > tr > th {
+  border-bottom-color: var(--vc-border);
+  color: var(--vc-muted);
+  font-weight: 500;
+}
+
+.table > tbody > tr > td,
+.table > tbody > tr > th {
+  border-top-color: var(--vc-border);
+}
+
+.li-column {
+  border-radius: var(--vc-radius-xs);
+}
+
+/* Game search suggestions */
+.vc-game-suggestions {
+  max-height: 220px;
+  overflow-y: auto;
+  margin: 10px 0 0;
+  border: 1px solid var(--vc-border);
+  border-radius: var(--vc-radius-md);
+  box-shadow: var(--vc-shadow-1);
+  background: var(--vc-card);
+}
+
+.vc-game-suggestions .list-group-item {
+  border: none;
+  border-bottom: 1px solid var(--vc-border);
+  margin: 0;
+  background: transparent;
+  transition: background-color 140ms var(--vc-ease);
+}
+
+.vc-game-suggestions .list-group-item:last-child {
+  border-bottom: none;
+}
+
+.vc-game-suggestions .list-group-item:hover,
+.vc-game-suggestions .list-group-item:focus {
+  background-color: var(--vc-accent-soft);
+}
+
+.list-group {
+  border-radius: var(--vc-radius-md);
+}
+
+.list-group-item:first-child {
+  border-top-left-radius: var(--vc-radius-md);
+  border-top-right-radius: var(--vc-radius-md);
+}
+
+.list-group-item:last-child {
+  border-bottom-left-radius: var(--vc-radius-md);
+  border-bottom-right-radius: var(--vc-radius-md);
+}
+
+/* Well / pre */
+.well,
+pre {
+  border-radius: var(--vc-radius-md);
+  border-color: var(--vc-border);
+  box-shadow: none;
+}
+
+/* Bottom bar */
+.navbar-fixed-bottom {
+  border-top: 1px solid var(--vc-border);
+  box-shadow: 0 -6px 20px rgba(15, 30, 55, 0.06);
+  background: color-mix(in srgb, var(--vc-card) 92%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Help text */
+.help-block {
+  color: var(--vc-muted);
+}
+
+/* Reduce harsh Bootstrap panel status colors slightly via softer borders */
+.panel-warning {
+  border-color: color-mix(in srgb, var(--vc-warning) 35%, var(--vc-border));
+}
+
+.panel-danger {
+  border-color: color-mix(in srgb, var(--vc-danger) 35%, var(--vc-border));
+}
+
+.panel-success {
+  border-color: color-mix(in srgb, var(--vc-success) 35%, var(--vc-border));
+}
+
+@media (max-width: 767px) {
+  .panel {
+    border-radius: var(--vc-radius-md);
+  }
+
+  .modal-content {
+    border-radius: var(--vc-radius-lg);
+  }
+
+  .navbar-default .navbar-nav .open .dropdown-menu {
+    border-radius: var(--vc-radius-md);
+    box-shadow: var(--vc-shadow-2);
+  }
+}

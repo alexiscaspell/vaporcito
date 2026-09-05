@@ -16,10 +16,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/connections/registry"
-	"github.com/syncthing/syncthing/lib/events"
-	"github.com/syncthing/syncthing/lib/protocol"
-	"github.com/syncthing/syncthing/lib/tlsutil"
+	"github.com/alexiscaspell/vaporcito/lib/connections/registry"
+	"github.com/alexiscaspell/vaporcito/lib/events"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/tlsutil"
 )
 
 func TestParseOptions(t *testing.T) {

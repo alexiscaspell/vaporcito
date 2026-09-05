@@ -13,9 +13,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/syncthing/syncthing/lib/osutil"
-	"github.com/syncthing/syncthing/lib/rand"
-	"github.com/syncthing/syncthing/lib/sync"
+	"github.com/alexiscaspell/vaporcito/lib/osutil"
+	"github.com/alexiscaspell/vaporcito/lib/rand"
+	"github.com/alexiscaspell/vaporcito/lib/sync"
 )
 
 const maxCsrfTokens = 25

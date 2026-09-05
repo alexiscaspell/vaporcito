@@ -28,8 +28,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/dialer"
-	"github.com/syncthing/syncthing/lib/signature"
+	"github.com/alexiscaspell/vaporcito/lib/dialer"
+	"github.com/alexiscaspell/vaporcito/lib/signature"
 	"golang.org/x/net/http2"
 )
 
@@ -346,7 +346,7 @@ func archiveFileVisitor(dir string, tempFile *string, signature *[]byte, archive
 	archiveDir := path.Dir(archivePath)
 	l.Debugf("considering file %s", archivePath)
 	switch filename {
-	case "syncthing", "syncthing.exe":
+	case "vaporcito", "vaporcito.exe", "syncthing", "syncthing.exe":
 		archiveDirs := strings.Split(archiveDir, "/")
 		if len(archiveDirs) > 1 {
 			// Don't consider "syncthing" files found too deeply, as they may be

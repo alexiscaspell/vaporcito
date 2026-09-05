@@ -10,8 +10,8 @@ import (
 	"errors"
 	"path/filepath"
 
-	"github.com/syncthing/syncthing/lib/build"
-	"github.com/syncthing/syncthing/lib/fs"
+	"github.com/alexiscaspell/vaporcito/lib/build"
+	"github.com/alexiscaspell/vaporcito/lib/fs"
 )
 
 var (

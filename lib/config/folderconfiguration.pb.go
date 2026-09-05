@@ -7,9 +7,9 @@ import (
 	encoding_binary "encoding/binary"
 	fmt "fmt"
 	proto "github.com/gogo/protobuf/proto"
-	fs "github.com/syncthing/syncthing/lib/fs"
-	github_com_syncthing_syncthing_lib_protocol "github.com/syncthing/syncthing/lib/protocol"
-	_ "github.com/syncthing/syncthing/proto/ext"
+	fs "github.com/alexiscaspell/vaporcito/lib/fs"
+	github_com_syncthing_syncthing_lib_protocol "github.com/alexiscaspell/vaporcito/lib/protocol"
+	_ "github.com/alexiscaspell/vaporcito/proto/ext"
 	io "io"
 	math "math"
 	math_bits "math/bits"
@@ -27,8 +27,8 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type FolderDeviceConfiguration struct {
-	DeviceID           github_com_syncthing_syncthing_lib_protocol.DeviceID `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3,customtype=github.com/syncthing/syncthing/lib/protocol.DeviceID" json:"deviceID" xml:"id,attr"`
-	IntroducedBy       github_com_syncthing_syncthing_lib_protocol.DeviceID `protobuf:"bytes,2,opt,name=introduced_by,json=introducedBy,proto3,customtype=github.com/syncthing/syncthing/lib/protocol.DeviceID" json:"introducedBy" xml:"introducedBy,attr"`
+	DeviceID           github_com_syncthing_syncthing_lib_protocol.DeviceID `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3,customtype=github.com/alexiscaspell/vaporcito/lib/protocol.DeviceID" json:"deviceID" xml:"id,attr"`
+	IntroducedBy       github_com_syncthing_syncthing_lib_protocol.DeviceID `protobuf:"bytes,2,opt,name=introduced_by,json=introducedBy,proto3,customtype=github.com/alexiscaspell/vaporcito/lib/protocol.DeviceID" json:"introducedBy" xml:"introducedBy,attr"`
 	EncryptionPassword string                                               `protobuf:"bytes,3,opt,name=encryption_password,json=encryptionPassword,proto3" json:"encryptionPassword" xml:"encryptionPassword"`
 }
 

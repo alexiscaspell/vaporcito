@@ -9,7 +9,7 @@ package api
 import (
 	"testing"
 
-	"github.com/syncthing/syncthing/lib/config"
+	"github.com/alexiscaspell/vaporcito/lib/config"
 )
 
 var guiCfg config.GUIConfiguration

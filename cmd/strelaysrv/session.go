@@ -15,8 +15,8 @@ import (
 
 	"golang.org/x/time/rate"
 
-	syncthingprotocol "github.com/syncthing/syncthing/lib/protocol"
-	"github.com/syncthing/syncthing/lib/relay/protocol"
+	syncthingprotocol "github.com/alexiscaspell/vaporcito/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/relay/protocol"
 )
 
 var (

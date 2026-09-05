@@ -10,7 +10,7 @@
 package fs
 
 import (
-	"github.com/syncthing/syncthing/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
 )
 
 func (f *BasicFilesystem) PlatformData(name string, scanOwnership, scanXattrs bool, xattrFilter XattrFilter) (protocol.PlatformData, error) {

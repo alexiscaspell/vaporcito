@@ -6,7 +6,7 @@
 
 package db
 
-import "github.com/syncthing/syncthing/lib/protocol"
+import "github.com/alexiscaspell/vaporcito/lib/protocol"
 
 // How many files to send in each Index/IndexUpdate message.
 const (

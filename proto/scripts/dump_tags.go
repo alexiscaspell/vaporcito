@@ -17,7 +17,7 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/syncthing/syncthing/lib/config"
+	"github.com/alexiscaspell/vaporcito/lib/config"
 )
 
 func main() {
@@ -53,7 +53,7 @@ func walk(w *csv.Writer, prefix string, data interface{}) {
 			pfx = prefix + "." + s.Type().Field(i).Name + "[]"
 		}
 
-		if f.Kind() == reflect.Struct && strings.HasPrefix(f.Type().PkgPath(), "github.com/syncthing/syncthing") {
+		if f.Kind() == reflect.Struct && strings.HasPrefix(f.Type().PkgPath(), "github.com/alexiscaspell/vaporcito") {
 			walk(w, pfx, f.Addr().Interface())
 		} else {
 			jsonTag := ft.Tag.Get("json")

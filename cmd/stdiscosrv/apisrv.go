@@ -28,8 +28,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/protocol"
-	"github.com/syncthing/syncthing/lib/stringutil"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/stringutil"
 )
 
 // announcement is the format received from and sent to clients

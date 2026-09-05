@@ -9,8 +9,8 @@ package config_test
 import (
 	"testing"
 
-	"github.com/syncthing/syncthing/lib/config"
-	"github.com/syncthing/syncthing/lib/db/backend"
+	"github.com/alexiscaspell/vaporcito/lib/config"
+	"github.com/alexiscaspell/vaporcito/lib/db/backend"
 )
 
 func TestTuningMatches(t *testing.T) {

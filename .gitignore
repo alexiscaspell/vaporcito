@@ -1,4 +1,5 @@
 /syncthing
+/vaporcito
 /stdiscosrv
 *.tar.gz
 *.zip

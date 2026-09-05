@@ -5,8 +5,8 @@ import (
 	"context"
 	"sync"
 
-	"github.com/syncthing/syncthing/lib/config"
-	"github.com/syncthing/syncthing/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/config"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
 )
 
 type Wrapper struct {

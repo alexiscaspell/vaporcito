@@ -11,7 +11,7 @@ import (
 	"net"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/sync"
+	"github.com/alexiscaspell/vaporcito/lib/sync"
 )
 
 type MappingChangeSubscriber func()

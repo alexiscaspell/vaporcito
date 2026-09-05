@@ -11,7 +11,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/syncthing/syncthing/lib/fs"
+	"github.com/alexiscaspell/vaporcito/lib/fs"
 )
 
 func ParseSize(s string) (Size, error) {

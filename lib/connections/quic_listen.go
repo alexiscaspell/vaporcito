@@ -20,11 +20,11 @@ import (
 
 	"github.com/quic-go/quic-go"
 
-	"github.com/syncthing/syncthing/lib/config"
-	"github.com/syncthing/syncthing/lib/connections/registry"
-	"github.com/syncthing/syncthing/lib/nat"
-	"github.com/syncthing/syncthing/lib/stun"
-	"github.com/syncthing/syncthing/lib/svcutil"
+	"github.com/alexiscaspell/vaporcito/lib/config"
+	"github.com/alexiscaspell/vaporcito/lib/connections/registry"
+	"github.com/alexiscaspell/vaporcito/lib/nat"
+	"github.com/alexiscaspell/vaporcito/lib/stun"
+	"github.com/alexiscaspell/vaporcito/lib/svcutil"
 )
 
 func init() {

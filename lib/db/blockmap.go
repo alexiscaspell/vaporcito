@@ -10,7 +10,7 @@ import (
 	"encoding/binary"
 	"fmt"
 
-	"github.com/syncthing/syncthing/lib/osutil"
+	"github.com/alexiscaspell/vaporcito/lib/osutil"
 )
 
 type BlockFinder struct {

@@ -16,7 +16,7 @@ import (
 	"time"
 
 	minioSha256 "github.com/minio/sha256-simd"
-	"github.com/syncthing/syncthing/lib/logger"
+	"github.com/alexiscaspell/vaporcito/lib/logger"
 )
 
 var l = logger.DefaultLogger.NewFacility("sha256", "SHA256 hashing package")

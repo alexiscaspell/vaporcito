@@ -12,8 +12,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/syncthing/syncthing/lib/db/backend"
-	"github.com/syncthing/syncthing/lib/events"
+	"github.com/alexiscaspell/vaporcito/lib/db/backend"
+	"github.com/alexiscaspell/vaporcito/lib/events"
 )
 
 // writeJSONS serializes the database to a JSON stream that can be checked

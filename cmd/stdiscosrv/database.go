@@ -15,7 +15,7 @@ import (
 	"sort"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/sliceutil"
+	"github.com/alexiscaspell/vaporcito/lib/sliceutil"
 	"github.com/syndtr/goleveldb/leveldb"
 	"github.com/syndtr/goleveldb/leveldb/storage"
 	"github.com/syndtr/goleveldb/leveldb/util"

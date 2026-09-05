@@ -21,18 +21,18 @@ import (
 	"time"
 
 	lru "github.com/hashicorp/golang-lru/v2"
-	"github.com/syncthing/syncthing/lib/httpcache"
-	"github.com/syncthing/syncthing/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/httpcache"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
 
 	"github.com/oschwald/geoip2-golang"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"github.com/syncthing/syncthing/cmd/strelaypoolsrv/auto"
-	"github.com/syncthing/syncthing/lib/assets"
-	"github.com/syncthing/syncthing/lib/rand"
-	"github.com/syncthing/syncthing/lib/relay/client"
-	"github.com/syncthing/syncthing/lib/sync"
-	"github.com/syncthing/syncthing/lib/tlsutil"
+	"github.com/alexiscaspell/vaporcito/cmd/strelaypoolsrv/auto"
+	"github.com/alexiscaspell/vaporcito/lib/assets"
+	"github.com/alexiscaspell/vaporcito/lib/rand"
+	"github.com/alexiscaspell/vaporcito/lib/relay/client"
+	"github.com/alexiscaspell/vaporcito/lib/sync"
+	"github.com/alexiscaspell/vaporcito/lib/tlsutil"
 )
 
 type location struct {

@@ -17,9 +17,9 @@ import (
 	"github.com/jackpal/gateway"
 	natpmp "github.com/jackpal/go-nat-pmp"
 
-	"github.com/syncthing/syncthing/lib/nat"
-	"github.com/syncthing/syncthing/lib/osutil"
-	"github.com/syncthing/syncthing/lib/svcutil"
+	"github.com/alexiscaspell/vaporcito/lib/nat"
+	"github.com/alexiscaspell/vaporcito/lib/osutil"
+	"github.com/alexiscaspell/vaporcito/lib/svcutil"
 )
 
 func init() {

@@ -14,7 +14,7 @@ import (
 
 	"github.com/thejerf/suture/v4"
 
-	"github.com/syncthing/syncthing/lib/svcutil"
+	"github.com/alexiscaspell/vaporcito/lib/svcutil"
 )
 
 type recv struct {

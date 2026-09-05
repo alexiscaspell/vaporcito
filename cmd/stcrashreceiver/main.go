@@ -24,8 +24,8 @@ import (
 	"time"
 
 	"github.com/alecthomas/kong"
-	"github.com/syncthing/syncthing/lib/sha256"
-	"github.com/syncthing/syncthing/lib/ur"
+	"github.com/alexiscaspell/vaporcito/lib/sha256"
+	"github.com/alexiscaspell/vaporcito/lib/ur"
 
 	raven "github.com/getsentry/raven-go"
 )

@@ -39,7 +39,7 @@ import (
 	"net"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/nat"
+	"github.com/alexiscaspell/vaporcito/lib/nat"
 )
 
 // An IGDService is a specific service provided by an IGD.

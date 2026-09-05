@@ -16,7 +16,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/sha256"
+	"github.com/alexiscaspell/vaporcito/lib/sha256"
 )
 
 // userIDFor returns a string we can use as the user ID for the purpose of

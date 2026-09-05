@@ -7,8 +7,8 @@ import (
 	fmt "fmt"
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/gogo/protobuf/proto"
-	github_com_syncthing_syncthing_lib_protocol "github.com/syncthing/syncthing/lib/protocol"
-	_ "github.com/syncthing/syncthing/proto/ext"
+	github_com_syncthing_syncthing_lib_protocol "github.com/alexiscaspell/vaporcito/lib/protocol"
+	_ "github.com/alexiscaspell/vaporcito/proto/ext"
 	io "io"
 	math "math"
 	math_bits "math/bits"
@@ -26,7 +26,7 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type Announce struct {
-	ID         github_com_syncthing_syncthing_lib_protocol.DeviceID `protobuf:"bytes,1,opt,name=id,proto3,customtype=github.com/syncthing/syncthing/lib/protocol.DeviceID" json:"id" xml:"id"`
+	ID         github_com_syncthing_syncthing_lib_protocol.DeviceID `protobuf:"bytes,1,opt,name=id,proto3,customtype=github.com/alexiscaspell/vaporcito/lib/protocol.DeviceID" json:"id" xml:"id"`
 	Addresses  []string                                             `protobuf:"bytes,2,rep,name=addresses,proto3" json:"addresses" xml:"address"`
 	InstanceID int64                                                `protobuf:"varint,3,opt,name=instance_id,json=instanceId,proto3" json:"instanceId" xml:"instanceId"`
 }

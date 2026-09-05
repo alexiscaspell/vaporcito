@@ -81,7 +81,7 @@ func setBuildData() {
 
 	stamp, _ := strconv.Atoi(Stamp)
 	Date = time.Unix(int64(stamp), 0)
-	LongVersion = LongVersionFor("syncthing")
+	LongVersion = LongVersionFor("vaporcito")
 }
 
 // LongVersionFor returns the long version string for the given program name.

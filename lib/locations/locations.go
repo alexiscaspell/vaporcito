@@ -14,8 +14,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/build"
-	"github.com/syncthing/syncthing/lib/fs"
+	"github.com/alexiscaspell/vaporcito/lib/build"
+	"github.com/alexiscaspell/vaporcito/lib/fs"
 )
 
 type LocationEnum string
@@ -116,7 +116,7 @@ var locationTemplates = map[LocationEnum]string{
 	HTTPSCertFile: "${config}/https-cert.pem",
 	HTTPSKeyFile:  "${config}/https-key.pem",
 	Database:      "${data}/" + LevelDBDir,
-	LogFile:       "${data}/syncthing.log", // --logfile on Windows
+	LogFile:       "${data}/vaporcito.log", // --logfile on Windows
 	CsrfTokens:    "${data}/csrftokens.txt",
 	PanicLog:      "${data}/panic-${timestamp}.log",
 	AuditLog:      "${data}/audit-${timestamp}.log",
@@ -178,18 +178,18 @@ func defaultConfigDir(userHome string) string {
 	switch runtime.GOOS {
 	case build.Windows:
 		if p := os.Getenv("LocalAppData"); p != "" {
-			return filepath.Join(p, "Syncthing")
+			return filepath.Join(p, "Vaporcito")
 		}
-		return filepath.Join(os.Getenv("AppData"), "Syncthing")
+		return filepath.Join(os.Getenv("AppData"), "Vaporcito")
 
 	case build.Darwin:
-		return filepath.Join(userHome, "Library/Application Support/Syncthing")
+		return filepath.Join(userHome, "Library/Application Support/Vaporcito")
 
 	default:
 		if xdgCfg := os.Getenv("XDG_CONFIG_HOME"); xdgCfg != "" {
-			return filepath.Join(xdgCfg, "syncthing")
+			return filepath.Join(xdgCfg, "vaporcito")
 		}
-		return filepath.Join(userHome, ".config/syncthing")
+		return filepath.Join(userHome, ".config/vaporcito")
 	}
 }
 
@@ -206,12 +206,12 @@ func defaultDataDir(userHome, config string) string {
 	}
 	// Always use this env var, as it's explicitly set by the user
 	if xdgHome := os.Getenv("XDG_DATA_HOME"); xdgHome != "" {
-		return filepath.Join(xdgHome, "syncthing")
+		return filepath.Join(xdgHome, "vaporcito")
 	}
-	// Only use the XDG default, if a syncthing specific dir already
+	// Only use the XDG default, if a vaporcito specific dir already
 	// exists. Existence of ~/.local/share is not deemed enough, as
 	// it may also exist erroneously on non-XDG systems.
-	xdgDefault := filepath.Join(userHome, ".local/share/syncthing")
+	xdgDefault := filepath.Join(userHome, ".local/share/vaporcito")
 	if _, err := os.Lstat(xdgDefault); err == nil {
 		return xdgDefault
 	}

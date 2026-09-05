@@ -9,8 +9,8 @@ package model
 import (
 	"time"
 
-	"github.com/syncthing/syncthing/lib/events"
-	"github.com/syncthing/syncthing/lib/sync"
+	"github.com/alexiscaspell/vaporcito/lib/events"
+	"github.com/alexiscaspell/vaporcito/lib/sync"
 )
 
 type folderState int

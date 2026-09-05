@@ -13,9 +13,9 @@ import (
 
 	"github.com/julienschmidt/httprouter"
 
-	"github.com/syncthing/syncthing/lib/config"
-	"github.com/syncthing/syncthing/lib/protocol"
-	"github.com/syncthing/syncthing/lib/structutil"
+	"github.com/alexiscaspell/vaporcito/lib/config"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/structutil"
 )
 
 type configMuxBuilder struct {

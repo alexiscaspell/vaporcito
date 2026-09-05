@@ -13,8 +13,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/db/backend"
-	"github.com/syncthing/syncthing/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/db/backend"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
 )
 
 func TestDeviceStat(t *testing.T) {

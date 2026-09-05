@@ -6,9 +6,9 @@ package config
 import (
 	fmt "fmt"
 	proto "github.com/gogo/protobuf/proto"
-	github_com_syncthing_syncthing_lib_protocol "github.com/syncthing/syncthing/lib/protocol"
-	protocol "github.com/syncthing/syncthing/lib/protocol"
-	_ "github.com/syncthing/syncthing/proto/ext"
+	github_com_syncthing_syncthing_lib_protocol "github.com/alexiscaspell/vaporcito/lib/protocol"
+	protocol "github.com/alexiscaspell/vaporcito/lib/protocol"
+	_ "github.com/alexiscaspell/vaporcito/proto/ext"
 	io "io"
 	math "math"
 	math_bits "math/bits"
@@ -26,14 +26,14 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type DeviceConfiguration struct {
-	DeviceID                 github_com_syncthing_syncthing_lib_protocol.DeviceID `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3,customtype=github.com/syncthing/syncthing/lib/protocol.DeviceID" json:"deviceID" xml:"id,attr" nodefault:"true"`
+	DeviceID                 github_com_syncthing_syncthing_lib_protocol.DeviceID `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3,customtype=github.com/alexiscaspell/vaporcito/lib/protocol.DeviceID" json:"deviceID" xml:"id,attr" nodefault:"true"`
 	Name                     string                                               `protobuf:"bytes,2,opt,name=name,proto3" json:"name" xml:"name,attr,omitempty"`
 	Addresses                []string                                             `protobuf:"bytes,3,rep,name=addresses,proto3" json:"addresses" xml:"address,omitempty"`
 	Compression              protocol.Compression                                 `protobuf:"varint,4,opt,name=compression,proto3,enum=protocol.Compression" json:"compression" xml:"compression,attr"`
 	CertName                 string                                               `protobuf:"bytes,5,opt,name=cert_name,json=certName,proto3" json:"certName" xml:"certName,attr,omitempty"`
 	Introducer               bool                                                 `protobuf:"varint,6,opt,name=introducer,proto3" json:"introducer" xml:"introducer,attr"`
 	SkipIntroductionRemovals bool                                                 `protobuf:"varint,7,opt,name=skip_introduction_removals,json=skipIntroductionRemovals,proto3" json:"skipIntroductionRemovals" xml:"skipIntroductionRemovals,attr"`
-	IntroducedBy             github_com_syncthing_syncthing_lib_protocol.DeviceID `protobuf:"bytes,8,opt,name=introduced_by,json=introducedBy,proto3,customtype=github.com/syncthing/syncthing/lib/protocol.DeviceID" json:"introducedBy" xml:"introducedBy,attr" nodefault:"true"`
+	IntroducedBy             github_com_syncthing_syncthing_lib_protocol.DeviceID `protobuf:"bytes,8,opt,name=introduced_by,json=introducedBy,proto3,customtype=github.com/alexiscaspell/vaporcito/lib/protocol.DeviceID" json:"introducedBy" xml:"introducedBy,attr" nodefault:"true"`
 	Paused                   bool                                                 `protobuf:"varint,9,opt,name=paused,proto3" json:"paused" xml:"paused"`
 	AllowedNetworks          []string                                             `protobuf:"bytes,10,rep,name=allowed_networks,json=allowedNetworks,proto3" json:"allowedNetworks" xml:"allowedNetwork,omitempty"`
 	AutoAcceptFolders        bool                                                 `protobuf:"varint,11,opt,name=auto_accept_folders,json=autoAcceptFolders,proto3" json:"autoAcceptFolders" xml:"autoAcceptFolders"`

@@ -10,7 +10,7 @@ import (
 	"encoding/binary"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/db/backend"
+	"github.com/alexiscaspell/vaporcito/lib/db/backend"
 )
 
 // NamespacedKV is a simple key-value store using a specific namespace within

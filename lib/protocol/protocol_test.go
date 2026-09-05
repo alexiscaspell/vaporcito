@@ -17,9 +17,9 @@ import (
 	"time"
 
 	lz4 "github.com/pierrec/lz4/v4"
-	"github.com/syncthing/syncthing/lib/build"
-	"github.com/syncthing/syncthing/lib/rand"
-	"github.com/syncthing/syncthing/lib/testutil"
+	"github.com/alexiscaspell/vaporcito/lib/build"
+	"github.com/alexiscaspell/vaporcito/lib/rand"
+	"github.com/alexiscaspell/vaporcito/lib/testutil"
 )
 
 var (
@@ -92,7 +92,7 @@ func TestClose(t *testing.T) {
 
 // TestCloseOnBlockingSend checks that the connection does not deadlock when
 // Close is called while the underlying connection is broken (send blocks).
-// https://github.com/syncthing/syncthing/pull/5442
+// https://github.com/alexiscaspell/vaporcito/pull/5442
 func TestCloseOnBlockingSend(t *testing.T) {
 	oldCloseTimeout := CloseTimeout
 	CloseTimeout = 100 * time.Millisecond

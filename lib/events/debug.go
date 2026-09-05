@@ -7,7 +7,7 @@
 package events
 
 import (
-	liblogger "github.com/syncthing/syncthing/lib/logger"
+	liblogger "github.com/alexiscaspell/vaporcito/lib/logger"
 )
 
 var (

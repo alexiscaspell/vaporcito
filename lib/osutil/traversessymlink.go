@@ -10,7 +10,7 @@ import (
 	"fmt"
 	"path/filepath"
 
-	"github.com/syncthing/syncthing/lib/fs"
+	"github.com/alexiscaspell/vaporcito/lib/fs"
 )
 
 // TraversesSymlinkError is an error indicating symlink traversal

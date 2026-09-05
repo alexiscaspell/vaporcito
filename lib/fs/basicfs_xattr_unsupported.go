@@ -10,7 +10,7 @@
 package fs
 
 import (
-	"github.com/syncthing/syncthing/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
 )
 
 func (f *BasicFilesystem) GetXattr(path string, xattrFilter XattrFilter) ([]protocol.Xattr, error) {

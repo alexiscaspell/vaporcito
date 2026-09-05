@@ -10,7 +10,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/syncthing/syncthing/lib/build"
+	"github.com/alexiscaspell/vaporcito/lib/build"
 )
 
 func TestIsInternal(t *testing.T) {

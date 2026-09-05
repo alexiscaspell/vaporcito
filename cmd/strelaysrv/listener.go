@@ -11,10 +11,10 @@ import (
 	"sync/atomic"
 	"time"
 
-	syncthingprotocol "github.com/syncthing/syncthing/lib/protocol"
-	"github.com/syncthing/syncthing/lib/tlsutil"
+	syncthingprotocol "github.com/alexiscaspell/vaporcito/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/tlsutil"
 
-	"github.com/syncthing/syncthing/lib/relay/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/relay/protocol"
 )
 
 var (

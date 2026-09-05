@@ -7,7 +7,7 @@
 package model
 
 import (
-	"github.com/syncthing/syncthing/lib/fs"
+	"github.com/alexiscaspell/vaporcito/lib/fs"
 )
 
 // fatal is the required common interface between *testing.B and *testing.T

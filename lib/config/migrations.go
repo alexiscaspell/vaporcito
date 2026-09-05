@@ -15,10 +15,10 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/syncthing/syncthing/lib/build"
-	"github.com/syncthing/syncthing/lib/fs"
-	"github.com/syncthing/syncthing/lib/netutil"
-	"github.com/syncthing/syncthing/lib/upgrade"
+	"github.com/alexiscaspell/vaporcito/lib/build"
+	"github.com/alexiscaspell/vaporcito/lib/fs"
+	"github.com/alexiscaspell/vaporcito/lib/netutil"
+	"github.com/alexiscaspell/vaporcito/lib/upgrade"
 )
 
 // migrations is the set of config migration functions, with their target

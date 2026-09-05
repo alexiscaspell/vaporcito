@@ -12,10 +12,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/protocol"
-	protocolmocks "github.com/syncthing/syncthing/lib/protocol/mocks"
-	"github.com/syncthing/syncthing/lib/rand"
-	"github.com/syncthing/syncthing/lib/scanner"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
+	protocolmocks "github.com/alexiscaspell/vaporcito/lib/protocol/mocks"
+	"github.com/alexiscaspell/vaporcito/lib/rand"
+	"github.com/alexiscaspell/vaporcito/lib/scanner"
 )
 
 type downloadProgressMessage struct {

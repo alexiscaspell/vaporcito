@@ -16,7 +16,7 @@ import (
 	"time"
 
 	"github.com/shirou/gopsutil/v3/disk"
-	"github.com/syncthing/syncthing/lib/build"
+	"github.com/alexiscaspell/vaporcito/lib/build"
 )
 
 var (

@@ -30,23 +30,23 @@ import (
 	"golang.org/x/exp/constraints"
 	"golang.org/x/exp/slices"
 
-	"github.com/syncthing/syncthing/lib/build"
-	"github.com/syncthing/syncthing/lib/config"
-	"github.com/syncthing/syncthing/lib/connections/registry"
-	"github.com/syncthing/syncthing/lib/discover"
-	"github.com/syncthing/syncthing/lib/events"
-	"github.com/syncthing/syncthing/lib/nat"
-	"github.com/syncthing/syncthing/lib/osutil"
-	"github.com/syncthing/syncthing/lib/protocol"
-	"github.com/syncthing/syncthing/lib/semaphore"
-	"github.com/syncthing/syncthing/lib/sliceutil"
-	"github.com/syncthing/syncthing/lib/stringutil"
-	"github.com/syncthing/syncthing/lib/svcutil"
-	"github.com/syncthing/syncthing/lib/sync"
+	"github.com/alexiscaspell/vaporcito/lib/build"
+	"github.com/alexiscaspell/vaporcito/lib/config"
+	"github.com/alexiscaspell/vaporcito/lib/connections/registry"
+	"github.com/alexiscaspell/vaporcito/lib/discover"
+	"github.com/alexiscaspell/vaporcito/lib/events"
+	"github.com/alexiscaspell/vaporcito/lib/nat"
+	"github.com/alexiscaspell/vaporcito/lib/osutil"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/semaphore"
+	"github.com/alexiscaspell/vaporcito/lib/sliceutil"
+	"github.com/alexiscaspell/vaporcito/lib/stringutil"
+	"github.com/alexiscaspell/vaporcito/lib/svcutil"
+	"github.com/alexiscaspell/vaporcito/lib/sync"
 
 	// Registers NAT service providers
-	_ "github.com/syncthing/syncthing/lib/pmp"
-	_ "github.com/syncthing/syncthing/lib/upnp"
+	_ "github.com/alexiscaspell/vaporcito/lib/pmp"
+	_ "github.com/alexiscaspell/vaporcito/lib/upnp"
 
 	"github.com/thejerf/suture/v4"
 	"golang.org/x/time/rate"
@@ -308,7 +308,7 @@ func (s *service) handleConns(ctx context.Context) error {
 
 func (s *service) helloForDevice(remoteID protocol.DeviceID) protocol.Hello {
 	hello := protocol.Hello{
-		ClientName:    "syncthing",
+		ClientName:    "vaporcito",
 		ClientVersion: build.Version,
 		Timestamp:     time.Now().UnixNano(),
 	}

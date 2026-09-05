@@ -13,7 +13,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/fs"
+	"github.com/alexiscaspell/vaporcito/lib/fs"
 )
 
 var rand uint32

@@ -1,4 +1,4 @@
-module github.com/syncthing/syncthing
+module github.com/alexiscaspell/vaporcito
 
 go 1.20
 

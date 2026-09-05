@@ -18,14 +18,14 @@ import (
 	"time"
 
 	"github.com/greatroar/blobloom"
-	"github.com/syncthing/syncthing/lib/db/backend"
-	"github.com/syncthing/syncthing/lib/events"
-	"github.com/syncthing/syncthing/lib/fs"
-	"github.com/syncthing/syncthing/lib/protocol"
-	"github.com/syncthing/syncthing/lib/sha256"
-	"github.com/syncthing/syncthing/lib/stringutil"
-	"github.com/syncthing/syncthing/lib/svcutil"
-	"github.com/syncthing/syncthing/lib/sync"
+	"github.com/alexiscaspell/vaporcito/lib/db/backend"
+	"github.com/alexiscaspell/vaporcito/lib/events"
+	"github.com/alexiscaspell/vaporcito/lib/fs"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/sha256"
+	"github.com/alexiscaspell/vaporcito/lib/stringutil"
+	"github.com/alexiscaspell/vaporcito/lib/svcutil"
+	"github.com/alexiscaspell/vaporcito/lib/sync"
 	"github.com/thejerf/suture/v4"
 )
 

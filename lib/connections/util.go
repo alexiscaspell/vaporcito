@@ -12,7 +12,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/syncthing/syncthing/lib/osutil"
+	"github.com/alexiscaspell/vaporcito/lib/osutil"
 )
 
 func fixupPort(uri *url.URL, defaultPort int) *url.URL {

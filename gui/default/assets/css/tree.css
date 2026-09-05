@@ -1,5 +1,5 @@
 /*
-// Copyright (C) 2021 The Syncthing Authors.
+// Copyright (C) 2021 The Vaporcito Authors.
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this file,
@@ -39,7 +39,7 @@
 
 .fancytree-childcounter {
     background: #777;
-    border-radius: 10px;
+    border-radius: 12px;
     border: 1px solid gray;
     color: #fff;
     font-size: 13px;

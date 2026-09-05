@@ -7,7 +7,7 @@ import (
 	encoding_binary "encoding/binary"
 	fmt "fmt"
 	proto "github.com/gogo/protobuf/proto"
-	_ "github.com/syncthing/syncthing/proto/ext"
+	_ "github.com/alexiscaspell/vaporcito/proto/ext"
 	io "io"
 	math "math"
 	math_bits "math/bits"

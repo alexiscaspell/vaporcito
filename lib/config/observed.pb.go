@@ -7,8 +7,8 @@ import (
 	fmt "fmt"
 	proto "github.com/gogo/protobuf/proto"
 	github_com_gogo_protobuf_types "github.com/gogo/protobuf/types"
-	github_com_syncthing_syncthing_lib_protocol "github.com/syncthing/syncthing/lib/protocol"
-	_ "github.com/syncthing/syncthing/proto/ext"
+	github_com_syncthing_syncthing_lib_protocol "github.com/alexiscaspell/vaporcito/lib/protocol"
+	_ "github.com/alexiscaspell/vaporcito/proto/ext"
 	_ "google.golang.org/protobuf/types/known/timestamppb"
 	io "io"
 	math "math"
@@ -69,7 +69,7 @@ var xxx_messageInfo_ObservedFolder proto.InternalMessageInfo
 
 type ObservedDevice struct {
 	Time    time.Time                                            `protobuf:"bytes,1,opt,name=time,proto3,stdtime" json:"time" xml:"time,attr"`
-	ID      github_com_syncthing_syncthing_lib_protocol.DeviceID `protobuf:"bytes,2,opt,name=id,proto3,customtype=github.com/syncthing/syncthing/lib/protocol.DeviceID" json:"deviceID" xml:"id,attr"`
+	ID      github_com_syncthing_syncthing_lib_protocol.DeviceID `protobuf:"bytes,2,opt,name=id,proto3,customtype=github.com/alexiscaspell/vaporcito/lib/protocol.DeviceID" json:"deviceID" xml:"id,attr"`
 	Name    string                                               `protobuf:"bytes,3,opt,name=name,proto3" json:"name" xml:"name,attr"`
 	Address string                                               `protobuf:"bytes,4,opt,name=address,proto3" json:"address" xml:"address,attr"`
 }

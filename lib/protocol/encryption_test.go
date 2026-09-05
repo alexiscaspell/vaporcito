@@ -15,14 +15,14 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/syncthing/syncthing/lib/build"
-	"github.com/syncthing/syncthing/lib/rand"
+	"github.com/alexiscaspell/vaporcito/lib/build"
+	"github.com/alexiscaspell/vaporcito/lib/rand"
 )
 
 var (
 	testKeyGen = NewKeyGenerator()
 
-	// https://github.com/syncthing/syncthing/issues/8799
+	// https://github.com/alexiscaspell/vaporcito/issues/8799
 	cryptoIsBrokenUnderRaceDetector = (build.IsLinux || build.IsDarwin) && strings.HasPrefix(runtime.Version(), "go1.20")
 )
 

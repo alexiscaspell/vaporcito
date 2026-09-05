@@ -11,7 +11,7 @@ import (
 	"sort"
 	"testing"
 
-	"github.com/syncthing/syncthing/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
 )
 
 var (

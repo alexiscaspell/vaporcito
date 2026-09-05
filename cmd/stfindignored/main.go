@@ -12,8 +12,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/syncthing/syncthing/lib/fs"
-	"github.com/syncthing/syncthing/lib/ignore"
+	"github.com/alexiscaspell/vaporcito/lib/fs"
+	"github.com/alexiscaspell/vaporcito/lib/ignore"
 )
 
 func main() {

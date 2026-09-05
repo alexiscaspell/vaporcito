@@ -6,8 +6,8 @@ package config
 import (
 	fmt "fmt"
 	proto "github.com/gogo/protobuf/proto"
-	fs "github.com/syncthing/syncthing/lib/fs"
-	_ "github.com/syncthing/syncthing/proto/ext"
+	fs "github.com/alexiscaspell/vaporcito/lib/fs"
+	_ "github.com/alexiscaspell/vaporcito/proto/ext"
 	io "io"
 	math "math"
 	math_bits "math/bits"

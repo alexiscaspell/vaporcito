@@ -40,24 +40,24 @@ import (
 	"golang.org/x/text/transform"
 	"golang.org/x/text/unicode/norm"
 
-	"github.com/syncthing/syncthing/lib/build"
-	"github.com/syncthing/syncthing/lib/config"
-	"github.com/syncthing/syncthing/lib/connections"
-	"github.com/syncthing/syncthing/lib/db"
-	"github.com/syncthing/syncthing/lib/discover"
-	"github.com/syncthing/syncthing/lib/events"
-	"github.com/syncthing/syncthing/lib/fs"
-	"github.com/syncthing/syncthing/lib/ignore"
-	"github.com/syncthing/syncthing/lib/locations"
-	"github.com/syncthing/syncthing/lib/logger"
-	"github.com/syncthing/syncthing/lib/model"
-	"github.com/syncthing/syncthing/lib/protocol"
-	"github.com/syncthing/syncthing/lib/rand"
-	"github.com/syncthing/syncthing/lib/svcutil"
-	"github.com/syncthing/syncthing/lib/sync"
-	"github.com/syncthing/syncthing/lib/tlsutil"
-	"github.com/syncthing/syncthing/lib/upgrade"
-	"github.com/syncthing/syncthing/lib/ur"
+	"github.com/alexiscaspell/vaporcito/lib/build"
+	"github.com/alexiscaspell/vaporcito/lib/config"
+	"github.com/alexiscaspell/vaporcito/lib/connections"
+	"github.com/alexiscaspell/vaporcito/lib/db"
+	"github.com/alexiscaspell/vaporcito/lib/discover"
+	"github.com/alexiscaspell/vaporcito/lib/events"
+	"github.com/alexiscaspell/vaporcito/lib/fs"
+	"github.com/alexiscaspell/vaporcito/lib/ignore"
+	"github.com/alexiscaspell/vaporcito/lib/locations"
+	"github.com/alexiscaspell/vaporcito/lib/logger"
+	"github.com/alexiscaspell/vaporcito/lib/model"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/rand"
+	"github.com/alexiscaspell/vaporcito/lib/svcutil"
+	"github.com/alexiscaspell/vaporcito/lib/sync"
+	"github.com/alexiscaspell/vaporcito/lib/tlsutil"
+	"github.com/alexiscaspell/vaporcito/lib/upgrade"
+	"github.com/alexiscaspell/vaporcito/lib/ur"
 )
 
 const (
@@ -400,7 +400,7 @@ func (s *service) Serve(ctx context.Context) error {
 
 	srv := http.Server{
 		Handler: handler,
-		// ReadTimeout must be longer than SyncthingController $scope.refresh
+		// ReadTimeout must be longer than VaporcitoController $scope.refresh
 		// interval to avoid HTTP keepalive/GUI refresh race.
 		ReadTimeout: 15 * time.Second,
 		// Prevent the HTTP server from logging stuff on its own. The things we
@@ -1163,7 +1163,7 @@ func (s *service) getSystemLogTxt(w http.ResponseWriter, r *http.Request) {
 }
 
 const pcgamingWikiAPI = "https://www.pcgamingwiki.com/w/api.php"
-const pcgamingWikiUserAgent = "Vaporcito/1.0 (savegame path lookup; +https://github.com/syncthing/syncthing)"
+const pcgamingWikiUserAgent = "Vaporcito/1.0 (savegame path lookup; +https://github.com/alexiscaspell/vaporcito)"
 
 func pcgamingWikiClient() *http.Client {
 	return &http.Client{Timeout: 30 * time.Second}
@@ -1196,10 +1196,11 @@ func pcgamingWikiGET(client *http.Client, params url.Values) ([]byte, error) {
 
 func findPCGWSaveSectionIndex(client *http.Client, gameName string) (string, error) {
 	body, err := pcgamingWikiGET(client, url.Values{
-		"action": {"parse"},
-		"page":   {gameName},
-		"prop":   {"sections"},
-		"format": {"json"},
+		"action":    {"parse"},
+		"page":      {gameName},
+		"prop":      {"sections"},
+		"format":    {"json"},
+		"redirects": {"1"},
 	})
 	if err != nil {
 		return "", err
@@ -1234,10 +1235,11 @@ func findPCGWSaveSectionIndex(client *http.Client, gameName string) (string, err
 
 func fetchPCGWParseHTML(client *http.Client, gameName, section string) (string, error) {
 	params := url.Values{
-		"action": {"parse"},
-		"page":   {gameName},
-		"prop":   {"text"},
-		"format": {"json"},
+		"action":    {"parse"},
+		"page":      {gameName},
+		"prop":      {"text"},
+		"format":    {"json"},
+		"redirects": {"1"},
 	}
 	if section != "" {
 		params.Set("section", section)

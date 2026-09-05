@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <!--
-// Copyright (C) 2014 The Syncthing Authors.
+// Copyright (C) 2014 The Vaporcito Authors.
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this file,
 // You can obtain one at https://mozilla.org/MPL/2.0/.
 
 -->
-<html lang="en" ng-app="syncthing" ng-controller="SyncthingController">
+<html lang="en" ng-app="vaporcito" ng-controller="VaporcitoController">
 <head>
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -16,7 +16,7 @@
   <link rel="shortcut icon" href="assets/img/favicon-{{syncthingStatus()}}.png" type="image/x-icon"/>
   <link rel="mask-icon" href="assets/img/safari-pinned-tab.svg" color="#0882c8"/>
 
-  <title ng-bind="thisDeviceName() + ' | Syncthing'"></title>
+  <title ng-bind="thisDeviceName() + ' | Vaporcito'"></title>
   <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet"/>
   <link href="vendor/daterangepicker/daterangepicker.css" rel="stylesheet"/>
   <link href="assets/font/raleway.css" rel="stylesheet"/>
@@ -25,6 +25,7 @@
   <link href="assets/css/tree.css" rel="stylesheet"/>
   <link href="assets/css/overrides.css" rel="stylesheet"/>
   <link href="assets/css/theme.css" rel="stylesheet"/>
+  <link href="assets/css/vaporcito-ui.css" rel="stylesheet"/>
 </head>
 
 <body>
@@ -52,7 +53,7 @@
             </div>
             <div class="panel-body">
               <p>
-              The Syncthing admin interface requires JavaScript. Please enable JavaScript in your web browser and try again.
+              The Vaporcito admin interface requires JavaScript. Please enable JavaScript in your web browser and try again.
               </p>
             </div>
           </div>
@@ -62,8 +63,8 @@
   </noscript>
 
   <div class="ng-cloak">
-    <script type="text/javascript" src="syncthing/development/logbar.js"></script>
-    <div ng-if="version.isBeta" ng-include="'syncthing/development/logbar.html'"></div>
+    <script type="text/javascript" src="vaporcito/development/logbar.js"></script>
+    <div ng-if="version.isBeta" ng-include="'vaporcito/development/logbar.html'"></div>
     <!-- Top bar -->
 
     <nav class="navbar navbar-top navbar-default" role="navigation">
@@ -96,15 +97,14 @@
             <ul class="dropdown-menu">
               <li><a class="navbar-link" href="{{docsURL('intro/gui')}}" target="_blank"><span class="fa fa-fw fa-info-circle"></span>&nbsp;<span translate>Introduction</span></a></li>
               <li class="divider" aria-hidden="true"></li>
-              <li><a class="navbar-link" href="https://syncthing.net/" target="_blank"><span class="fa fa-fw fa-home"></span>&nbsp;<span translate>Home page</span></a></li>
+              <li><a class="navbar-link" href="https://github.com/alexiscaspell/vaporcito" target="_blank"><span class="fa fa-fw fa-home"></span>&nbsp;<span translate>Home page</span></a></li>
               <li><a class="navbar-link" href="{{docsURL()}}" target="_blank"><span class="fa fa-fw fa-book"></span>&nbsp;<span translate>Documentation</span></a></li>
-              <li><a class="navbar-link" href="https://forum.syncthing.net" target="_blank"><span class="fa fa-fw fa-users"></span>&nbsp;<span translate>Support</span></a></li>
+              <li><a class="navbar-link" href="https://github.com/alexiscaspell/vaporcito/issues" target="_blank"><span class="fa fa-fw fa-users"></span>&nbsp;<span translate>Support</span></a></li>
               <li class="divider" aria-hidden="true"></li>
-              <li><a class="navbar-link" href="https://github.com/syncthing/syncthing/releases" target="_blank"><span class="fa fa-fw fa-file-text"></span>&nbsp;<span translate>Changelog</span></a></li>
-              <li><a class="navbar-link" href="https://data.syncthing.net/" target="_blank"><span class="fa fa-fw fa-bar-chart"></span>&nbsp;<span translate>Statistics</span></a></li>
+              <li><a class="navbar-link" href="https://github.com/alexiscaspell/vaporcito/releases" target="_blank"><span class="fa fa-fw fa-file-text"></span>&nbsp;<span translate>Changelog</span></a></li>
               <li class="divider" aria-hidden="true"></li>
-              <li><a class="navbar-link" href="https://github.com/syncthing/syncthing/issues" target="_blank"><span class="fa fa-fw fa-bug"></span>&nbsp;<span translate>Bugs</span></a></li>
-              <li><a class="navbar-link" href="https://github.com/syncthing/syncthing" target="_blank"><span class="fa fa-fw fa-file-code-o"></span>&nbsp;<span translate>Source Code</span></a></li>
+              <li><a class="navbar-link" href="https://github.com/alexiscaspell/vaporcito/issues" target="_blank"><span class="fa fa-fw fa-bug"></span>&nbsp;<span translate>Bugs</span></a></li>
+              <li><a class="navbar-link" href="https://github.com/alexiscaspell/vaporcito" target="_blank"><span class="fa fa-fw fa-file-code-o"></span>&nbsp;<span translate>Source Code</span></a></li>
               <li class="divider" aria-hidden="true"></li>
               <li><a href="" ng-click="about.show()"><span class="fa fa-fw fa-heart"></span>&nbsp;<span translate>About</span></a></li>
             </ul>
@@ -155,7 +155,7 @@
             </div>
             <div class="panel-body">
               <p>
-              <span translate>The Syncthing admin interface is configured to allow remote access without a password.</span>
+              <span translate>The Vaporcito admin interface is configured to allow remote access without a password.</span>
               <b><span translate>This can easily give hackers access to read and change any files on your computer.</span></b>
               <span translate>Please set a GUI Authentication User and Password in the Settings dialog.</span>
               </p>
@@ -184,7 +184,7 @@
               </h3>
             </div>
             <div class="panel-body">
-              <p translate>The configuration has been saved but not activated. Syncthing must restart to activate the new configuration.</p>
+              <p translate>The configuration has been saved but not activated. Vaporcito must restart to activate the new configuration.</p>
             </div>
             <div class="panel-footer">
               <button type="button" class="btn btn-sm btn-default pull-right" ng-click="restart()">
@@ -200,7 +200,7 @@
 
         <!-- Panel: Notifications -->
 
-        <div ng-if="config.options && config.options.unackedNotificationIDs" ng-include="'syncthing/core/notifications.html'"></div>
+        <div ng-if="config.options && config.options.unackedNotificationIDs" ng-include="'vaporcito/core/notifications.html'"></div>
 
         <!-- Panel: New Device -->
 
@@ -332,7 +332,7 @@
             </div>
             <div class="panel-body">
               <p>
-                <span translate>For the following folders an error occurred while starting to watch for changes. It will be retried every minute, so the errors might go away soon. If they persist, try to fix the underlying issue and ask for help if you can't.</span>&emsp;<a href="https://forum.syncthing.net" target="_blank"><span class="fas fa-question-circle"></span>&nbsp;<span translate>Support</span></a>
+                <span translate>For the following folders an error occurred while starting to watch for changes. It will be retried every minute, so the errors might go away soon. If they persist, try to fix the underlying issue and ask for help if you can't.</span>&emsp;<a href="https://github.com/alexiscaspell/vaporcito/issues" target="_blank"><span class="fas fa-question-circle"></span>&nbsp;<span translate>Support</span></a>
               </p>
               <table>
                 <tr ng-repeat="(id, err) in fsWatcherErrorMap()">
@@ -365,7 +365,7 @@
                 Incorrect user name or password.
               </p>
               <p ng-if="login.errors.failed" class="text-danger" translate>
-                Login failed, see Syncthing logs for details.
+                Login failed, see Vaporcito logs for details.
               </p>
             </div>
             <div class="col-md-3 text-right">
@@ -1019,36 +1019,36 @@
     </div> <!-- /container -->
   </div> <!-- /ng-cloak -->
 
-  <ng-include src="'syncthing/core/networkErrorDialogView.html'"></ng-include>
-  <ng-include src="'syncthing/core/httpErrorDialogView.html'"></ng-include>
-  <ng-include src="'syncthing/core/restartingDialogView.html'"></ng-include>
-  <ng-include src="'syncthing/core/upgradingDialogView.html'"></ng-include>
-  <ng-include src="'syncthing/core/shutdownDialogView.html'"></ng-include>
-  <ng-include src="'syncthing/core/savingChangesDialogView.html'"></ng-include>
-  <ng-include src="'syncthing/device/idqrModalView.html'"></ng-include>
-  <ng-include src="'syncthing/device/editDeviceModalView.html'"></ng-include>
-  <ng-include src="'syncthing/device/globalChangesModalView.html'"></ng-include>
-  <ng-include src="'syncthing/folder/editFolderModalView.html'"></ng-include>
-  <ng-include src="'syncthing/folder/restoreVersionsModalView.html'"></ng-include>
-  <ng-include src="'syncthing/folder/restoreVersionsConfirmation.html'"></ng-include>
-  <ng-include src="'syncthing/settings/settingsModalView.html'"></ng-include>
-  <ng-include src="'syncthing/settings/advancedSettingsModalView.html'"></ng-include>
-  <ng-include src="'syncthing/settings/discardChangesConfirmation.html'"></ng-include>
-  <ng-include src="'syncthing/usagereport/usageReportModalView.html'"></ng-include>
-  <ng-include src="'syncthing/usagereport/usageReportPreviewModalView.html'"></ng-include>
-  <ng-include src="'syncthing/transfer/neededFilesModalView.html'"></ng-include>
-  <ng-include src="'syncthing/transfer/failedFilesModalView.html'"></ng-include>
-  <ng-include src="'syncthing/transfer/remoteNeededFilesModalView.html'"></ng-include>
-  <ng-include src="'syncthing/transfer/localChangedFilesModalView.html'"></ng-include>
-  <ng-include src="'syncthing/core/upgradeModalView.html'"></ng-include>
-  <ng-include src="'syncthing/core/majorUpgradeModalView.html'"></ng-include>
-  <ng-include src="'syncthing/core/aboutModalView.html'"></ng-include>
-  <ng-include src="'syncthing/core/connectivityStatusModalView.html'"></ng-include>
-  <ng-include src="'syncthing/folder/removeFolderDialogView.html'"></ng-include>
-  <ng-include src="'syncthing/folder/revertOverrideView.html'"></ng-include>
-  <ng-include src="'syncthing/device/removeDeviceDialogView.html'"></ng-include>
-  <ng-include src="'syncthing/core/logViewerModalView.html'"></ng-include>
-  <ng-include src="'syncthing/device/shareDeviceIdDialogView.html'"></ng-include>
+  <ng-include src="'vaporcito/core/networkErrorDialogView.html'"></ng-include>
+  <ng-include src="'vaporcito/core/httpErrorDialogView.html'"></ng-include>
+  <ng-include src="'vaporcito/core/restartingDialogView.html'"></ng-include>
+  <ng-include src="'vaporcito/core/upgradingDialogView.html'"></ng-include>
+  <ng-include src="'vaporcito/core/shutdownDialogView.html'"></ng-include>
+  <ng-include src="'vaporcito/core/savingChangesDialogView.html'"></ng-include>
+  <ng-include src="'vaporcito/device/idqrModalView.html'"></ng-include>
+  <ng-include src="'vaporcito/device/editDeviceModalView.html'"></ng-include>
+  <ng-include src="'vaporcito/device/globalChangesModalView.html'"></ng-include>
+  <ng-include src="'vaporcito/folder/editFolderModalView.html'"></ng-include>
+  <ng-include src="'vaporcito/folder/restoreVersionsModalView.html'"></ng-include>
+  <ng-include src="'vaporcito/folder/restoreVersionsConfirmation.html'"></ng-include>
+  <ng-include src="'vaporcito/settings/settingsModalView.html'"></ng-include>
+  <ng-include src="'vaporcito/settings/advancedSettingsModalView.html'"></ng-include>
+  <ng-include src="'vaporcito/settings/discardChangesConfirmation.html'"></ng-include>
+  <ng-include src="'vaporcito/usagereport/usageReportModalView.html'"></ng-include>
+  <ng-include src="'vaporcito/usagereport/usageReportPreviewModalView.html'"></ng-include>
+  <ng-include src="'vaporcito/transfer/neededFilesModalView.html'"></ng-include>
+  <ng-include src="'vaporcito/transfer/failedFilesModalView.html'"></ng-include>
+  <ng-include src="'vaporcito/transfer/remoteNeededFilesModalView.html'"></ng-include>
+  <ng-include src="'vaporcito/transfer/localChangedFilesModalView.html'"></ng-include>
+  <ng-include src="'vaporcito/core/upgradeModalView.html'"></ng-include>
+  <ng-include src="'vaporcito/core/majorUpgradeModalView.html'"></ng-include>
+  <ng-include src="'vaporcito/core/aboutModalView.html'"></ng-include>
+  <ng-include src="'vaporcito/core/connectivityStatusModalView.html'"></ng-include>
+  <ng-include src="'vaporcito/folder/removeFolderDialogView.html'"></ng-include>
+  <ng-include src="'vaporcito/folder/revertOverrideView.html'"></ng-include>
+  <ng-include src="'vaporcito/device/removeDeviceDialogView.html'"></ng-include>
+  <ng-include src="'vaporcito/core/logViewerModalView.html'"></ng-include>
+  <ng-include src="'vaporcito/device/shareDeviceIdDialogView.html'"></ng-include>
 
   <!-- vendor scripts -->
   <script type="text/javascript" src="vendor/jquery/jquery-2.2.2.js"></script>
@@ -1064,31 +1064,31 @@
   <!-- / vendor scripts -->
 
   <!-- gui application code -->
-  <script type="text/javascript" src="syncthing/core/module.js"></script>
-  <script type="text/javascript" src="syncthing/core/alwaysNumberFilter.js"></script>
-  <script type="text/javascript" src="syncthing/core/basenameFilter.js"></script>
-  <script type="text/javascript" src="syncthing/core/binaryFilter.js"></script>
-  <script type="text/javascript" src="syncthing/core/localeNumberFilter.js"></script>
-  <script type="text/javascript" src="syncthing/core/percentFilter.js"></script>
-  <script type="text/javascript" src="syncthing/core/durationFilter.js"></script>
-  <script type="text/javascript" src="syncthing/core/eventService.js"></script>
-  <script type="text/javascript" src="syncthing/core/identiconDirective.js"></script>
-  <script type="text/javascript" src="syncthing/core/languageSelectDirective.js"></script>
-  <script type="text/javascript" src="syncthing/core/localeService.js"></script>
-  <script type="text/javascript" src="syncthing/core/modalDirective.js"></script>
-  <script type="text/javascript" src="syncthing/core/metricFilter.js"></script>
-  <script type="text/javascript" src="syncthing/core/notificationDirective.js"></script>
-  <script type="text/javascript" src="syncthing/core/pathIsSubDirDirective.js"></script>
-  <script type="text/javascript" src="syncthing/core/popoverDirective.js"></script>
-  <script type="text/javascript" src="syncthing/core/syncthingController.js"></script>
-  <script type="text/javascript" src="syncthing/core/tooltipDirective.js"></script>
-  <script type="text/javascript" src="syncthing/core/uncamelFilter.js"></script>
-  <script type="text/javascript" src="syncthing/core/uniqueFolderDirective.js"></script>
-  <script type="text/javascript" src="syncthing/core/validDeviceidDirective.js"></script>
+  <script type="text/javascript" src="vaporcito/core/module.js"></script>
+  <script type="text/javascript" src="vaporcito/core/alwaysNumberFilter.js"></script>
+  <script type="text/javascript" src="vaporcito/core/basenameFilter.js"></script>
+  <script type="text/javascript" src="vaporcito/core/binaryFilter.js"></script>
+  <script type="text/javascript" src="vaporcito/core/localeNumberFilter.js"></script>
+  <script type="text/javascript" src="vaporcito/core/percentFilter.js"></script>
+  <script type="text/javascript" src="vaporcito/core/durationFilter.js"></script>
+  <script type="text/javascript" src="vaporcito/core/eventService.js"></script>
+  <script type="text/javascript" src="vaporcito/core/identiconDirective.js"></script>
+  <script type="text/javascript" src="vaporcito/core/languageSelectDirective.js"></script>
+  <script type="text/javascript" src="vaporcito/core/localeService.js"></script>
+  <script type="text/javascript" src="vaporcito/core/modalDirective.js"></script>
+  <script type="text/javascript" src="vaporcito/core/metricFilter.js"></script>
+  <script type="text/javascript" src="vaporcito/core/notificationDirective.js"></script>
+  <script type="text/javascript" src="vaporcito/core/pathIsSubDirDirective.js"></script>
+  <script type="text/javascript" src="vaporcito/core/popoverDirective.js"></script>
+  <script type="text/javascript" src="vaporcito/core/vaporcitoController.js"></script>
+  <script type="text/javascript" src="vaporcito/core/tooltipDirective.js"></script>
+  <script type="text/javascript" src="vaporcito/core/uncamelFilter.js"></script>
+  <script type="text/javascript" src="vaporcito/core/uniqueFolderDirective.js"></script>
+  <script type="text/javascript" src="vaporcito/core/validDeviceidDirective.js"></script>
   <script type="text/javascript" src="assets/lang/valid-langs.js"></script>
   <script type="text/javascript" src="assets/lang/prettyprint.js"></script>
   <script type="text/javascript" src="meta.js"></script>
-  <script type="text/javascript" src="syncthing/app.js"></script>
+  <script type="text/javascript" src="vaporcito/app.js"></script>
   <!-- / gui application code -->
 
 </body>

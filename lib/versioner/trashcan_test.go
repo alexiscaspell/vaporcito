@@ -14,8 +14,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/config"
-	"github.com/syncthing/syncthing/lib/fs"
+	"github.com/alexiscaspell/vaporcito/lib/config"
+	"github.com/alexiscaspell/vaporcito/lib/fs"
 )
 
 func TestTrashcanArchiveRestoreSwitcharoo(t *testing.T) {

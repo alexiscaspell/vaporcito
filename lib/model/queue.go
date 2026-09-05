@@ -10,8 +10,8 @@ import (
 	"sort"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/rand"
-	"github.com/syncthing/syncthing/lib/sync"
+	"github.com/alexiscaspell/vaporcito/lib/rand"
+	"github.com/alexiscaspell/vaporcito/lib/sync"
 )
 
 type jobQueue struct {

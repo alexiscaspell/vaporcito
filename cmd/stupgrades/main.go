@@ -19,8 +19,8 @@ import (
 	"time"
 
 	"github.com/alecthomas/kong"
-	"github.com/syncthing/syncthing/lib/httpcache"
-	"github.com/syncthing/syncthing/lib/upgrade"
+	"github.com/alexiscaspell/vaporcito/lib/httpcache"
+	"github.com/alexiscaspell/vaporcito/lib/upgrade"
 )
 
 type cli struct {

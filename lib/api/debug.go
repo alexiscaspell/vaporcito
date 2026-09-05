@@ -7,7 +7,7 @@
 package api
 
 import (
-	"github.com/syncthing/syncthing/lib/logger"
+	"github.com/alexiscaspell/vaporcito/lib/logger"
 )
 
 var (
@@ -20,7 +20,7 @@ func shouldDebugHTTP() bool {
 
 func init() {
 	// The debug facility was originally named "http", changed in:
-	// https://github.com/syncthing/syncthing/pull/5548
+	// https://github.com/alexiscaspell/vaporcito/pull/5548
 	if l.IsTraced("http") {
 		l.SetDebug("api", true)
 	}

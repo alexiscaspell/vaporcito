@@ -20,8 +20,8 @@
 }
 
 .li-column {
-    background-color: rgb(236, 240, 241);
-    border-radius: 3px;
+    background-color: rgba(31, 123, 184, 0.10);
+    border-radius: 8px;
 }
 
 .panel-heading:hover, .panel-heading:focus {

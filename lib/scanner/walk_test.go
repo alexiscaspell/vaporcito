@@ -20,13 +20,13 @@ import (
 	"testing"
 
 	"github.com/d4l3k/messagediff"
-	"github.com/syncthing/syncthing/lib/build"
-	"github.com/syncthing/syncthing/lib/events"
-	"github.com/syncthing/syncthing/lib/fs"
-	"github.com/syncthing/syncthing/lib/ignore"
-	"github.com/syncthing/syncthing/lib/protocol"
-	"github.com/syncthing/syncthing/lib/rand"
-	"github.com/syncthing/syncthing/lib/sha256"
+	"github.com/alexiscaspell/vaporcito/lib/build"
+	"github.com/alexiscaspell/vaporcito/lib/events"
+	"github.com/alexiscaspell/vaporcito/lib/fs"
+	"github.com/alexiscaspell/vaporcito/lib/ignore"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/rand"
+	"github.com/alexiscaspell/vaporcito/lib/sha256"
 	"golang.org/x/text/unicode/norm"
 )
 
@@ -830,7 +830,7 @@ func TestIssue4841(t *testing.T) {
 	}
 }
 
-// TestNotExistingError reproduces https://github.com/syncthing/syncthing/issues/5385
+// TestNotExistingError reproduces https://github.com/alexiscaspell/vaporcito/issues/5385
 func TestNotExistingError(t *testing.T) {
 	sub := "notExisting"
 	testFs := newTestFs()
@@ -886,7 +886,7 @@ func TestSkipIgnoredDirs(t *testing.T) {
 	}
 }
 
-// https://github.com/syncthing/syncthing/issues/6487
+// https://github.com/alexiscaspell/vaporcito/issues/6487
 func TestIncludedSubdir(t *testing.T) {
 	fss := fs.NewFilesystem(fs.FilesystemTypeFake, "")
 

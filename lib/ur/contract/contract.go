@@ -14,7 +14,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/structutil"
+	"github.com/alexiscaspell/vaporcito/lib/structutil"
 )
 
 type Report struct {

@@ -29,8 +29,8 @@ import (
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 
-	"github.com/syncthing/syncthing/lib/upgrade"
-	"github.com/syncthing/syncthing/lib/ur/contract"
+	"github.com/alexiscaspell/vaporcito/lib/upgrade"
+	"github.com/alexiscaspell/vaporcito/lib/ur/contract"
 )
 
 type CLI struct {

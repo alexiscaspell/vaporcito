@@ -15,11 +15,11 @@ import (
 
 	"golang.org/x/crypto/bcrypt"
 
-	"github.com/syncthing/syncthing/lib/rand"
+	"github.com/alexiscaspell/vaporcito/lib/rand"
 )
 
 func (c GUIConfiguration) IsAuthEnabled() bool {
-	// This function should match isAuthEnabled() in syncthingController.js
+	// This function should match isAuthEnabled() in vaporcitoController.js
 	return c.AuthMode == AuthModeLDAP || (len(c.User) > 0 && len(c.Password) > 0)
 }
 

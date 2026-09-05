@@ -17,8 +17,8 @@ import (
 	"testing/quick"
 
 	rollingAdler32 "github.com/chmduquesne/rollinghash/adler32"
-	"github.com/syncthing/syncthing/lib/protocol"
-	"github.com/syncthing/syncthing/lib/sha256"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/sha256"
 )
 
 var blocksTestData = []struct {

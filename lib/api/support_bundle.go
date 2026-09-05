@@ -10,7 +10,7 @@ import (
 	"archive/zip"
 	"io"
 
-	"github.com/syncthing/syncthing/lib/config"
+	"github.com/alexiscaspell/vaporcito/lib/config"
 )
 
 // getRedactedConfig redacting some parts of config

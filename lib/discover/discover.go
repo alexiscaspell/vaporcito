@@ -10,7 +10,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
 	"github.com/thejerf/suture/v4"
 )
 

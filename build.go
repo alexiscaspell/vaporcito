@@ -33,7 +33,7 @@ import (
 	"text/template"
 	"time"
 
-	buildpkg "github.com/syncthing/syncthing/lib/build"
+	buildpkg "github.com/alexiscaspell/vaporcito/lib/build"
 )
 
 var (
@@ -86,14 +86,14 @@ var targets = map[string]target{
 		// the archive creation stuff. buildPkgs gets filled out in init()
 		tags: []string{"purego"},
 	},
-	"syncthing": {
+	"vaporcito": {
 		// The default target for "build", "install", "tar", "zip", "deb", etc.
-		name:        "syncthing",
-		debname:     "syncthing",
+		name:        "vaporcito",
+		debname:     "vaporcito",
 		debdeps:     []string{"libc6", "procps"},
-		description: "Open Source Continuous File Synchronization",
-		buildPkgs:   []string{"github.com/syncthing/syncthing/cmd/syncthing"},
-		binaryName:  "syncthing", // .exe will be added automatically for Windows builds
+		description: "Savegame synchronization with Vaporcito",
+		buildPkgs:   []string{"github.com/alexiscaspell/vaporcito/cmd/vaporcito"},
+		binaryName:  "vaporcito", // .exe will be added automatically for Windows builds
 		archiveFiles: []archiveFile{
 			{src: "{{binary}}", dst: "{{binary}}", perm: 0755},
 			{src: "README.md", dst: "README.txt", perm: 0644},
@@ -101,35 +101,40 @@ var targets = map[string]target{
 			{src: "AUTHORS", dst: "AUTHORS.txt", perm: 0644},
 			// All files from etc/ and extra/ added automatically in init().
 		},
-		systemdService: "syncthing@*.service",
+		systemdService: "vaporcito@*.service",
 		installationFiles: []archiveFile{
 			{src: "{{binary}}", dst: "deb/usr/bin/{{binary}}", perm: 0755},
-			{src: "README.md", dst: "deb/usr/share/doc/syncthing/README.txt", perm: 0644},
-			{src: "LICENSE", dst: "deb/usr/share/doc/syncthing/LICENSE.txt", perm: 0644},
-			{src: "AUTHORS", dst: "deb/usr/share/doc/syncthing/AUTHORS.txt", perm: 0644},
-			{src: "man/syncthing.1", dst: "deb/usr/share/man/man1/syncthing.1", perm: 0644},
-			{src: "man/syncthing-config.5", dst: "deb/usr/share/man/man5/syncthing-config.5", perm: 0644},
-			{src: "man/syncthing-stignore.5", dst: "deb/usr/share/man/man5/syncthing-stignore.5", perm: 0644},
-			{src: "man/syncthing-device-ids.7", dst: "deb/usr/share/man/man7/syncthing-device-ids.7", perm: 0644},
-			{src: "man/syncthing-event-api.7", dst: "deb/usr/share/man/man7/syncthing-event-api.7", perm: 0644},
-			{src: "man/syncthing-faq.7", dst: "deb/usr/share/man/man7/syncthing-faq.7", perm: 0644},
-			{src: "man/syncthing-networking.7", dst: "deb/usr/share/man/man7/syncthing-networking.7", perm: 0644},
-			{src: "man/syncthing-rest-api.7", dst: "deb/usr/share/man/man7/syncthing-rest-api.7", perm: 0644},
-			{src: "man/syncthing-security.7", dst: "deb/usr/share/man/man7/syncthing-security.7", perm: 0644},
-			{src: "man/syncthing-versioning.7", dst: "deb/usr/share/man/man7/syncthing-versioning.7", perm: 0644},
-			{src: "etc/linux-systemd/system/syncthing@.service", dst: "deb/lib/systemd/system/syncthing@.service", perm: 0644},
-			{src: "etc/linux-systemd/system/syncthing-resume.service", dst: "deb/lib/systemd/system/syncthing-resume.service", perm: 0644},
-			{src: "etc/linux-systemd/user/syncthing.service", dst: "deb/usr/lib/systemd/user/syncthing.service", perm: 0644},
-			{src: "etc/linux-sysctl/30-syncthing.conf", dst: "deb/usr/lib/sysctl.d/30-syncthing.conf", perm: 0644},
-			{src: "etc/firewall-ufw/syncthing", dst: "deb/etc/ufw/applications.d/syncthing", perm: 0644},
-			{src: "etc/linux-desktop/syncthing-start.desktop", dst: "deb/usr/share/applications/syncthing-start.desktop", perm: 0644},
-			{src: "etc/linux-desktop/syncthing-ui.desktop", dst: "deb/usr/share/applications/syncthing-ui.desktop", perm: 0644},
-			{src: "assets/logo-32.png", dst: "deb/usr/share/icons/hicolor/32x32/apps/syncthing.png", perm: 0644},
-			{src: "assets/logo-64.png", dst: "deb/usr/share/icons/hicolor/64x64/apps/syncthing.png", perm: 0644},
-			{src: "assets/logo-128.png", dst: "deb/usr/share/icons/hicolor/128x128/apps/syncthing.png", perm: 0644},
-			{src: "assets/logo-256.png", dst: "deb/usr/share/icons/hicolor/256x256/apps/syncthing.png", perm: 0644},
-			{src: "assets/logo-512.png", dst: "deb/usr/share/icons/hicolor/512x512/apps/syncthing.png", perm: 0644},
-			{src: "assets/logo-only.svg", dst: "deb/usr/share/icons/hicolor/scalable/apps/syncthing.svg", perm: 0644},
+			{src: "README.md", dst: "deb/usr/share/doc/vaporcito/README.txt", perm: 0644},
+			{src: "LICENSE", dst: "deb/usr/share/doc/vaporcito/LICENSE.txt", perm: 0644},
+			{src: "AUTHORS", dst: "deb/usr/share/doc/vaporcito/AUTHORS.txt", perm: 0644},
+			{src: "etc/linux-systemd/system/syncthing@.service", dst: "deb/lib/systemd/system/vaporcito@.service", perm: 0644},
+			{src: "etc/linux-systemd/system/syncthing-resume.service", dst: "deb/lib/systemd/system/vaporcito-resume.service", perm: 0644},
+			{src: "etc/linux-systemd/user/syncthing.service", dst: "deb/usr/lib/systemd/user/vaporcito.service", perm: 0644},
+			{src: "assets/logo-32.png", dst: "deb/usr/share/icons/hicolor/32x32/apps/vaporcito.png", perm: 0644},
+			{src: "assets/logo-64.png", dst: "deb/usr/share/icons/hicolor/64x64/apps/vaporcito.png", perm: 0644},
+			{src: "assets/logo-128.png", dst: "deb/usr/share/icons/hicolor/128x128/apps/vaporcito.png", perm: 0644},
+			{src: "assets/logo-256.png", dst: "deb/usr/share/icons/hicolor/256x256/apps/vaporcito.png", perm: 0644},
+			{src: "assets/logo-512.png", dst: "deb/usr/share/icons/hicolor/512x512/apps/vaporcito.png", perm: 0644},
+			{src: "assets/logo-only.svg", dst: "deb/usr/share/icons/hicolor/scalable/apps/vaporcito.svg", perm: 0644},
+		},
+	},
+	// Keep old key as alias for scripts that still pass "syncthing".
+	"syncthing": {
+		name:        "vaporcito",
+		debname:     "vaporcito",
+		debdeps:     []string{"libc6", "procps"},
+		description: "Savegame synchronization with Vaporcito",
+		buildPkgs:   []string{"github.com/alexiscaspell/vaporcito/cmd/vaporcito"},
+		binaryName:  "vaporcito",
+		archiveFiles: []archiveFile{
+			{src: "{{binary}}", dst: "{{binary}}", perm: 0755},
+			{src: "README.md", dst: "README.txt", perm: 0644},
+			{src: "LICENSE", dst: "LICENSE.txt", perm: 0644},
+			{src: "AUTHORS", dst: "AUTHORS.txt", perm: 0644},
+		},
+		systemdService: "vaporcito@*.service",
+		installationFiles: []archiveFile{
+			{src: "{{binary}}", dst: "deb/usr/bin/{{binary}}", perm: 0755},
 		},
 	},
 	"stdiscosrv": {
@@ -138,7 +143,7 @@ var targets = map[string]target{
 		debdeps:     []string{"libc6"},
 		debpre:      "cmd/stdiscosrv/scripts/preinst",
 		description: "Syncthing Discovery Server",
-		buildPkgs:   []string{"github.com/syncthing/syncthing/cmd/stdiscosrv"},
+		buildPkgs:   []string{"github.com/alexiscaspell/vaporcito/cmd/stdiscosrv"},
 		binaryName:  "stdiscosrv", // .exe will be added automatically for Windows builds
 		archiveFiles: []archiveFile{
 			{src: "{{binary}}", dst: "{{binary}}", perm: 0755},
@@ -165,7 +170,7 @@ var targets = map[string]target{
 		debdeps:     []string{"libc6"},
 		debpre:      "cmd/strelaysrv/scripts/preinst",
 		description: "Syncthing Relay Server",
-		buildPkgs:   []string{"github.com/syncthing/syncthing/cmd/strelaysrv"},
+		buildPkgs:   []string{"github.com/alexiscaspell/vaporcito/cmd/strelaysrv"},
 		binaryName:  "strelaysrv", // .exe will be added automatically for Windows builds
 		archiveFiles: []archiveFile{
 			{src: "{{binary}}", dst: "{{binary}}", perm: 0755},
@@ -192,7 +197,7 @@ var targets = map[string]target{
 		debname:     "syncthing-relaypoolsrv",
 		debdeps:     []string{"libc6"},
 		description: "Syncthing Relay Pool Server",
-		buildPkgs:   []string{"github.com/syncthing/syncthing/cmd/strelaypoolsrv"},
+		buildPkgs:   []string{"github.com/alexiscaspell/vaporcito/cmd/strelaypoolsrv"},
 		binaryName:  "strelaypoolsrv", // .exe will be added automatically for Windows builds
 		archiveFiles: []archiveFile{
 			{src: "{{binary}}", dst: "{{binary}}", perm: 0755},
@@ -210,19 +215,19 @@ var targets = map[string]target{
 	"stupgrades": {
 		name:        "stupgrades",
 		description: "Syncthing Upgrade Check Server",
-		buildPkgs:   []string{"github.com/syncthing/syncthing/cmd/stupgrades"},
+		buildPkgs:   []string{"github.com/alexiscaspell/vaporcito/cmd/stupgrades"},
 		binaryName:  "stupgrades",
 	},
 	"stcrashreceiver": {
 		name:        "stcrashreceiver",
 		description: "Syncthing Crash Server",
-		buildPkgs:   []string{"github.com/syncthing/syncthing/cmd/stcrashreceiver"},
+		buildPkgs:   []string{"github.com/alexiscaspell/vaporcito/cmd/stcrashreceiver"},
 		binaryName:  "stcrashreceiver",
 	},
 	"ursrv": {
 		name:        "ursrv",
 		description: "Syncthing Usage Reporting Server",
-		buildPkgs:   []string{"github.com/syncthing/syncthing/cmd/ursrv"},
+		buildPkgs:   []string{"github.com/alexiscaspell/vaporcito/cmd/ursrv"},
 		binaryName:  "ursrv",
 	},
 }
@@ -239,23 +244,24 @@ func initTargets() {
 		if noupgrade && pkg == "stupgrades" {
 			continue
 		}
-		all.buildPkgs = append(all.buildPkgs, fmt.Sprintf("github.com/syncthing/syncthing/cmd/%s", pkg))
+		all.buildPkgs = append(all.buildPkgs, fmt.Sprintf("github.com/alexiscaspell/vaporcito/cmd/%s", pkg))
 	}
 	targets["all"] = all
 
-	// The "syncthing" target includes a few more files found in the "etc"
+	// The "vaporcito" target includes a few more files found in the "etc"
 	// and "extra" dirs.
-	syncthingPkg := targets["syncthing"]
+	vaporcitoPkg := targets["vaporcito"]
 	for _, file := range listFiles("etc") {
-		syncthingPkg.archiveFiles = append(syncthingPkg.archiveFiles, archiveFile{src: file, dst: file, perm: 0644})
+		vaporcitoPkg.archiveFiles = append(vaporcitoPkg.archiveFiles, archiveFile{src: file, dst: file, perm: 0644})
 	}
 	for _, file := range listFiles("extra") {
-		syncthingPkg.archiveFiles = append(syncthingPkg.archiveFiles, archiveFile{src: file, dst: file, perm: 0644})
+		vaporcitoPkg.archiveFiles = append(vaporcitoPkg.archiveFiles, archiveFile{src: file, dst: file, perm: 0644})
 	}
 	for _, file := range listFiles("extra") {
-		syncthingPkg.installationFiles = append(syncthingPkg.installationFiles, archiveFile{src: file, dst: "deb/usr/share/doc/syncthing/" + filepath.Base(file), perm: 0644})
+		vaporcitoPkg.installationFiles = append(vaporcitoPkg.installationFiles, archiveFile{src: file, dst: "deb/usr/share/doc/vaporcito/" + filepath.Base(file), perm: 0644})
 	}
-	targets["syncthing"] = syncthingPkg
+	targets["vaporcito"] = vaporcitoPkg
+	targets["syncthing"] = vaporcitoPkg // temporary alias
 }
 
 func main() {
@@ -280,7 +286,7 @@ func main() {
 		// with any command given but not a target, the target is
 		// "syncthing". So "go run build.go install" is "go run build.go install
 		// syncthing" etc.
-		targetName := "syncthing"
+		targetName := "vaporcito"
 		if flag.NArg() > 1 {
 			targetName = flag.Arg(1)
 		}
@@ -309,10 +315,10 @@ func runCommand(cmd string, target target) {
 		build(target, tags)
 
 	case "test":
-		test(strings.Fields(extraTags), "github.com/syncthing/syncthing/lib/...", "github.com/syncthing/syncthing/cmd/...")
+		test(strings.Fields(extraTags), "github.com/alexiscaspell/vaporcito/lib/...", "github.com/alexiscaspell/vaporcito/cmd/...")
 
 	case "bench":
-		bench(strings.Fields(extraTags), "github.com/syncthing/syncthing/lib/...", "github.com/syncthing/syncthing/cmd/...")
+		bench(strings.Fields(extraTags), "github.com/alexiscaspell/vaporcito/lib/...", "github.com/alexiscaspell/vaporcito/cmd/...")
 
 	case "integration":
 		integration(false)
@@ -472,7 +478,7 @@ func benchArgs() []string {
 }
 
 func install(target target, tags []string) {
-	if (target.name == "syncthing" || target.name == "") && !withNextGenGUI {
+	if (target.name == "vaporcito" || target.name == "") && !withNextGenGUI {
 		log.Println("Notice: Next generation GUI will not be built; see --with-next-gen-gui.")
 	}
 
@@ -505,7 +511,7 @@ func install(target target, tags []string) {
 }
 
 func build(target target, tags []string) {
-	if (target.name == "syncthing" || target.name == "") && !withNextGenGUI {
+	if (target.name == "vaporcito" || target.name == "") && !withNextGenGUI {
 		log.Println("Notice: Next generation GUI will not be built; see --with-next-gen-gui.")
 	}
 
@@ -674,7 +680,7 @@ func buildDeb(target target) {
 		"-m", maintainer,
 		"--vendor", maintainer,
 		"--description", target.description,
-		"--url", "https://syncthing.net/",
+		"--url", "https://github.com/alexiscaspell/vaporcito",
 		"--license", "MPL-2",
 	}
 	for _, dep := range target.debdeps {
@@ -736,12 +742,12 @@ func shouldBuildSyso(dir string) (string, error) {
 		},
 		"StringFileInfo": M{
 			"CompanyName":      "The Syncthing Authors",
-			"FileDescription":  "Syncthing - Open Source Continuous File Synchronization",
+			"FileDescription":  "Vaporcito - Savegame Synchronization",
 			"FileVersion":      version,
-			"InternalName":     "syncthing",
-			"LegalCopyright":   "The Syncthing Authors",
-			"OriginalFilename": "syncthing",
-			"ProductName":      "Syncthing",
+			"InternalName":     "vaporcito",
+			"LegalCopyright":   "The Vaporcito Authors",
+			"OriginalFilename": "vaporcito",
+			"ProductName":      "Vaporcito",
 			"ProductVersion":   version,
 		},
 		"IconPath": "assets/logo.ico",
@@ -762,7 +768,7 @@ func shouldBuildSyso(dir string) (string, error) {
 		}
 	}()
 
-	sysoPath := filepath.Join(dir, "cmd", "syncthing", "resource.syso")
+	sysoPath := filepath.Join(dir, "cmd", "vaporcito", "resource.syso")
 
 	// See https://github.com/josephspurrier/goversioninfo#command-line-flags
 	armOption := ""
@@ -835,7 +841,7 @@ func listFiles(dir string) []string {
 
 func rebuildAssets() {
 	os.Setenv("SOURCE_DATE_EPOCH", fmt.Sprint(buildStamp()))
-	runPrint(goCmd, "generate", "github.com/syncthing/syncthing/lib/api/auto", "github.com/syncthing/syncthing/cmd/strelaypoolsrv/auto")
+	runPrint(goCmd, "generate", "github.com/alexiscaspell/vaporcito/lib/api/auto", "github.com/alexiscaspell/vaporcito/cmd/strelaypoolsrv/auto")
 }
 
 func lazyRebuildAssets() {
@@ -940,20 +946,20 @@ func proto() {
 	}
 	runPrintInDir(path, "git", "checkout", pv)
 
-	runPrint(goCmd, "generate", "github.com/syncthing/syncthing/cmd/stdiscosrv")
+	runPrint(goCmd, "generate", "github.com/alexiscaspell/vaporcito/cmd/stdiscosrv")
 	runPrint(goCmd, "generate", "proto/generate.go")
 }
 
 func testmocks() {
 	args := []string{
 		"generate",
-		"github.com/syncthing/syncthing/lib/config",
-		"github.com/syncthing/syncthing/lib/connections",
-		"github.com/syncthing/syncthing/lib/discover",
-		"github.com/syncthing/syncthing/lib/events",
-		"github.com/syncthing/syncthing/lib/logger",
-		"github.com/syncthing/syncthing/lib/model",
-		"github.com/syncthing/syncthing/lib/protocol",
+		"github.com/alexiscaspell/vaporcito/lib/config",
+		"github.com/alexiscaspell/vaporcito/lib/connections",
+		"github.com/alexiscaspell/vaporcito/lib/discover",
+		"github.com/alexiscaspell/vaporcito/lib/events",
+		"github.com/alexiscaspell/vaporcito/lib/logger",
+		"github.com/alexiscaspell/vaporcito/lib/model",
+		"github.com/alexiscaspell/vaporcito/lib/protocol",
 	}
 	runPrint(goCmd, args...)
 }
@@ -982,11 +988,11 @@ func weblate() {
 func ldflags(tags []string) string {
 	b := new(strings.Builder)
 	b.WriteString("-w")
-	fmt.Fprintf(b, " -X github.com/syncthing/syncthing/lib/build.Version=%s", version)
-	fmt.Fprintf(b, " -X github.com/syncthing/syncthing/lib/build.Stamp=%d", buildStamp())
-	fmt.Fprintf(b, " -X github.com/syncthing/syncthing/lib/build.User=%s", buildUser())
-	fmt.Fprintf(b, " -X github.com/syncthing/syncthing/lib/build.Host=%s", buildHost())
-	fmt.Fprintf(b, " -X github.com/syncthing/syncthing/lib/build.Tags=%s", strings.Join(tags, ","))
+	fmt.Fprintf(b, " -X github.com/alexiscaspell/vaporcito/lib/build.Version=%s", version)
+	fmt.Fprintf(b, " -X github.com/alexiscaspell/vaporcito/lib/build.Stamp=%d", buildStamp())
+	fmt.Fprintf(b, " -X github.com/alexiscaspell/vaporcito/lib/build.User=%s", buildUser())
+	fmt.Fprintf(b, " -X github.com/alexiscaspell/vaporcito/lib/build.Host=%s", buildHost())
+	fmt.Fprintf(b, " -X github.com/alexiscaspell/vaporcito/lib/build.Tags=%s", strings.Join(tags, ","))
 	if v := os.Getenv("EXTRA_LDFLAGS"); v != "" {
 		fmt.Fprintf(b, " %s", v)
 	}

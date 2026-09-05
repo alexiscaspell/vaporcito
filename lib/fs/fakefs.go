@@ -23,7 +23,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
 )
 
 // see readShortAt()

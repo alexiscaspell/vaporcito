@@ -19,8 +19,8 @@ import (
 	"io"
 	"math/big"
 
-	"github.com/syncthing/syncthing/lib/rand"
-	"github.com/syncthing/syncthing/lib/sha256"
+	"github.com/alexiscaspell/vaporcito/lib/rand"
+	"github.com/alexiscaspell/vaporcito/lib/sha256"
 )
 
 // GenerateKeys returns a new key pair, with the private and public key

@@ -52,5 +52,5 @@ Vaporcito is licensed under the [MIT License](LICENSE), ensuring a fair and open
 
 ---
 
-**Note:** This project is inspired by and forked from [Syncthing](https://syncthing.net/). Special thanks to the Syncthing team for their foundational work.
+**Note:** Vaporcito is a savegame-focused fork of an open-source continuous file synchronization engine (MPL 2.0).
 

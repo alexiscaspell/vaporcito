@@ -9,7 +9,7 @@ package fs
 import (
 	"fmt"
 
-	"github.com/syncthing/syncthing/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
 	"golang.org/x/sys/windows"
 )
 

@@ -9,8 +9,8 @@ import (
 	"net"
 	"testing"
 
-	"github.com/syncthing/syncthing/lib/dialer"
-	"github.com/syncthing/syncthing/lib/testutil"
+	"github.com/alexiscaspell/vaporcito/lib/dialer"
+	"github.com/alexiscaspell/vaporcito/lib/testutil"
 )
 
 func BenchmarkRequestsRawTCP(b *testing.B) {

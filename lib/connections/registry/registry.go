@@ -12,8 +12,8 @@ package registry
 import (
 	"strings"
 
-	"github.com/syncthing/syncthing/lib/sliceutil"
-	"github.com/syncthing/syncthing/lib/sync"
+	"github.com/alexiscaspell/vaporcito/lib/sliceutil"
+	"github.com/alexiscaspell/vaporcito/lib/sync"
 )
 
 type Registry struct {

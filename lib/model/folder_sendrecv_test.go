@@ -19,15 +19,15 @@ import (
 	"testing"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/build"
-	"github.com/syncthing/syncthing/lib/config"
-	"github.com/syncthing/syncthing/lib/events"
-	"github.com/syncthing/syncthing/lib/fs"
-	"github.com/syncthing/syncthing/lib/ignore"
-	"github.com/syncthing/syncthing/lib/protocol"
-	"github.com/syncthing/syncthing/lib/rand"
-	"github.com/syncthing/syncthing/lib/scanner"
-	"github.com/syncthing/syncthing/lib/sync"
+	"github.com/alexiscaspell/vaporcito/lib/build"
+	"github.com/alexiscaspell/vaporcito/lib/config"
+	"github.com/alexiscaspell/vaporcito/lib/events"
+	"github.com/alexiscaspell/vaporcito/lib/fs"
+	"github.com/alexiscaspell/vaporcito/lib/ignore"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/rand"
+	"github.com/alexiscaspell/vaporcito/lib/scanner"
+	"github.com/alexiscaspell/vaporcito/lib/sync"
 )
 
 var blocks = []protocol.BlockInfo{
@@ -1015,7 +1015,7 @@ func TestDeleteBehindSymlink(t *testing.T) {
 	}
 }
 
-// Reproduces https://github.com/syncthing/syncthing/issues/6559
+// Reproduces https://github.com/alexiscaspell/vaporcito/issues/6559
 func TestPullCtxCancel(t *testing.T) {
 	_, f, wcfgCancel := setupSendReceiveFolder(t)
 	defer wcfgCancel()

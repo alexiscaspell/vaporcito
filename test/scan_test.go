@@ -14,7 +14,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/syncthing/syncthing/lib/rc"
+	"github.com/alexiscaspell/vaporcito/lib/rc"
 )
 
 func TestScanSubdir(t *testing.T) {

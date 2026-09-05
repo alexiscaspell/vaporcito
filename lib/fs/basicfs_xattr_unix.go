@@ -15,7 +15,7 @@ import (
 	"fmt"
 	"syscall"
 
-	"github.com/syncthing/syncthing/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
 	"golang.org/x/sys/unix"
 )
 

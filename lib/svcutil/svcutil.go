@@ -12,8 +12,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/syncthing/syncthing/lib/logger"
-	"github.com/syncthing/syncthing/lib/sync"
+	"github.com/alexiscaspell/vaporcito/lib/logger"
+	"github.com/alexiscaspell/vaporcito/lib/sync"
 
 	"github.com/thejerf/suture/v4"
 )

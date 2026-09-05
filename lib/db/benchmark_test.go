@@ -10,8 +10,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/syncthing/syncthing/lib/db"
-	"github.com/syncthing/syncthing/lib/protocol"
+	"github.com/alexiscaspell/vaporcito/lib/db"
+	"github.com/alexiscaspell/vaporcito/lib/protocol"
 )
 
 var files, oneFile, firstHalf, secondHalf, changed100, unchanged100 []protocol.FileInfo

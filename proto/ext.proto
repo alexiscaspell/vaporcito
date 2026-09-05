@@ -4,7 +4,7 @@ package ext;
 
 import "google/protobuf/descriptor.proto";
 
-option go_package = "github.com/syncthing/syncthing/proto/ext";
+option go_package = "github.com/alexiscaspell/vaporcito/proto/ext";
 
 extend google.protobuf.MessageOptions {
     optional bool xml_tags = 74001;

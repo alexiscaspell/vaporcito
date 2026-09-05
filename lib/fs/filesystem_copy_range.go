@@ -9,7 +9,7 @@ package fs
 import (
 	"syscall"
 
-	"github.com/syncthing/syncthing/lib/sync"
+	"github.com/alexiscaspell/vaporcito/lib/sync"
 )
 
 var (
