@@ -1,0 +1,119 @@
+name: Build and Release
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect channel
+        id: channel
+        run: |
+          case "${GITHUB_REF_NAME}" in
+            main) echo "name=main" >> "$GITHUB_OUTPUT" ;;
+            develop) echo "name=develop" >> "$GITHUB_OUTPUT" ;;
+            *)
+              echo "Unsupported branch: ${GITHUB_REF_NAME}" >&2
+              exit 1
+              ;;
+          esac
+
+      - name: Calculate version
+        id: version
+        run: |
+          chmod +x scripts/calc-version.sh
+          ./scripts/calc-version.sh \
+            --channel "${{ steps.channel.outputs.name }}" \
+            --sha "$(git rev-parse --short=7 HEAD)"
+
+      - name: Skip if tag already exists
+        id: skip
+        run: |
+          TAG="${{ steps.version.outputs.version }}"
+          if git rev-parse -q --verify "refs/tags/${TAG}" >/dev/null; then
+            echo "Tag ${TAG} already exists; skipping release."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Set up Go
+        if: steps.skip.outputs.skip != 'true'
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: back/go.mod
+          cache-dependency-path: back/go.sum
+
+      - name: Build Linux amd64
+        if: steps.skip.outputs.skip != 'true'
+        working-directory: back
+        env:
+          CGO_ENABLED: "0"
+        run: |
+          go run build.go \
+            -goos linux -goarch amd64 \
+            -no-upgrade \
+            -version "${{ steps.version.outputs.version }}" \
+            build
+          mkdir -p ../dist
+          mv vaporcito "../dist/vaporcito-linux-amd64"
+          chmod +x "../dist/vaporcito-linux-amd64"
+
+      - name: Build Windows amd64
+        if: steps.skip.outputs.skip != 'true'
+        working-directory: back
+        env:
+          CGO_ENABLED: "0"
+        run: |
+          go run build.go \
+            -goos windows -goarch amd64 \
+            -no-upgrade \
+            -version "${{ steps.version.outputs.version }}" \
+            build
+          mkdir -p ../dist
+          mv vaporcito.exe "../dist/vaporcito-windows-amd64.exe"
+
+      - name: Checksums
+        if: steps.skip.outputs.skip != 'true'
+        working-directory: dist
+        run: |
+          sha256sum vaporcito-linux-amd64 vaporcito-windows-amd64.exe > SHA256SUMS.txt
+          cat SHA256SUMS.txt
+
+      - name: Create GitHub Release
+        if: steps.skip.outputs.skip != 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.version }}
+          name: Vaporcito ${{ steps.version.outputs.version }}
+          target_commitish: ${{ github.sha }}
+          prerelease: ${{ steps.version.outputs.prerelease == 'true' }}
+          generate_release_notes: true
+          body: |
+            **Canal:** `${{ steps.version.outputs.channel }}`
+            **Bump:** `${{ steps.version.outputs.bump }}` (desde `${{ steps.version.outputs.base }}`)
+            **Estable siguiente:** `${{ steps.version.outputs.next_stable }}`
+
+            Binarios incluidos:
+            - `vaporcito-linux-amd64`
+            - `vaporcito-windows-amd64.exe`
+          files: |
+            dist/vaporcito-linux-amd64
+            dist/vaporcito-windows-amd64.exe
+            dist/SHA256SUMS.txt

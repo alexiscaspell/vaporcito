@@ -56,9 +56,18 @@ docker compose -f docker/docker-compose.yml up --build -d
 
 UI: http://127.0.0.1:8384
 
-### Desktop (Tauri)
+### Releases
 
-See [front/desktop/README.md](front/desktop/README.md).
+Al pushear a `develop` o `main`, el workflow [`.github/workflows/release.yml`](.github/workflows/release.yml):
+
+1. Calcula la versión con [`scripts/calc-version.sh`](scripts/calc-version.sh) (major/minor/patch según commits).
+2. Compila binarios Linux y Windows amd64.
+3. Publica un GitHub Release (`develop` = prerelease, `main` = release).
+
+```bash
+./scripts/calc-version.sh --channel develop
+./scripts/calc-version.sh --channel main
+```
 
 ## Installation
 
