@@ -66,8 +66,8 @@ Al pushear a `develop` o `main`, el workflow [`.github/workflows/release.yml`](.
 | `feat:` | MINOR |
 | `fix:` / resto | PATCH |
 
-- **main:** `1.2.3` (tag `v1.2.3`, release)
-- **develop:** `1.2.3-develop.N` (tag `v1.2.3-develop.N`, prerelease)
+- **develop:** versión `1.2.3-develop.N`, tag **`v1.2.3`**, GitHub Release en prerelease (se actualiza en cada push)
+- **main:** misma versión/tag **`v1.2.3`** (sin `-develop.N`), se promueve a release
 
 Artefactos en cada release:
 - **Desktop Tauri:** AppImage/deb (Linux) y MSI/NSIS (Windows)

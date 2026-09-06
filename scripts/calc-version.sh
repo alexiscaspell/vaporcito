@@ -1,18 +1,22 @@
 #!/usr/bin/env bash
 # Calcula la próxima versión según Semantic Versioning 2.0.0
-# (https://semver.org/) a partir de Conventional Commits desde el último
-# release estable.
+# (https://semver.org/) a partir de Conventional Commits.
 #
 # Bump (gana el más alto):
-#   MAJOR – BREAKING CHANGE en el body, o tipo con '!' (ej. feat!: …)
+#   MAJOR – BREAKING CHANGE / tipo! (feat!: …)
 #   MINOR – feat:
-#   PATCH – fix: / resto (chore, docs, ci, refactor, perf, test, style, …)
+#   PATCH – fix: y resto
 #
-# Formato de versión (SemVer puro, sin prefijo v):
-#   main     → MAJOR.MINOR.PATCH          (ej. 1.2.3)
-#   develop  → MAJOR.MINOR.PATCH-develop.N  (ej. 1.2.3-develop.1)
+# Versión (SemVer, sin prefijo v):
+#   develop → MAJOR.MINOR.PATCH-develop.N   (ej. 1.0.0-develop.1)
+#   main    → MAJOR.MINOR.PATCH             (ej. 1.0.0)
 #
-# El tag de Git/GitHub es "v" + version (convención habitual).
+# Tag de Git (siempre estable en forma):
+#   vMAJOR.MINOR.PATCH   (ej. v1.0.0)  — NUNCA incluye -develop.N
+#
+# Flujo:
+#   develop crea/actualiza una GitHub Release *prerelease* en el tag vM.m.p
+#   main promueve el mismo tag a release (sin prerelease)
 #
 # Uso:
 #   ./scripts/calc-version.sh --channel develop|main [--base X.Y.Z|vX.Y.Z]
@@ -33,11 +37,10 @@ while [[ $# -gt 0 ]]; do
       shift 2
       ;;
     --sha)
-      # Compat: ignorado. Los prereleases usan contador SemVer, no el SHA.
       shift 2
       ;;
     -h|--help)
-      sed -n '2,22p' "$0"
+      sed -n '2,28p' "$0"
       exit 0
       ;;
     *)
@@ -59,9 +62,11 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
 normalize_core() {
-  # Acepta X.Y.Z o vX.Y.Z → imprime X.Y.Z
   local v="$1"
   v="${v#v}"
+  # Strip accidental prerelease/build metadata
+  v="${v%%-*}"
+  v="${v%%+*}"
   if [[ ! "$v" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
     echo "Invalid SemVer core: $1 (expected MAJOR.MINOR.PATCH)" >&2
     exit 1
@@ -69,23 +74,61 @@ normalize_core() {
   printf '%s' "$v"
 }
 
-# Último tag estable: vMAJOR.MINOR.PATCH o MAJOR.MINOR.PATCH (sin prerelease).
-last_stable_core() {
-  local t
-  t="$(git tag -l --sort=-v:refname | grep -E '^v?[0-9]+\.[0-9]+\.[0-9]+$' | head -1 || true)"
-  if [[ -z "$t" ]]; then
-    echo "0.0.0"
-    return
-  fi
-  normalize_core "$t"
+tag_exists() {
+  local tag="$1"
+  git rev-parse -q --verify "refs/tags/${tag}" >/dev/null 2>&1
 }
 
-tag_for_ref() {
-  # Devuelve un ref de tag existente para un core X.Y.Z (con o sin v).
+# True if GitHub release for tag is a published non-prerelease (stable).
+is_stable_release() {
+  local tag="$1"
+  if ! command -v gh >/dev/null 2>&1; then
+    return 1
+  fi
+  local json
+  json="$(gh release view "$tag" --json isPrerelease,isDraft 2>/dev/null || true)"
+  [[ -z "$json" ]] && return 1
+  printf '%s' "$json" | grep -q '"isPrerelease":false' || return 1
+  printf '%s' "$json" | grep -q '"isDraft":true' && return 1
+  return 0
+}
+
+# Último core estable: release no-prerelease vía gh, si no tags mergeados en main.
+last_stable_core() {
+  local t
+  if command -v gh >/dev/null 2>&1; then
+    t="$(
+      gh release list --limit 100 --json tagName,isPrerelease,isDraft \
+        --jq '[.[] | select((.isPrerelease|not) and (.isDraft|not)) | .tagName]
+              | map(select(test("^v?[0-9]+\\.[0-9]+\\.[0-9]+$")))
+              | sort_by(split("v")|last|split(".")|map(tonumber))
+              | reverse | .[0] // empty' 2>/dev/null || true
+    )"
+    if [[ -n "$t" ]]; then
+      normalize_core "$t"
+      return
+    fi
+  fi
+
+  for ref in origin/main main; do
+    if git rev-parse -q --verify "$ref" >/dev/null 2>&1; then
+      t="$(git tag -l 'v*.*.*' --merged "$ref" --sort=-v:refname \
+        | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -1 || true)"
+      if [[ -n "$t" ]]; then
+        normalize_core "$t"
+        return
+      fi
+    fi
+  done
+
+  echo "0.0.0"
+}
+
+tag_for_core() {
   local core="$1"
-  if git rev-parse -q --verify "refs/tags/v${core}" >/dev/null 2>&1; then
+  if tag_exists "v${core}"; then
     echo "v${core}"
-  elif git rev-parse -q --verify "refs/tags/${core}" >/dev/null 2>&1; then
+  elif tag_exists "${core}"; then
     echo "${core}"
   else
     echo ""
@@ -93,7 +136,7 @@ tag_for_ref() {
 }
 
 BASE_CORE="$(normalize_core "${BASE_OVERRIDE:-$(last_stable_core)}")"
-BASE_TAG="$(tag_for_ref "$BASE_CORE")"
+BASE_TAG="$(tag_for_core "$BASE_CORE")"
 
 IFS=. read -r MAJOR MINOR PATCH <<< "$BASE_CORE"
 
@@ -107,10 +150,8 @@ fi
 COMMITS="$(git log --pretty=format:'%s' "${RANGE_ARGS[@]}" 2>/dev/null || true)"
 BODIES="$(git log --pretty=format:'%b' "${RANGE_ARGS[@]}" 2>/dev/null || true)"
 
-# Conventional Commits → SemVer (sin heurísticas de lenguaje natural).
 bump_from_subject() {
   local subject="$1"
-  # type(scope)!: or type!:
   if printf '%s' "$subject" | grep -qE '^[a-zA-Z]+(\([^)]*\))?!:'; then
     echo major
     return
@@ -123,12 +164,10 @@ bump_from_subject() {
     echo patch
     return
   fi
-  # Otros tipos convencionales → patch
   if printf '%s' "$subject" | grep -qE '^(chore|docs|ci|refactor|perf|test|style|build|revert)(\([^)]*\))?:'; then
     echo patch
     return
   fi
-  # Commits no convencionales → patch
   echo patch
 }
 
@@ -145,13 +184,10 @@ if [[ -n "$(printf '%s' "$COMMITS" | tr -d '[:space:]')" ]]; then
   done <<< "$COMMITS"
 fi
 
-# Footer Conventional Commits
 if [[ "$BUMP" != "major" ]] && printf '%s' "$BODIES" | grep -qE '^BREAKING CHANGE([[:space:]]|:|$)' ; then
   BUMP="major"
 fi
 
-# Sin commits nuevos desde el tag estable: en main no hay nada que publicar
-# con bump real; en develop igual se permite un patch prerelease sobre NEXT.
 if [[ "$BUMP" == "none" ]]; then
   BUMP="patch"
 fi
@@ -171,7 +207,7 @@ case "$BUMP" in
     ;;
 esac
 
-# Sin tags previos: primera versión pública SemVer = 1.0.0
+# Primera versión pública
 if [[ "$BASE_CORE" == "0.0.0" && -z "$BASE_TAG" ]]; then
   MAJOR=1
   MINOR=0
@@ -180,32 +216,61 @@ if [[ "$BASE_CORE" == "0.0.0" && -z "$BASE_TAG" ]]; then
 fi
 
 NEXT_CORE="${MAJOR}.${MINOR}.${PATCH}"
+TAG="v${NEXT_CORE}"
 
-# Próximo contador develop.N (identificador numérico = orden SemVer correcto).
+# Si el tag candidato ya es un release estable, avanzar un patch más.
+if is_stable_release "$TAG"; then
+  PATCH=$((PATCH + 1))
+  NEXT_CORE="${MAJOR}.${MINOR}.${PATCH}"
+  TAG="v${NEXT_CORE}"
+  BUMP="patch"
+fi
+
+# Contador develop.N desde el nombre de la prerelease existente (mismo tag vM.m.p).
 next_develop_n() {
   local core="$1"
+  local tag="v${core}"
   local max=0
-  local t n
-  while IFS= read -r t; do
-    [[ -z "$t" ]] && continue
-    n="${t##*-develop.}"
-    n="${n#v}"
-    if [[ "$n" =~ ^[0-9]+$ ]] && (( n > max )); then
-      max=$n
+  local name n
+  if command -v gh >/dev/null 2>&1; then
+    name="$(gh release view "$tag" --json name --jq .name 2>/dev/null || true)"
+    if [[ "$name" =~ develop\.([0-9]+) ]]; then
+      max="${BASH_REMATCH[1]}"
     fi
-  done < <(git tag -l "v${core}-develop.*" "${core}-develop.*" 2>/dev/null || true)
+  fi
   echo $((max + 1))
 }
 
 PRERELEASE="false"
 VERSION="$NEXT_CORE"
+ACTION="create" # create | update-prerelease | promote
+
 if [[ "$CHANNEL" == "develop" ]]; then
   PRERELEASE="true"
   N="$(next_develop_n "$NEXT_CORE")"
   VERSION="${NEXT_CORE}-develop.${N}"
+  if tag_exists "$TAG"; then
+    ACTION="update-prerelease"
+  else
+    ACTION="create"
+  fi
+else
+  # main: misma versión core (sin -develop), release estable
+  PRERELEASE="false"
+  VERSION="$NEXT_CORE"
+  if is_stable_release "$TAG"; then
+    ACTION="skip"
+  elif tag_exists "$TAG"; then
+    ACTION="promote"
+  else
+    ACTION="create"
+  fi
 fi
 
-TAG="v${VERSION}"
+SKIP="false"
+if [[ "$ACTION" == "skip" ]]; then
+  SKIP="true"
+fi
 
 emit() {
   local key="$1"
@@ -223,3 +288,5 @@ emit bump "$BUMP"
 emit channel "$CHANNEL"
 emit prerelease "$PRERELEASE"
 emit next_stable "$NEXT_CORE"
+emit action "$ACTION"
+emit skip "$SKIP"

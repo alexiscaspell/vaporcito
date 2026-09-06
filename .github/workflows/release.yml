@@ -24,6 +24,7 @@ jobs:
       channel: ${{ steps.version.outputs.channel }}
       prerelease: ${{ steps.version.outputs.prerelease }}
       next_stable: ${{ steps.version.outputs.next_stable }}
+      action: ${{ steps.version.outputs.action }}
       skip: ${{ steps.skip.outputs.skip }}
     steps:
       - name: Checkout
@@ -45,16 +46,20 @@ jobs:
 
       - name: Calculate SemVer
         id: version
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           chmod +x scripts/calc-version.sh
           ./scripts/calc-version.sh --channel "${{ steps.channel.outputs.name }}"
 
-      - name: Skip if tag already exists
+      - name: Decide skip
         id: skip
         run: |
-          TAG="${{ steps.version.outputs.tag }}"
-          if git rev-parse -q --verify "refs/tags/${TAG}" >/dev/null; then
-            echo "Tag ${TAG} already exists; skipping release."
+          echo "action=${{ steps.version.outputs.action }}"
+          echo "tag=${{ steps.version.outputs.tag }}"
+          echo "version=${{ steps.version.outputs.version }}"
+          if [[ "${{ steps.version.outputs.skip }}" == "true" ]]; then
+            echo "Tag ${{ steps.version.outputs.tag }} already released as stable; skipping."
             echo "skip=true" >> "$GITHUB_OUTPUT"
           else
             echo "skip=false" >> "$GITHUB_OUTPUT"
@@ -228,6 +233,11 @@ jobs:
     if: needs.version.outputs.skip != 'true'
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
@@ -239,28 +249,36 @@ jobs:
           cp -v artifacts/cli-binaries/* dist/ || true
           cp -v artifacts/desktop-linux/* dist/ || true
           cp -v artifacts/desktop-windows/* dist/ || true
-          # Refresh checksums for everything in dist/
           (cd dist && sha256sum * > SHA256SUMS.txt)
           ls -lah dist
 
-      - name: Create GitHub Release
+      - name: Point tag at this commit
+        env:
+          TAG: ${{ needs.version.outputs.tag }}
+        run: |
+          git fetch --tags --force origin
+          git tag -f "$TAG" "${{ github.sha }}"
+          git push -f origin "refs/tags/${TAG}"
+
+      - name: Create or update GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ needs.version.outputs.tag }}
           name: Vaporcito ${{ needs.version.outputs.version }}
           target_commitish: ${{ github.sha }}
           prerelease: ${{ needs.version.outputs.prerelease == 'true' }}
+          make_latest: ${{ needs.version.outputs.prerelease != 'true' }}
           generate_release_notes: true
           body: |
             **SemVer:** `${{ needs.version.outputs.version }}`
+            **Tag:** `${{ needs.version.outputs.tag }}`
             **Canal:** `${{ needs.version.outputs.channel }}`
+            **Acción:** `${{ needs.version.outputs.action }}`
             **Bump:** `${{ needs.version.outputs.bump }}` (desde `${{ needs.version.outputs.base }}`)
-            **Próxima estable:** `${{ needs.version.outputs.next_stable }}`
 
             ### Desktop (Tauri)
-            Instaladores nativos (ventana WebView + sidecar Go, sin navegador del sistema):
-            - Linux: `.AppImage` / `.deb`
-            - Windows: `.msi` / `.exe` (NSIS)
+            - Linux: `.AppImage` / `.deb` / `.rpm`
+            - Windows: NSIS `.exe`
 
             ### CLI
             - `vaporcito-linux-amd64`
