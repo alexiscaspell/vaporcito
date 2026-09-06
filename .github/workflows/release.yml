@@ -25,6 +25,7 @@ jobs:
       prerelease: ${{ steps.version.outputs.prerelease }}
       next_stable: ${{ steps.version.outputs.next_stable }}
       action: ${{ steps.version.outputs.action }}
+      develop_n: ${{ steps.version.outputs.develop_n }}
       skip: ${{ steps.skip.outputs.skip }}
     steps:
       - name: Checkout
@@ -264,13 +265,14 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ needs.version.outputs.tag }}
-          name: Vaporcito ${{ needs.version.outputs.version }}
+          name: ${{ needs.version.outputs.tag }}
           target_commitish: ${{ github.sha }}
           prerelease: ${{ needs.version.outputs.prerelease == 'true' }}
           make_latest: ${{ needs.version.outputs.prerelease != 'true' }}
           generate_release_notes: true
           body: |
             **SemVer:** `${{ needs.version.outputs.version }}`
+            develop_build: ${{ needs.version.outputs.develop_n }}
             **Tag:** `${{ needs.version.outputs.tag }}`
             **Canal:** `${{ needs.version.outputs.channel }}`
             **Acción:** `${{ needs.version.outputs.action }}`

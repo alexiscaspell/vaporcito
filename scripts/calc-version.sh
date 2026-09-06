@@ -226,15 +226,17 @@ if is_stable_release "$TAG"; then
   BUMP="patch"
 fi
 
-# Contador develop.N desde el nombre de la prerelease existente (mismo tag vM.m.p).
+# Contador develop.N desde el body de la prerelease (mismo tag vM.m.p).
 next_develop_n() {
   local core="$1"
   local tag="v${core}"
   local max=0
-  local name n
+  local body n
   if command -v gh >/dev/null 2>&1; then
-    name="$(gh release view "$tag" --json name --jq .name 2>/dev/null || true)"
-    if [[ "$name" =~ develop\.([0-9]+) ]]; then
+    body="$(gh release view "$tag" --json body --jq .body 2>/dev/null || true)"
+    if [[ "$body" =~ develop_build:[[:space:]]*([0-9]+) ]]; then
+      max="${BASH_REMATCH[1]}"
+    elif [[ "$body" =~ ${core}-develop\.([0-9]+) ]]; then
       max="${BASH_REMATCH[1]}"
     fi
   fi
@@ -244,11 +246,12 @@ next_develop_n() {
 PRERELEASE="false"
 VERSION="$NEXT_CORE"
 ACTION="create" # create | update-prerelease | promote
+DEVELOP_N="0"
 
 if [[ "$CHANNEL" == "develop" ]]; then
   PRERELEASE="true"
-  N="$(next_develop_n "$NEXT_CORE")"
-  VERSION="${NEXT_CORE}-develop.${N}"
+  DEVELOP_N="$(next_develop_n "$NEXT_CORE")"
+  VERSION="${NEXT_CORE}-develop.${DEVELOP_N}"
   if tag_exists "$TAG"; then
     ACTION="update-prerelease"
   else
@@ -290,3 +293,4 @@ emit prerelease "$PRERELEASE"
 emit next_stable "$NEXT_CORE"
 emit action "$ACTION"
 emit skip "$SKIP"
+emit develop_n "$DEVELOP_N"
