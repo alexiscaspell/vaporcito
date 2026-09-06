@@ -120,7 +120,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
           cache: npm
           cache-dependency-path: front/desktop/package-lock.json
 
@@ -172,7 +172,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
           cache: npm
           cache-dependency-path: front/desktop/package-lock.json
 
@@ -196,10 +196,23 @@ jobs:
         shell: bash
         run: |
           mkdir -p dist/desktop-windows
-          find front/desktop/src-tauri/target/release/bundle -type f \( \
-            -name '*.msi' -o -name '*.exe' -o -name '*.nsis.zip' \
-          \) -exec cp -v {} dist/desktop-windows/ \;
-          # Avoid shipping unsigned helper exes from nsis folders if empty; require at least one file.
+          RELEASE="front/desktop/src-tauri/target/release"
+          echo "=== release tree (bundle) ==="
+          find "$RELEASE/bundle" -type f 2>/dev/null | head -50 || echo "(no bundle dir)"
+          # Installers from Tauri
+          if [[ -d "$RELEASE/bundle" ]]; then
+            find "$RELEASE/bundle" -type f \( \
+              -name '*.msi' -o -name '*-setup.exe' -o -name '*setup*.exe' -o -name '*.nsis.zip' \
+            \) -exec cp -v {} dist/desktop-windows/ \;
+            # Any remaining .exe under nsis/msi (avoid copying random tools)
+            find "$RELEASE/bundle/nsis" "$RELEASE/bundle/msi" -type f -name '*.exe' 2>/dev/null \
+              -exec cp -v {} dist/desktop-windows/ \; || true
+          fi
+          # Fallback: portable binary if bundlers produced nothing
+          if [[ "$(find dist/desktop-windows -type f | wc -l)" -eq 0 ]]; then
+            echo "No installers found; shipping portable vaporcito-desktop.exe"
+            cp -v "$RELEASE/vaporcito-desktop.exe" dist/desktop-windows/ || true
+          fi
           ls -la dist/desktop-windows
           test "$(find dist/desktop-windows -type f | wc -l)" -gt 0
 

@@ -57,8 +57,14 @@ fi
 
 bash ./scripts/prepare-sidecar.sh windows
 npm install
-npm run tauri build
+
+# Windows installer: NSIS (works on GHA without WiX). MSI optional locally.
+npm run tauri build -- --bundles nsis
 
 echo
 echo "Windows bundles:"
 find src-tauri/target/release/bundle -type f 2>/dev/null | sed 's/^/  /' || true
+if [[ ! -d src-tauri/target/release/bundle ]]; then
+  echo "WARNING: no bundle/ dir — check NSIS/WiX tooling" >&2
+  ls -la src-tauri/target/release/ || true
+fi
